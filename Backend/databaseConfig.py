@@ -7,7 +7,8 @@ def database_connector():
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "lab_2"
+        "database": "lab_2",
+        "raise_on_warnings" : True  #Thows an exception when there is an error with other provided parameters.
     }
 
     # config["host"] = input("Enter your MySQL Hostname (default: localhost): ")
