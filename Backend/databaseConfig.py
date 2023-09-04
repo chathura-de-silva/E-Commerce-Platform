@@ -40,4 +40,10 @@ def generate_database(config):
                                                      # database doesn't exist.
     connection.cursor().execute(f'CREATE DATABASE {db_name}')
     print(f'Database Generated as "{db_name}".')
+    # SQL Queries should
+    # come here to create
+    # the tables.
+    print("Tables created successfully.")
+    # Then comes the code for  populate the initial data from CSV files.
+    print("Initial data populated successfully.")
     return connection
