@@ -8,7 +8,7 @@ def database_connector():
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "lab_2",
+        "database": "testing",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
@@ -43,6 +43,9 @@ def generate_database(config):
     # SQL Queries should
     # come here to create
     # the tables.
+
+    #how to run sql queries on python ?
+    
     print("Tables created successfully.")
     # Then comes the code for  populate the initial data from CSV files.
     print("Initial data populated successfully.")
