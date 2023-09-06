@@ -70,15 +70,25 @@ def generate_tables_populate_data(dbconnection):
             print(f"Table '{table_name}' creation failed!\nError: {errr}")
             sys.exit(1)
 
-    def row_sanitizer(csv_reader_row):
-        for i in range(len(csv_reader_row)):
-            try:  # Had to use a try catch block to check whether string contains a float.
-                float(csv_reader_row[i].replace(" ",
-                                                ""))  # If the cell is a float (or an integer), it will not raise an exception. Instead will jump to the next for loop itereation
-                continue
-            except ValueError:
-                csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
-        return csv_reader_row
+    def data_populater():
+
+        def row_sanitizer(csv_reader_row):
+            for i in range(len(csv_reader_row)):
+                try:  # Had to use a try catch block to check whether string contains a float.
+                    float(csv_reader_row[i].replace(" ", ""))  # If the cell is a float (or an integer), it will not
+                    # raise an exception. Instead, will jump to the next for loop iteration
+                    continue
+                except ValueError:
+                    csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
+            return csv_reader_row
+
+        for row in csvreader:
+            try:
+                dbconnection.cursor().execute(
+                    f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
+            except mysql.connector.Error as errr:
+                print(f"Error: {errr}")
+                sys.exit(1)
 
     table_files_list = os.listdir('dbInitialData')
     for file_name in table_files_list:
@@ -90,7 +100,8 @@ def generate_tables_populate_data(dbconnection):
                 except csv.Error as err:
                     print(f"Error: {err}")
                 first_line_list = next(
-                    csvreader)  # First row of the csv file is the column names. This list will be later used after modification to get the column names to populate data.
+                    csvreader)  # First row of the csv file is the column names. This list will be later used after
+                # modification to get the column names to populate data.
                 columns_with_type = ','.join(first_line_list)  # First row of the csv file is the column names.
                 table_creator(file_name[0:-4],
                               columns_with_type)  # [0:-4]-Removes the .csv extension from the file name.
@@ -98,14 +109,7 @@ def generate_tables_populate_data(dbconnection):
                 # Preprocessing the first_line_list and converting it into a list of only "column names" without types.
                 column_list = [string.split()[0] for string in first_line_list]
                 # Populating the data into the table.
-
-                for row in csvreader:
-                    try:
-                        dbconnection.cursor().execute(
-                            f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
-                    except mysql.connector.Error as err:
-                        print(f"Error: {err}")
-                        sys.exit(1)
+                data_populater()
 
             dbconnection.commit()
         dbconnection.cursor().close()
