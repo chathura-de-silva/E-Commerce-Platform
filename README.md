@@ -14,7 +14,8 @@ To get started with the platform, you will need to:
 2. Install the necessary dependencies.
 3. Create a database and load the schema.
 4. Run the application.
-   
+5. cd to Backend and run the following command
+6. python -m flask run --port=5001 
 
 ## Additional information
 
