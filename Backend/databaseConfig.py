@@ -1,14 +1,18 @@
 import mysql.connector
 from mysql.connector import errorcode
 
+# Declaring the global connection object.
+connection = None
+
 
 def database_connector():
     # Defining the connection parameters in a config dictionary
+    global connection
     _config = {
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "testing",
+        "database": "lab_2",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
@@ -37,15 +41,12 @@ def generate_database(config):
     config.pop("raise_on_warnings")
     db_name = config.pop("database")
     connection = mysql.connector.connect(**config)  # No try catch block added since only error that reach here is
-                                                     # database doesn't exist.
+    # database doesn't exist.
     connection.cursor().execute(f'CREATE DATABASE {db_name}')
     print(f'Database Generated as "{db_name}".')
     # SQL Queries should
     # come here to create
     # the tables.
-
-    #how to run sql queries on python ?
-    
     print("Tables created successfully.")
     # Then comes the code for  populate the initial data from CSV files.
     print("Initial data populated successfully.")
