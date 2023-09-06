@@ -1,0 +1,6 @@
+user_id INT PRIMARY KEY,name VARCHAR(255),email VARCHAR(255),address TEXT,phone VARCHAR(20),password VARCHAR(255),username VARCHAR(255)
+10001,"John Doe","john@example.com","123 Main St, City, Country","555-555-5555","password123","johndoe"
+10002,"Jane Smith","jane@example.com","456 Elm St, City, Country","555-555-5556","pass456","janesmith"
+10003,"David Johnson","david@example.com","789 Oak St, City, Country","555-555-5557","secure789","davidj"
+10004,"Emily Davis","emily@example.com","101 Maple St, City, Country","555-555-5558","pwd101","emilyd"
+10005,"Michael Wilson","michael@example.com","246 Birch St, City, Country","555-555-5559","secret246","michaelw"

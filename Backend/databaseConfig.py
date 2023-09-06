@@ -16,7 +16,7 @@ def database_connector():
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "lb_2",
+        "database": "EcomDB",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
@@ -67,6 +67,7 @@ def generate_tables_populate_data(dbconnection):
             dbconnection.cursor().close()
             print(f"Table '{table_name}' created successfully.")
         except mysql.connector.Error as errr:
+            print(f"CREATE TABLE {table_name} ({columns});")
             print(f"Table '{table_name}' creation failed!\nError: {errr}")
             sys.exit(1)
 
@@ -75,9 +76,10 @@ def generate_tables_populate_data(dbconnection):
         def row_sanitizer(csv_reader_row):
             for i in range(len(csv_reader_row)):
                 try:  # Had to use a try catch block to check whether string contains a float.
+                    if csv_reader_row[i] == 'NULL':  # Adding support for NULL values in fields such as integers.
+                        continue
                     float(csv_reader_row[i].replace(" ", ""))  # If the cell is a float (or an integer), it will not
                     # raise an exception. Instead, will jump to the next for loop iteration
-                    continue
                 except ValueError:
                     csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
             return csv_reader_row

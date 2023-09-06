@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2da0e553-eebf-49dc-91d9-37b21cec7374" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/dbInitialData/cart.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/cart_item.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/category.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/delivery_module.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/inventory.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/order.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/order_item.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/product.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/registered_user.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dbInitialData/variant.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/databaseConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/databaseConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbInitialData/products.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbInitialData/tables.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
