@@ -86,9 +86,11 @@ def generate_tables_populate_data(dbconnection):
             try:
                 dbconnection.cursor().execute(
                     f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
+                print(f"Record '{row[0]}...'Inserted in to '{file_name}' table")
             except mysql.connector.Error as errr:
                 print(f"Error: {errr}")
                 sys.exit(1)
+        print('\n')
 
     table_files_list = os.listdir('dbInitialData')
     for file_name in table_files_list:
