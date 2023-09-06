@@ -64,10 +64,22 @@ def generate_tables_populate_data(dbconnection):
         # SQL Queries should come here.
         try:
             dbconnection.cursor().execute(f"CREATE TABLE {table_name} ({columns});")
+            dbconnection.cursor().close()
             print(f"Table {table_name} created successfully.")
         except mysql.connector.Error as errr:
             print(f"Table {table_name} creation failed!\nError: {errr}")
             sys.exit(1)
+
+    def row_sanitizer(csv_reader_row):
+        print(csv_reader_row)
+        for i in range(len(csv_reader_row)):
+            try: # Had to use a try catch block to check whether string contains a float.
+                float(csv_reader_row[i].replace(" ","")) # If the cell is a float (or an integer), it will not raise an exception. Instead will jump to the next for loop itereation
+                continue
+            except ValueError:
+                csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
+                print("csv row :" +csv_reader_row[i])
+        return csv_reader_row
 
     table_files_list = os.listdir('dbInitialData')
     for file_name in table_files_list:
@@ -87,3 +99,22 @@ def generate_tables_populate_data(dbconnection):
                 # Preprocessing the first_line_list and converting it into a list of only "column names" without types.
                 column_list = [string.split()[0] for string in first_line_list]
                 # Populating the data into the table.
+
+                for row in csvreader:
+                    try:
+                        print(
+                        f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
+                    except Exception as er:
+                        print(f"Error: {er}")
+                        sys.exit(1)
+                    try:
+                        dbconnection.cursor().execute(
+                            f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
+                    except mysql.connector.Error as err:
+                        print(f"Error: {err}")
+                        sys.exit(1)
+
+
+        dbconnection.commit()
+        dbconnection.cursor().close()
+

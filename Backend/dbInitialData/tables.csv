@@ -1,21 +1,21 @@
 Name VARCHAR(255),Age INT,Gender VARCHAR(10),Location VARCHAR(255),Occupation VARCHAR(255),"Salary DECIMAL(10, 2)",Email VARCHAR(255),Phone VARCHAR(15),Education VARCHAR(50),Status VARCHAR(10)
-John Smith,32,Male,New York,Engineer,75000,john.smith@example.com,555-123-4567,Bachelor's,Married
-Jane Doe,28,Female,Los Angeles,Teacher,55000,jane.doe@example.com,555-987-6543,Master's,Single
+John Smith,32,Male,New York,Engineer,75000,john.smith@example.com,555-123-4567,Bachelor''s,Married
+Jane Doe,28,Female,Los Angeles,Teacher,55000,jane.doe@example.com,555-987-6543,Master''s,Single
 Michael Johnson,45,Male,Chicago,Doctor,120000,michael.j@example.com,555-567-7890,Doctorate,Married
-Emily Davis,30,Female,San Francisco,Software Developer,85000,emily.d@example.com,555-234-5678,Bachelor's,Single
-David Brown,50,Male,Houston,Accountant,65000,david.brown@example.com,555-876-5432,Bachelor's,Married
-Sarah Wilson,35,Female,Miami,Marketing Manager,70000,sarah.w@example.com,555-345-6789,Master's,Single
-Robert Martinez,40,Male,Seattle,Architect,90000,robert.m@example.com,555-654-3210,Bachelor's,Married
-Linda Taylor,29,Female,Atlanta,Graphic Designer,60000,linda.t@example.com,555-432-1098,Bachelor's,Single
+Emily Davis,30,Female,San Francisco,Software Developer,85000,emily.d@example.com,555-234-5678,Bachelor''s,Single
+David Brown,50,Male,Houston,Accountant,65000,david.brown@example.com,555-876-5432,Bachelor''s,Married
+Sarah Wilson,35,Female,Miami,Marketing Manager,70000,sarah.w@example.com,555-345-6789,Master''s,Single
+Robert Martinez,40,Male,Seattle,Architect,90000,robert.m@example.com,555-654-3210,Bachelor''s,Married
+Linda Taylor,29,Female,Atlanta,Graphic Designer,60000,linda.t@example.com,555-432-1098,Bachelor''s,Single
 William Lee,38,Male,Dallas,Lawyer,110000,william.l@example.com,555-876-5432,Doctorate,Married
-Amanda Clark,27,Female,Boston,Nurse,50000,amanda.c@example.com,555-987-6543,Associate's,Single
-Daniel White,33,Male,Denver,Consultant,80000,daniel.w@example.com,555-123-4567,Master's,Married
-Jennifer Turner,31,Female,Phoenix,HR Manager,68000,jennifer.t@example.com,555-234-5678,Bachelor's,Single
+Amanda Clark,27,Female,Boston,Nurse,50000,amanda.c@example.com,555-987-6543,Associate''s,Single
+Daniel White,33,Male,Denver,Consultant,80000,daniel.w@example.com,555-123-4567,Master''s,Married
+Jennifer Turner,31,Female,Phoenix,HR Manager,68000,jennifer.t@example.com,555-234-5678,Bachelor''s,Single
 Matthew Hall,47,Male,Portland,Professor,95000,matthew.h@example.com,555-567-7890,Doctorate,Married
 Olivia Adams,26,Female,Detroit,Pharmacist,60000,olivia.a@example.com,555-345-6789,Doctorate,Single
-Christopher Harris,42,Male,Philadelphia,Marketing Director,105000,christopher.h@example.com,555-432-1098,Master's,Married
-Sophia Turner,32,Female,Minneapolis,Product Manager,90000,sophia.t@example.com,555-654-3210,Bachelor's,Single
-Joseph Wilson,39,Male,Orlando,Financial Analyst,75000,joseph.w@example.com,555-987-6543,Bachelor's,Married
-Mia Davis,29,Female,Pittsburgh,UX Designer,70000,mia.d@example.com,555-234-5678,Master's,Single
-Alexander Anderson,44,Male,Tampa,Engineer,98000,alexander.a@example.com,555-345-6789,Bachelor's,Married
-Abigail Smith,34,Female,Raleigh,Project Manager,80000,abigail.s@example.com,555-876-5432,Master's,Single
+Christopher Harris,42,Male,Philadelphia,Marketing Director,105000,christopher.h@example.com,555-432-1098,Master''s,Married
+Sophia Turner,32,Female,Minneapolis,Product Manager,90000,sophia.t@example.com,555-654-3210,Bachelor''s,Single
+Joseph Wilson,39,Male,Orlando,Financial Analyst,75000,joseph.w@example.com,555-987-6543,Bachelor''s,Married
+Mia Davis,29,Female,Pittsburgh,UX Designer,70000,mia.d@example.com,555-234-5678,Master''s,Single
+Alexander Anderson,44,Male,Tampa,Engineer,98000,alexander.a@example.com,555-345-6789,Bachelor''s,Married
+Abigail Smith,34,Female,Raleigh,Project Manager,80000,abigail.s@example.com,555-876-5432,Master''s,Single
