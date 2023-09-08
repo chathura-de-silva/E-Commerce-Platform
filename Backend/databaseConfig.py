@@ -12,7 +12,7 @@ def database_connector():
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "loginapp",
+        "database": "onlinestore",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
@@ -52,3 +52,5 @@ def generate_database(config):
     # Then comes the code for  populate the initial data from CSV files.
     print("Initial data populated successfully.")
     return connection
+
+
