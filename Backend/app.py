@@ -49,11 +49,11 @@ def logout():
     session.pop('type')
     return redirect(url_for('home'))
 
+
 @app.route('/products')
 def products():
     # Your products page logic
     return render_template('products.html')
-
 
 @app.route("/viewprofile/", methods=["POST", "GET"])
 def profile():
@@ -83,26 +83,6 @@ def seller_products(id):
     return render_template('seller_products.html', name=name, id=id, results=res)
 
 
-# @app.route("/changepassword/", methods=["POST", "GET"])
-# def change_password():
-#     if 'userid' not in session:
-#         return redirect(url_for('home'))
-#     check = True
-#     equal = True
-#     if request.method=="POST":
-#         userid = session["userid"]
-#         type = session["type"]
-#         old_psswd = request.form["old_psswd"]
-#         new_psswd = request.form["new_psswd"]
-#         cnfrm_psswd = request.form["cnfrm_psswd"]
-#         check = check_psswd(old_psswd, userid, type)
-#         if check:
-#             equal = (new_psswd == cnfrm_psswd)
-#             if equal:
-#                 set_psswd(new_psswd, userid, type)
-#                 return redirect(url_for('home'))
-#     return render_template("change_password.html", check=check, equal=equal)
-
 @app.route("/sell/", methods=["POST", "GET"])
 def my_products():
     if 'userid' not in session:
@@ -118,7 +98,6 @@ def my_products():
         results = search_myproduct(session['userid'], srchBy, category, keyword)
         return render_template('my_products.html', categories=categories, after_srch=True, results=results)
     return render_template("my_products.html", categories=categories, after_srch=False)
-
 
 @app.route("/viewproduct/")
 def view_prod():
@@ -156,6 +135,25 @@ def buy():
         results = search_products(srchBy, category, keyword)
         return render_template('search_products.html', after_srch=True, results=results)
     return render_template('search_products.html', after_srch=False)
+
+@app.route("/buy/cart/", methods=["POST", "GET"])
+def my_cart():
+
+    #user need to be logged in in order to view the cart
+    if 'userid' not in session:
+        return redirect(url_for('home'))
+    # if session['type']=="Seller":
+    #     abort(403)
+    cart = get_cart(session['userid'])
+    if request.method=="POST":
+        data = request.form
+        qty = {}
+        for i in data:
+            if i.startswith("qty"):
+                qty[i[3:]]=data[i]      #qty[prodID]=quantity
+        update_cart(session['userid'], qty)
+        return redirect("/buy/cart/confirm/")
+    return render_template('my_cart.html', cart=cart)
 
 @app.route("/buy/<id>/", methods=['POST', 'GET'])
 def buy_product(id):
@@ -234,22 +232,6 @@ def my_sales():
     res = sell_sales(session['userid'])
     return render_template('my_sales.html', sales=res)
 
-@app.route("/buy/cart/", methods=["POST", "GET"])
-def my_cart():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
-    cart = get_cart(session['userid'])
-    if request.method=="POST":
-        data = request.form
-        qty = {}
-        for i in data:
-            if i.startswith("qty"):
-                qty[i[3:]]=data[i]      #qty[prodID]=quantity
-        update_cart(session['userid'], qty)
-        return redirect("/buy/cart/confirm/")
-    return render_template('my_cart.html', cart=cart)
 
 @app.route("/buy/cart/confirm/", methods=["POST", "GET"])
 def cart_purchase_confirm():
