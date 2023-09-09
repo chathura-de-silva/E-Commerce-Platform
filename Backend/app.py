@@ -14,8 +14,9 @@ sess = Session()
 
 @app.route("/")
 def home():
-    if "userid" in session:
-        return render_template("home.html", signedin=True, id=session['userid'], name=session['name'], type=session['type'])
+    #if the user is signed in load as signed in
+    if "id" in session:
+        return render_template("home.html", signedin=True, id=session['id'])
     return render_template("home.html", signedin=False)
 
 @app.route("/signup/", methods = ["POST", "GET"])
@@ -36,8 +37,6 @@ def login():
         userdat = auth_user(data)
         if userdat:
             session["userid"] = userdat[0]
-            session["name"] = userdat[1]
-            session["type"] = data["type"]
             return redirect(url_for('home'))
         return render_template("login.html", err=True)
     return render_template("login.html", err=False)

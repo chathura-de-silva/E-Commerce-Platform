@@ -237,6 +237,11 @@ body, h1, h2, h3, h4, p, ul, ol, li {
     color: #43b9f0;
   }
   
+  .content {
+    /* Your content styles here */
+    flex-grow: 1; /* Allow the content to grow and push the footer to the bottom */
+}
+
   /* Footer */
   footer {
     left: 0;
@@ -246,6 +251,8 @@ body, h1, h2, h3, h4, p, ul, ol, li {
     font-family: 'Manjari', sans-serif;
     margin-top: 40px;
     color: #00264d;
+    position: sticky;
+    bottom: 0;
   }
   
   /* Additional Styles */

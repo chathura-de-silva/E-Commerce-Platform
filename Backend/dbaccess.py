@@ -15,7 +15,7 @@ def get_mysql_connection():
         'user': 'root',
         'password': 'SaviYa1000!!',
         'host': 'localhost',
-        'database': 'onlinestore',
+        'database': 'loginapp',
     }
 
     return mysql.connector.connect(**config)
@@ -34,16 +34,6 @@ def gen_custID():
     id = "CID" + "0" * (7 - len(custnum)) + custnum
     return id
 
-def gen_sellID():
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE metadata SET sellnum = sellnum + 1")
-    conn.commit()
-    cur.execute("SELECT sellnum FROM metadata")
-    sellnum = str(cur.fetchone()[0])
-    conn.close()
-    id = "SID" + "0" * (7 - len(sellnum)) + sellnum
-    return id
 
 def gen_prodID():
     conn = get_mysql_connection()
@@ -67,6 +57,8 @@ def gen_orderID():
     id = "OID" + "0" * (7 - len(ordernum)) + ordernum
     return id
 
+
+#this function will be used to add a new user to the database
 def add_user(data):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -88,16 +80,18 @@ def add_user(data):
     conn.close()
     return True
 
+#this function is used to authenticate the user
+
 def auth_user(data):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    type = data["type"]
-    email = data["email"]
+    #extract the data from the data object
+    username = data["username"]
     password = data["password"]
-    if type == "Customer":
-        cur.execute("SELECT custID, name FROM customer WHERE email=%s AND password=%s", (email, password))
-    elif type == "Seller":
-        cur.execute("SELECT sellID, name FROM seller WHERE email=%s AND password=%s", (email, password))
+
+    #check if the user is already in the database
+    cur.execute("SELECT id FROM accounts WHERE password=%s AND username=%s", (password,username))
+
     result = cur.fetchall()
     conn.close()
     if len(result) == 0:
