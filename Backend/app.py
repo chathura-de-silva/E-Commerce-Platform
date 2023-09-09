@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, abort, session
+from flask import Flask, render_template, request, url_for, redirect, abort, session,flash
 from flask_session import Session
 from databaseConfig import connection
 from dbaccess import *
@@ -10,7 +10,8 @@ app = Flask(__name__)
 
 sess = Session()
 
-#currently users neew to be logged in to use the platform and that should not happen
+#users should not be logged in in order to use the platform
+
 
 @app.route("/")
 def home():
@@ -27,6 +28,8 @@ def signup():
         ok = add_user(data)
         if ok:
             return render_template("home.html")
+        else:
+            flash("Username already taken. Please choose another username.", "error")
         return render_template("signup.html", ok=ok)
     return render_template("signup.html", ok=True)
 
@@ -47,6 +50,7 @@ def logout():
     session.pop('name')
     session.pop('type')
     return redirect(url_for('home'))
+
 
 
 @app.route('/products')
