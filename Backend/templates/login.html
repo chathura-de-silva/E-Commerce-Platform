@@ -1,6 +1,22 @@
-
-
 {% extends "layout.html" %}
 {% block content %}
+  <h2>Login</h2>
+  <form action="/login" method="post" style="text-align: left; max-width: 300px; margin: 0 auto;">
+    <!-- Add form fields for login here -->
+    <div style="margin-bottom: 10px;">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
 
+    <div style="margin-bottom: 10px;">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+
+    <div style="text-align: center;">
+      <button type="submit">Login</button>
+    </div>
+  </form>
+
+  <p style="text-align: center;">Not a user yet? <a href="/signup">Sign up here</a></p>
 {% endblock content %}
