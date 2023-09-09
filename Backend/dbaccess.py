@@ -23,17 +23,22 @@ def get_mysql_connection():
 
 #all of the following functions will be used to communicate with the database
 
+#this function is used to generate a unique custom ID
+#always remember to insert id's in numerical order
 def gen_custID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("UPDATE metadata SET custnum = custnum + 1")
-    conn.commit()
-    cur.execute("SELECT custnum FROM metadata")
-    custnum = str(cur.fetchone()[0])
+    cur.execute("SELECT id FROM accounts ORDER BY id DESC LIMIT 1")
+    res = cur.fetchall()
     conn.close()
-    id = "CID" + "0" * (7 - len(custnum)) + custnum
-    return id
-
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
 
 def gen_prodID():
     conn = get_mysql_connection()
@@ -62,20 +67,17 @@ def gen_orderID():
 def add_user(data):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    email = data["email"]
-    if data['type'] == "Customer":
-        cur.execute("SELECT * FROM customer WHERE email=%s", (email,))
-    elif data['type'] == "Seller":
-        cur.execute("SELECT * FROM seller WHERE email=%s", (email,))
+    username = data["username"]
+    #need to check if the username already exists
+    cur.execute("SELECT * FROM accounts WHERE username=%s", (username,))
     result = cur.fetchall()
     if len(result) != 0:
         return False
-    tup = (data["name"], data["email"], data["phone"], data["area"], data["locality"], data["city"],
-           data["state"], data["country"], data["zip"], data["password"])
-    if data['type'] == "Customer":
-        cur.execute("INSERT INTO customer (custID, name, email, phone, area, locality, city, state, country, zipcode, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (gen_custID(), *tup))
-    elif data['type'] == "Seller":
-        cur.execute("INSERT INTO seller (sellID, name, email, phone, area, locality, city, state, country, zipcode, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (gen_sellID(), *tup))
+    customer_id = gen_custID()
+    tup = (customer_id,data["username"], data["email"], data["password"])
+    
+    cur.execute("INSERT INTO accounts (id, username, email, password) VALUES (%s, %s, %s, %s)", tup)
+    
     conn.commit()
     conn.close()
     return True

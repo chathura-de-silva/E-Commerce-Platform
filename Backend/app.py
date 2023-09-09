@@ -21,12 +21,12 @@ def home():
 
 @app.route("/signup/", methods = ["POST", "GET"])
 def signup():
-
+    #we need to call the add user function here 
     if request.method == "POST":
         data = request.form
         ok = add_user(data)
         if ok:
-            return render_template("success_signup.html")
+            return render_template("home.html")
         return render_template("signup.html", ok=ok)
     return render_template("signup.html", ok=True)
 
@@ -66,20 +66,6 @@ def profile():
         return render_template('profiles.html', id=session['userid'], type=type, after_srch=True, found=found, results=results)
 
     return render_template('profiles.html', id=session['userid'], type=type, after_srch=False)
-
-@app.route("/viewprofile/<id>/sellerproducts/")
-def seller_products(id):
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session["type"]=="Seller":
-        abort(403)
-    det, categories = fetch_details(id, "Seller")   #details
-    if len(det)==0:
-        abort(404)
-    det = det[0]
-    name=det[1]
-    res = get_seller_products(id)
-    return render_template('seller_products.html', name=name, id=id, results=res)
 
 
 @app.route("/sell/", methods=["POST", "GET"])
