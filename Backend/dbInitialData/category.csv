@@ -1,0 +1,13 @@
+category_id INT PRIMARY KEY,parent_category_id INT,category_name VARCHAR(255)
+1,NULL,"Electronics"
+2,NULL,"Clothing"
+3,1,"Smartphones"
+4,1,"Laptops"
+5,2,"Shirts"
+6,2,"Jeans"
+7,NULL,"Home & Kitchen"
+8,NULL,"Books"
+9,7,"Appliances"
+10,7,"Furniture"
+11,8,"Fiction"
+12,8,"Non-Fiction"
