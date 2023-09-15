@@ -4,7 +4,21 @@
 <div class="row">
     <div class="col-md-12">
         <h1>Products</h1>
-        <!-- Add your product listing here -->
+
+        <div class="row">
+            {% for product in product %}
+            <div class="col-md-4">  
+
+                <a href="{{ url_for('view_product', id=product[0]) }}">{{ product[1] }}</a>
+                <!-- fetch the product URL from the database and use it here  -->
+                <img src="static/{{ product[3]}}" alt="{{ product[2]}}" class="product-image">
+                <h3>{{ product[1] }}</h3>
+                <p>{{ product.description }}</p>
+                <p>Price: ${{ product[4] }}</p>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

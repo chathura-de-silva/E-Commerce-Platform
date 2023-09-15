@@ -52,25 +52,27 @@ def logout():
     return redirect(url_for('home'))
 
 
-
 @app.route('/products')
 def products():
     # Your products page logic
-    return render_template('products.html')
+        # Call the get_product_info function to fetch a product
+    product = get_product_info()  # Replace 'your_product_id' with the actual product ID you want to fetch
 
-@app.route("/viewprofile/", methods=["POST", "GET"])
-def profile():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    type = "Seller" if session['type']=="Customer" else "Customer"
-    if request.method=="POST":
-        search = request.form['search']
-        results = search_users(search, type)
-        found = len(results)
-        return render_template('profiles.html', id=session['userid'], type=type, after_srch=True, found=found, results=results)
+    # Check if the product exists
+    if product:
+        # If the product exists, render the 'products.html' template with the product data
+        return render_template('products.html', product=product)
 
-    return render_template('profiles.html', id=session['userid'], type=type, after_srch=False)
+    return render_template('products.html',products=product)
 
+@app.route("/product/<id>/")
+def view_product(id):
+    # if 'userid' not in session:
+    #     return redirect(url_for('home'))
+    # type = session["type"]
+    tup = get_single_product_info(id)
+
+    return render_template('product_detail.html',product = tup)
 
 @app.route("/sell/", methods=["POST", "GET"])
 def my_products():
@@ -97,18 +99,7 @@ def view_prod():
     if session['type']=="Customer":
         return redirect(url_for('buy'))
 
-@app.route("/viewproduct/<id>/")
-def view_product(id):
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    type = session["type"]
-    ispresent, tup = get_product_info(id)
-    if not ispresent:
-        abort(404)
-    (name, quantity, category, cost_price, sell_price, sellID, desp, sell_name) = tup
-    if type=="Seller" and sellID!=session['userid']:
-        abort(403)
-    return render_template('view_product.html', type=type, name=name, quantity=quantity, category=category, cost_price=cost_price, sell_price=sell_price, sell_id=sellID, sell_name=sell_name, desp=desp, prod_id=id)
+
 
 @app.route("/buy/", methods=["POST", "GET"])
 def buy():
@@ -275,4 +266,4 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 sess.init_app(app)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5007,debug=True)
+    app.run(host='0.0.0.0', port=5009,debug=True)

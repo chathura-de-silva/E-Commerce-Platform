@@ -25,6 +25,7 @@ def get_mysql_connection():
 
 #this function is used to generate a unique custom ID
 #always remember to insert id's in numerical order
+#the following functions will be used to generate uniqe ID's
 def gen_custID():
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -61,6 +62,8 @@ def gen_orderID():
     conn.close()
     id = "OID" + "0" * (7 - len(ordernum)) + ordernum
     return id
+
+
 
 
 #this function will be used to add a new user to the database
@@ -116,17 +119,6 @@ def fetch_details(userid, type):
     conn.close()
     return result_a, b
 
-def search_users(search, srch_type):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    search = "%" + search + "%"
-    if srch_type == "Customer":
-        cur.execute("SELECT custID, name, email, phone, area, locality, city, state, country, zipcode FROM customer WHERE LOWER(name) like %s", (search.lower(),))
-    elif srch_type == "Seller":
-        cur.execute("SELECT sellID, name, email, phone, area, locality, city, state, country, zipcode FROM seller WHERE LOWER(name) like %s", (search.lower(),))
-    result = cur.fetchall()
-    conn.close()
-    return result
 
 def update_details(data, userid, type):
     conn = get_mysql_connection()
@@ -159,14 +151,14 @@ def set_psswd(psswd, userid, type):
     conn.commit()
     conn.close()
 
-def add_prod(sellID, data):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    prodID = gen_prodID()
-    tup = (prodID, data["name"], data["qty"], data["category"], data["price"], data["price"], data["desp"], sellID)
-    cur.execute("INSERT INTO product (prodID, name, quantity, category, cost_price, sell_price, description, sellID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", tup)
-    conn.commit()
-    conn.close()
+# def add_prod(sellID, data):
+#     conn = get_mysql_connection()
+#     cur = conn.cursor()
+#     prodID = gen_prodID()
+#     tup = (prodID, data["name"], data["qty"], data["category"], data["price"], data["price"], data["desp"], sellID)
+#     cur.execute("INSERT INTO product (prodID, name, quantity, category, cost_price, sell_price, description, sellID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", tup)
+#     conn.commit()
+#     conn.close()
 
 def get_categories(sellID):
     conn = get_mysql_connection()
@@ -200,22 +192,35 @@ def search_myproduct(sellID, srchBy, category, keyword):
     conn.close()
     return result
 
-def get_product_info(id):
+def get_product_info():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("SELECT p.name, p.quantity, p.category, p.cost_price, p.sell_price, p.sellID, p.description, s.name FROM product p JOIN seller s WHERE p.sellID=s.sellID AND p.prodID=%s", (id,))
-    result = cur.fetchall()
-    conn.close()
-    if len(result) == 0:
-        return False, result
-    return True, result[0]
 
-def update_product(data, id):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE product SET name=%s, quantity=%s, category=%s, cost_price=%s, sell_price=(SELECT profit_rate from metadata)*%s, description=%s where prodID=%s", (data['name'], data['qty'], data['category'], data['price'], data['price'], data['desp'], id))
-    conn.commit()
-    conn.close()
+    cur.execute("SELECT * FROM product")
+    products = cur.fetchall()
+    return products
+
+# def get_single_product_info(product_id):
+
+#     conn = get_mysql_connection()
+#     cur = conn.cursor()
+#     #run the query to get all the details based on the user ID
+#     cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
+#     details = cur.fetchall()
+#     return details 
+
+def get_single_product_info(product_id):
+    try:
+        conn = get_mysql_connection()
+        with conn.cursor() as cur:
+            # Run the query to get product details based on the product_id
+            cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
+            details = cur.fetchone()  # Use fetchone since we expect a single result
+        return details
+    except Exception as e:
+        # Handle the exception (e.g., log the error or return an error message)
+        return None  # Return None or an appropriate error indicator
+
 
 def search_products(srchBy, category, keyword):
     conn = get_mysql_connection()
@@ -241,13 +246,7 @@ def search_products(srchBy, category, keyword):
     conn.close()
     return result
 
-def get_seller_products(sellID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE sellID=%s AND quantity!=0", (sellID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
+
 
 def place_order(prodID, custID, qty):
     conn = get_mysql_connection()
@@ -265,13 +264,6 @@ def cust_orders(custID):
     conn.close()
     return result
 
-def sell_orders(sellID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.orderID, o.prodID, p.name, o.quantity, p.quantity, o.cost_price, o.date, o.status FROM orders o JOIN product p WHERE o.prodID=p.prodID AND p.sellID=%s AND o.status!='RECEIVED' ORDER BY o.date DESC", (sellID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
 
 def get_order_details(orderID):
     conn = get_mysql_connection()
