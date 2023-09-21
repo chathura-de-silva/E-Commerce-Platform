@@ -64,8 +64,6 @@ def gen_orderID():
     return id
 
 
-
-
 #this function will be used to add a new user to the database
 def add_user(data):
     conn = get_mysql_connection()
@@ -103,94 +101,42 @@ def auth_user(data):
         return False
     return result[0]
 
-def fetch_details(userid, type):
+
+def search_product(search_query):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    if type == "Customer":
-        cur.execute("SELECT * FROM customer WHERE custID=%s", (userid,))
-        result_a = cur.fetchall()
-        b = []
-    elif type == "Seller":
-        cur.execute("SELECT * FROM seller WHERE sellID=%s", (userid,))
-        result_a = cur.fetchall()
-        cur.execute("SELECT DISTINCT(category) from product WHERE sellID=%s", (userid,))
-        result_b = cur.fetchall()
-        b = [i[0] for i in result_b]
-    conn.close()
-    return result_a, b
+
+    sql_query = "SELECT * FROM product WHERE name LIKE %s"
+    cur.execute(sql_query, ("%" + search_query + "%",))
+
+    # Fetch the matching products
+    matching_products = cur.fetchall()
+
+    return matching_products
 
 
-def update_details(data, userid, type):
+# we can use the below function to get all the main products related to a given category
+# ex :- when we pass electronics as the parameter to this function we are fetching all the electronics sub products from the database 
+def get_categories(category):
+
     conn = get_mysql_connection()
     cur = conn.cursor()
-    if type == "Customer":
-        cur.execute("UPDATE customer SET phone=%s, area=%s, locality=%s, city=%s, state=%s, country=%s, zipcode=%s where custID=%s", (data["phone"], data["area"], data["locality"], data["city"], data["state"], data["country"], data["zip"], userid))
-    elif type == "Seller":
-        cur.execute("UPDATE seller SET phone=%s, area=%s, locality=%s, city=%s, state=%s, country=%s, zipcode=%s where sellID=%s", (data["phone"], data["area"], data["locality"], data["city"], data["state"], data["country"], data["zip"], userid))
-    conn.commit()
-    conn.close()
+    #select all the subproducts related to the given category
+        # Execute the SQL query
+    query = """
+            SELECT Category.name, Category.category_image
+            FROM Category
+            WHERE Category.parent_category_id = (
+                SELECT category_id FROM Category WHERE name = %s
+            )
+        """
+    cur.execute(query, (category,))
+        # Fetch the results
+    results = cur.fetchall()
 
-def check_psswd(psswd, userid, type):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    if type == "Customer":
-        cur.execute("SELECT password FROM customer WHERE custID=%s", (userid,))
-    elif type == "Seller":
-        cur.execute("SELECT password FROM seller WHERE sellID=%s", (userid,))
-    real_psswd = cur.fetchone()[0]
-    conn.close()
-    return psswd == real_psswd
+    return results
 
-def set_psswd(psswd, userid, type):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    if type == "Customer":
-        cur.execute("UPDATE customer SET password=%s WHERE custID=%s", (psswd, userid))
-    elif type == "Seller":
-        cur.execute("UPDATE seller SET password=%s WHERE sellID=%s", (psswd, userid))
-    conn.commit()
-    conn.close()
 
-# def add_prod(sellID, data):
-#     conn = get_mysql_connection()
-#     cur = conn.cursor()
-#     prodID = gen_prodID()
-#     tup = (prodID, data["name"], data["qty"], data["category"], data["price"], data["price"], data["desp"], sellID)
-#     cur.execute("INSERT INTO product (prodID, name, quantity, category, cost_price, sell_price, description, sellID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", tup)
-#     conn.commit()
-#     conn.close()
-
-def get_categories(sellID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT DISTINCT(category) from product where sellID=%s", (sellID,))
-    categories = [i[0] for i in cur.fetchall()]
-    conn.close()
-    return categories
-
-def search_myproduct(sellID, srchBy, category, keyword):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    keyword = ['%' + i + '%' for i in keyword.split()]
-    if len(keyword) == 0:
-        keyword.append('%%')
-    if srchBy == "by category":
-        cur.execute("SELECT prodID, name, quantity, category, cost_price FROM product WHERE category=%s AND sellID=%s", (category, sellID))
-        result = cur.fetchall()
-    elif srchBy == "by keyword":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, quantity, category, cost_price FROM product WHERE (name LIKE %s OR description LIKE %s OR category LIKE %s) AND sellID=%s", (word, word, word, sellID))
-            result += cur.fetchall()
-        result = list(set(result))
-    elif srchBy == "both":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, quantity, category, cost_price FROM product WHERE (name LIKE %s OR description LIKE %s) AND sellID=%s AND category=%s", (word, word, sellID, category))
-            result += cur.fetchall()
-        result = list(set(result))
-    conn.close()
-    return result
 
 def get_product_info():
     conn = get_mysql_connection()

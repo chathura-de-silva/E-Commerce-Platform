@@ -65,6 +65,18 @@ def products():
 
     return render_template('products.html',products=product)
 
+
+# we have to define a function to fetch trype of product separately..
+# it would be good if we could make a function which takes product type as an arugment and bla bla 
+@app.route('/electronics')
+def get_electronics():
+    #we need to get all the electrnoics items from our database 
+    #for this we are going to get the primary key of the electronics category in the database and fetch all the data which has that value as the parent category id
+    electronics  = get_categories("Electronics")
+    return render_template('Electronics.html',products = electronics)
+
+
+
 @app.route("/product/<id>/")
 def view_product(id):
     # if 'userid' not in session:
@@ -74,39 +86,20 @@ def view_product(id):
 
     return render_template('product_detail.html',product = tup)
 
-@app.route("/sell/", methods=["POST", "GET"])
-def my_products():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session["type"]=="Customer":
-        abort(403)
-    categories = get_categories(session["userid"])
-    if request.method=="POST":
-        data = request.form
-        srchBy = data["search method"]
-        category = None if srchBy=='by keyword' else data["category"]
-        keyword = data["keyword"]
-        results = search_myproduct(session['userid'], srchBy, category, keyword)
-        return render_template('my_products.html', categories=categories, after_srch=True, results=results)
-    return render_template("my_products.html", categories=categories, after_srch=False)
+@app.route('/search', methods=['GET'])
+def search_products():
 
-@app.route("/viewproduct/")
-def view_prod():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        return redirect(url_for('my_products'))
-    if session['type']=="Customer":
-        return redirect(url_for('buy'))
+    search_query = request.args.get('query')
 
+    products = search_product(search_query)
+
+    return render_template('search_results.html', products = products)
 
 
 @app.route("/buy/", methods=["POST", "GET"])
 def buy():
     if 'userid' not in session:
         return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
     if request.method=="POST":
         data = request.form
         srchBy = data["search method"]
@@ -194,14 +187,6 @@ def my_purchases():
     res = cust_purchases(session['userid'])
     return render_template('my_purchases.html', purchases=res)
 
-@app.route("/sell/neworders/")
-def new_orders():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Customer":
-        abort(403)
-    res = sell_orders(session['userid'])
-    return render_template('new_orders.html', orders=res)
 
 @app.route("/sell/sales/")
 def my_sales():
