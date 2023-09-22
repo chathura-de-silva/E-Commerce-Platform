@@ -1,0 +1,11 @@
+variant_id INT PRIMARY KEY,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)"
+501,101,"Black",799.99
+502,102,"Phantom Gray",699.99
+503,103,"8GB RAM",999.99
+504,104,"16GB RAM",899.99
+601,201,"Medium",19.99
+602,202,"32W x 32L",39.99
+701,301,"Standard",49.99
+702,302,"18 cu. ft.",899.99
+801,401,"Paperback",9.99
+802,402,"Hardcover",14.99

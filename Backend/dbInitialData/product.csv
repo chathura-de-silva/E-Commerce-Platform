@@ -1,0 +1,11 @@
+product_id INT PRIMARY KEY,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)","price DECIMAL(10, 2)",custom_attributes_text TEXT
+101,"iPhone 12","Apple iPhone 12, 64GB",0.4,799.99,"Color: Black"
+102,"Samsung Galaxy S21","Samsung Galaxy S21, 128GB",0.35,699.99,"Color: Phantom Gray"
+103,"MacBook Air","Apple MacBook Air, 13-inch",2.8,999.99,"RAM: 8GB"
+104,"Dell XPS 13","Dell XPS 13, 13-inch",2.7,899.99,"RAM: 16GB"
+201,"Cotton T-shirt","Comfortable cotton t-shirt",0.2,19.99,"Size: M"
+202,"Denim Jeans","Classic denim jeans",0.6,39.99,"Size: 32W x 32L"
+301,"Coffee Maker","Drip coffee maker",3.0,49.99,"Capacity: 12 cups"
+302,"Refrigerator","Double-door refrigerator",75.0,899.99,"Capacity: 18 cu. ft."
+401,"The Great Gatsby","Classic novel by F. Scott Fitzgerald",0.5,9.99,"Author: F. Scott Fitzgerald"
+402,"How to Win Friends and Influence People","Self-help book",0.4,14.99,"Author: Dale Carnegie"
