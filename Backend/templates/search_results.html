@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Search Results</h1>
+
+        <ul>
+            {% for product in products %}
+                <li>{{ product[1] }}</li>
+                <li>{{ product[0] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

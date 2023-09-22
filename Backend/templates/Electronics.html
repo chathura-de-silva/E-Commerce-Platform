@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    .product-image {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        transition: transform 0.3s ease; /* Add smooth transition for scaling */
+    }
+
+    .product-tile {
+        height: 400px;
+        padding: 10px; /* Add padding for spacing between tiles */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .product-tile:hover .product-image {
+        transform: scale(1.1); /* Scale up the image on hover */
+    }
+
+    .product-name {
+        margin-top: 10px; /* Add spacing between the image and product name */
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Electronics Products</h1>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <a href="#" class="product-tile">
+                        <img src="static/{{ product[1] }}" alt="{{ product[0] }}" class="product-image">
+                        <div class="product-name">{{ product[0] }}</div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
