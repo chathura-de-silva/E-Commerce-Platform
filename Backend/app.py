@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, url_for, redirect, abort, session,flash
 from flask_session import Session
-from databaseConfig import connection
 from dbaccess import *
-import re
+from databaseConfig import database_connector
 import os
+
 
 #creating a global cursor
 app = Flask(__name__)
@@ -235,5 +235,10 @@ app.config['SECRET_KEY'] = os.urandom(17)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 sess.init_app(app)
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5009,debug=True)
+
+
+    app.run(host='0.0.0.0', port=5007, debug=False)
+connection_config = database_connector()
+

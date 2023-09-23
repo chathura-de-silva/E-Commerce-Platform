@@ -1,6 +1,5 @@
 import mysql.connector
-import databaseConfig
-
+from app import connection_config
 #tried using the global connection object but it failed
 
 # connection = databaseConfig.database_connector()
@@ -11,13 +10,7 @@ import databaseConfig
 
 #creating another function to create the connection with the database everytime we want to communicate with it
 def get_mysql_connection():
-    config = {
-        'user': 'root',
-        'password': 'SaviYa1000!!',
-        'host': 'localhost',
-        'database': 'loginapp',
-    }
-
+    config =  connection_config
     return mysql.connector.connect(**config)
 
 
