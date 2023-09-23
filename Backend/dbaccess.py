@@ -130,8 +130,9 @@ def get_categories(category):
                 SELECT category_id FROM Category WHERE name = %s
             )
         """
+    
+        #Fetch the results
     cur.execute(query, (category,))
-        # Fetch the results
     results = cur.fetchall()
 
     return results

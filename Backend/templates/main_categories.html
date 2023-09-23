@@ -31,13 +31,13 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Electronics Products</h1>
+        <h1>{{ category_name }}</h1>
         <div class="row">
             {% for product in products %}
                 <div class="col-md-4">
                     <a href="#" class="product-tile">
                         <img src="static/{{ product[1] }}" alt="{{ product[0] }}" class="product-image">
-                        <div class="product-name">{{ product[0] }}</div>
+                        <!-- <div class="product-name">{{ product[0] }}</div> -->
                     </a>
                 </div>
             {% endfor %}

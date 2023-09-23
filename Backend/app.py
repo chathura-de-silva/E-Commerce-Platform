@@ -72,9 +72,18 @@ def products():
 def get_electronics():
     #we need to get all the electrnoics items from our database 
     #for this we are going to get the primary key of the electronics category in the database and fetch all the data which has that value as the parent category id
+    category_name = "ELECTRONIC PRODUCTS"  # The category name you want to display
     electronics  = get_categories("Electronics")
-    return render_template('Electronics.html',products = electronics)
+    return render_template('main_categories.html',products = electronics,category_name=category_name)
 
+
+@app.route('/toys')
+def get_toys():
+    #we need to get all the electrnoics items from our database 
+    #for this we are going to get the primary key of the electronics category in the database and fetch all the data which has that value as the parent category id
+    category_name = "TOY PRODUCTS"
+    toys = get_categories("Toys")
+    return render_template('main_categories.html',products = toys,category_name=category_name)
 
 
 @app.route("/product/<id>/")
@@ -108,6 +117,7 @@ def buy():
         results = search_products(srchBy, category, keyword)
         return render_template('search_products.html', after_srch=True, results=results)
     return render_template('search_products.html', after_srch=False)
+
 
 @app.route("/buy/cart/", methods=["POST", "GET"])
 def my_cart():
@@ -144,29 +154,6 @@ def buy_product(id):
         return redirect(url_for('buy_confirm', total=total, quantity=data['qty'], id=id))
     return render_template('buy_product.html', name=name, category=category, desp=desp, quantity=quantity, price=sell_price)
 
-@app.route("/buy/<id>/confirm/", methods=["POST", "GET"])
-def buy_confirm(id):
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
-    ispresent, tup = get_product_info(id)
-    if not ispresent:
-        abort(404)
-    (name, quantity, category, cost_price, sell_price, sellID, desp, sell_name) = tup
-    if 'total' not in request.args or 'quantity' not in request.args:
-        abort(404)
-    total = request.args['total']
-    qty = request.args['quantity']
-    if request.method=="POST":
-        choice = request.form['choice']
-        if choice=="PLACE ORDER":
-            place_order(id, session['userid'], qty)
-            return redirect(url_for('my_orders'))
-        elif choice=="CANCEL":
-            return redirect(url_for('buy_product', id=id))
-    items = ((name, qty, total),)
-    return render_template('buy_confirm.html', items=items, total=total)
 
 @app.route("/buy/myorders/")
 def my_orders():
@@ -222,8 +209,6 @@ def cart_purchase_confirm():
 def add_to_cart(prodID):
     if 'userid' not in session:
         return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
     add_product_to_cart(prodID, session['userid'])
     return redirect(url_for('view_product', id=prodID))
 
