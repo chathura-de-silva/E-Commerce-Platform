@@ -140,6 +140,8 @@ def get_product_info():
     products = cur.fetchall()
     return products
 
+
+
 # def get_single_product_info(product_id):
 
 #     conn = get_mysql_connection()
