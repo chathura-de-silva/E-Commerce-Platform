@@ -55,7 +55,7 @@ def logout():
 @app.route('/products')
 def products():
     # Your products page logic
-        # Call the get_product_info function to fetch a product
+    #     Call the get_product_info function to fetch a product
     product = get_product_info()  # Replace 'your_product_id' with the actual product ID you want to fetch
 
     # Check if the product exists
@@ -63,8 +63,13 @@ def products():
         # If the product exists, render the 'products.html' template with the product data
         return render_template('products.html', product=product)
 
-    return render_template('products.html',products=product)
+    return render_template('products.html')
 
+@app.route('/analytics')
+
+def analytics():
+
+    return render_template('login.html')
 
 # we have to define a function to fetch trype of product separately..
 # it would be good if we could make a function which takes product type as an arugment and bla bla 
@@ -86,6 +91,7 @@ def get_toys():
     return render_template('main_categories.html',products = toys,category_name=category_name)
 
 
+# when someone clicked on a tile in the product page this function will be called 
 @app.route("/product/<id>/")
 def view_product(id):
     # if 'userid' not in session:

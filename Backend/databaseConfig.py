@@ -13,7 +13,7 @@ def database_connector():
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "EcomDB",
+        "database": "loginapp",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
