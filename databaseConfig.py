@@ -65,6 +65,21 @@ def generate_tables_populate_data(dbconnection):
             print(Style.BRIGHT + Fore.RED + f"Table '{table_name}' creation failed!\nError: {errr}")
             sys.exit(1)
 
+    def relationship_creator():
+        try:
+            with open('dbInitialData/database_relations.sql', 'r') as sql_file:
+                queries = sql_file.read()
+                print(queries)
+            dbconnection.cursor().execute(queries, multi=True)
+            dbconnection.cursor().close()
+            print(Style.BRIGHT + Fore.LIGHTGREEN_EX + f"Table relationships created successfully.")
+        except mysql.connector.Error as errr:
+            print(Style.BRIGHT + Fore.RED + f"Table relationship creation failed!\nError: {errr}")
+            sys.exit(1)
+        except IOError as error:
+            print(Style.BRIGHT + Fore.RED + f"Table relationship creation failed!\nError: {error}")
+            sys.exit(1)
+
     def data_populater():
 
         def row_sanitizer(csv_reader_row):
@@ -103,11 +118,10 @@ def generate_tables_populate_data(dbconnection):
                 columns_with_type = ','.join(first_line_list)  # First row of the csv file is the column names.
                 table_creator(file_name[0:-4],
                               columns_with_type)  # [0:-4]-Removes the .csv extension from the file name.
-
                 # Preprocessing the first_line_list and converting it into a list of only "column names" without types.
                 column_list = [string.split()[0] for string in first_line_list]
                 # Populating the data into the table.
                 data_populater()
-
-            dbconnection.commit()
-        dbconnection.cursor().close()
+    relationship_creator()
+    dbconnection.commit()
+    dbconnection.cursor().close()
