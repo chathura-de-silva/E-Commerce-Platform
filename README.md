@@ -42,10 +42,10 @@ To get started with the platform, follow these steps :
     ```
 3.  create `.env` file inside the `dbInitialData` directory including following environmental variables.(You are supposed to update variable values according to your sql environment. You can simply copy the text below, modify it and save in the specified path.)
     ```dotenv
-    HOST=localhost
-    USER=root
-    PASSWORD=5059860
-    DATABASE=EcomDB
+    HOST=<hostname (defaults to "localhost")>
+    USER=<MySql server username (defaults to "root")>
+    PASSWORD=<your password (no defaults. i.e. Must specify)>
+    DATABASE=<Database name (deaults to "ecomdb")>
     ```
 4.  You can entirely alter the initial database as per your requirements without involving in any coding(sql queries will be required to specify the relations between tables and data types. But it is a simple process of modifying some text files.). For more info refer the later part of this document. 
 
