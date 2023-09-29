@@ -1,4 +1,4 @@
-variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_attrbutes TEXT,varient_image TEXT
+variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_attrbutes TEXT,variant_image TEXT
 501,101,Black,799.99,With 2 years Apple Care warranty!,put a link here
 502,102,Phantom Gray,699.99,With 120hz Super Amoled Display,put a link here
 503,103,8GB RAM,999.99,Best price with credit card deals!,put a link here
