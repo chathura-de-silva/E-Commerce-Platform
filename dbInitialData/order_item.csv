@@ -1,4 +1,4 @@
-order_item_id INT PRIMARY KEY,order_id INT,variant_id INT,quantity INT,"price DECIMAL(10, 2)"
+order_item_id INT ,order_id INT,variant_id INT,quantity INT,"price DECIMAL(10, 2)"
 40001,30001,501,2,1599.98
 40002,30001,503,1,999.99
 40003,30002,502,3,2099.97

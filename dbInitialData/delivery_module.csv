@@ -1,6 +1,6 @@
-delivery_module_id INT PRIMARY KEY,order_item_id INT,destination_city VARCHAR(255),estimated_delivery_no_of_days INT
-50001,40001,"City A",2
-50002,40002,"City B",3
-50003,40003,"City C",2
-50004,40004,"City D",4
-50005,40005,"City E",1
+delivery_module_id INT ,order_item_id INT,destination_city VARCHAR(255),estimated_days INT
+50001,40001,City A,2
+50002,40002,City B,3
+50003,40003,City C,2
+50004,40004,City D,4
+50005,40005,City E,1

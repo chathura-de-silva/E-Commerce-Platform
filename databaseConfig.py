@@ -1,11 +1,12 @@
 import csv
 import os
 import sys
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 import mysql.connector
 from mysql.connector import errorcode
 
 init(autoreset=True)
+
 
 def database_connector():
     # Defining the connection parameters in a config dictionary
@@ -13,7 +14,7 @@ def database_connector():
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "loginapp",
+        "database": "EcomDB",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
@@ -21,27 +22,26 @@ def database_connector():
 
     # _config["host"] = input(Style.BRIGHT + Fore.MAGENTA+"Enter your MySQL Hostname (default: localhost): ")
     # _config["user"] = input(Style.BRIGHT + Fore.MAGENTA+"Enter your MySQL Username (default: root): ")
-    _config["password"] = input(Style.BRIGHT + Fore.MAGENTA+"Enter your MySQL Password: ")
+    _config["password"] = input(Style.BRIGHT + Fore.MAGENTA + "Enter your MySQL Password: ")
     # _config["database"] = input(Style.BRIGHT + Fore.MAGENTA+"Enter the name of the MySQL Database: ")
 
     # Creating a connection to the MySQL server
     try:
         connection = mysql.connector.connect(**_config)
-        print(Style.BRIGHT + Fore.GREEN+f'Successfully Connected to the MYSQL Database "{_config["database"]}".')
+        print(Style.BRIGHT + Fore.GREEN + f'Successfully Connected to the MYSQL Database "{_config["database"]}".')
         connection.close()
         return _config
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_BAD_DB_ERROR:
-            print(Style.BRIGHT + Fore.YELLOW+"Database not Found! Generating the initial database")
+            print(Style.BRIGHT + Fore.YELLOW + "Database not Found! Generating the initial database")
             generate_database(_config)
             return _config
         else:
-            print(Style.BRIGHT + Fore.RED+f"Database Server Connection Failed!\nError: {err}")
+            print(Style.BRIGHT + Fore.RED + f"Database Server Connection Failed!\nError: {err}")
             return 0
 
 
 def generate_database(config):
-
     config.pop("raise_on_warnings")
     db_name = config.pop("database")
     connection = mysql.connector.connect(**config)  # No try catch block added since only error that reach here is
@@ -49,10 +49,10 @@ def generate_database(config):
     connection.cursor().execute(f'CREATE DATABASE {db_name}')
     connection.cursor().execute(f'USE {db_name}')  # Selecting the database for future operations.
     connection.cursor().close()
-    print(Style.BRIGHT + Fore.GREEN+f'Database Generated as "{db_name}".')
+    print(Style.BRIGHT + Fore.GREEN + f'Database Generated as "{db_name}".')
     # function below initialises tables.
     generate_tables_populate_data(connection)
-    print(Style.BRIGHT + Fore.GREEN+"All the tables created and all initial data populated successfully.")
+    print(Style.BRIGHT + Fore.GREEN + "All the tables created and all initial data populated successfully.")
     return
 
 
@@ -63,10 +63,10 @@ def generate_tables_populate_data(dbconnection):
         try:
             dbconnection.cursor().execute(f"CREATE TABLE {table_name} ({columns});")
             dbconnection.cursor().close()
-            print(Style.BRIGHT + Fore.LIGHTGREEN_EX+f"Table '{table_name}' created successfully.")
+            print(Style.BRIGHT + Fore.LIGHTGREEN_EX + f"Table '{table_name}' created successfully.")
         except mysql.connector.Error as errr:
             print(f"CREATE TABLE {table_name} ({columns});")
-            print(Style.BRIGHT + Fore.RED+f"Table '{table_name}' creation failed!\nError: {errr}")
+            print(Style.BRIGHT + Fore.RED + f"Table '{table_name}' creation failed!\nError: {errr}")
             sys.exit(1)
 
     def data_populater():
@@ -86,9 +86,9 @@ def generate_tables_populate_data(dbconnection):
             try:
                 dbconnection.cursor().execute(
                     f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
-                print(Style.BRIGHT + Fore.BLUE+f"Record '{row[0]}...'Inserted in to '{file_name}' table")
+                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name}' table")
             except mysql.connector.Error as errr:
-                print(Style.BRIGHT + Fore.RED+f"Error: {errr}")
+                print(Style.BRIGHT + Fore.RED + f"Error: {errr}")
                 sys.exit(1)
         print('\n')
 

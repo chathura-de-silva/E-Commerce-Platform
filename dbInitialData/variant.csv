@@ -1,11 +1,11 @@
-variant_id INT PRIMARY KEY,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)"
-501,101,"Black",799.99
-502,102,"Phantom Gray",699.99
-503,103,"8GB RAM",999.99
-504,104,"16GB RAM",899.99
-601,201,"Medium",19.99
-602,202,"32W x 32L",39.99
-701,301,"Standard",49.99
-702,302,"18 cu. ft.",899.99
-801,401,"Paperback",9.99
-802,402,"Hardcover",14.99
+variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_attrbutes TEXT,varient_image TEXT
+501,101,Black,799.99,With 2 years Apple Care warranty!,put a link here
+502,102,Phantom Gray,699.99,With 120hz Super Amoled Display,put a link here
+503,103,8GB RAM,999.99,Best price with credit card deals!,put a link here
+504,104,16GB RAM,899.99,Upgradable to 32 GB RAM,put a link here
+601,201,Medium,19.99,Made in Sri Lanka,put a link here
+602,202,32W x 32L,39.99,Fulfilled by C brand.,put a link here
+701,301,Standard,49.99,Enhanced Gutter Protection,put a link here
+702,302,18 cu. ft.,899.99,"Inverter Type, No CFC",put a link here
+801,401,Paperback,9.99,By renowed author : F. Scott Fitzgerald,put a link here
+802,402,Hardcover,14.99,Get 10% off with Sampath Cards,put a link here

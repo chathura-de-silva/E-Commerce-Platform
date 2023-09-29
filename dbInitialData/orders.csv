@@ -1,6 +1,6 @@
-order_id INT PRIMARY KEY,date DATE,delivery_method VARCHAR(255),payment_method VARCHAR(255),user_id INT
-30001,"2023-09-01","Express","Credit Card",10001
-30002,"2023-09-02","Standard","PayPal",10002
-30003,"2023-09-03","Express","Credit Card",10003
-30004,"2023-09-04","Standard","PayPal",10004
-30005,"2023-09-05","Express","Credit Card",10005
+order_id INT,date DATE,delivery_method VARCHAR(255),payment_method VARCHAR(255),user_id INT
+30001,2023-09-01,Express,Credit Card,10001
+30002,2023-09-02,Standard,PayPal,10002
+30003,2023-09-03,Express,Credit Card,10003
+30004,2023-09-04,Standard,PayPal,10004
+30005,2023-09-05,Express,Credit Card,10005

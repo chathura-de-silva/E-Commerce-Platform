@@ -1,4 +1,4 @@
-inventory_id INT PRIMARY KEY,variant_id INT,stock_count INT
+inventory_id INT,variant_id INT,stock_count INT
 1001,501,50
 1002,502,30
 1003,503,20
