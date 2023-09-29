@@ -68,10 +68,10 @@ def generate_tables_populate_data(dbconnection):
     def relationship_creator():
         try:
             with open('dbInitialData/database_relations.sql', 'r') as sql_file:
-                queries = sql_file.read()
-                print(queries)
-            dbconnection.cursor().execute(queries, multi=True)
-            dbconnection.cursor().close()
+                queries = sql_file.read().split('\n\n')
+                # print(queries) # Uncomment for debugging.
+            for query in queries:
+                dbconnection.cursor().execute(query)
             print(Style.BRIGHT + Fore.LIGHTGREEN_EX + f"Table relationships created successfully.")
         except mysql.connector.Error as errr:
             print(Style.BRIGHT + Fore.RED + f"Table relationship creation failed!\nError: {errr}")
