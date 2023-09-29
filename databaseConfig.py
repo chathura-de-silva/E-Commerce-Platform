@@ -34,7 +34,7 @@ def database_connector():
             return _config
         else:
             print(Style.BRIGHT + Fore.RED + f"Database Server Connection Failed!\nError: {err}")
-            return 0
+            sys.exit()
 
 
 def generate_database(config):
