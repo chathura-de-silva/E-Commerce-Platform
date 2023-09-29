@@ -29,8 +29,10 @@ This repository contains the database design and implementation for a single ven
 *   This project includes a python automation script which allows you to specify the initial database entirely by modifying some files without needing to write sql quries for everything.
 
 ## Getting started
-*   As a prerequisite you should have your mysql environment set up  and server running.
-  
+*   As prerequisites you should have,
+    *    your mysql environment set up  and server running.
+    *    Python environment with Python version 3.11 or higher.
+
 To get started with the platform, follow these steps : 
 1.  Clone this repository.
     ```plaintext
