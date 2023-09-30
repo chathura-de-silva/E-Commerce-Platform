@@ -114,7 +114,8 @@ product_id,title,description,weight,category_id,product_image
 ```
 
 ## Table relations
-You have to write `ALTER` SQL queries for the referencing.
+You have to write `ALTER` SQL queries for the referencing inside `dbInitialData/database_relations.sql`.
+
 Keep an empty line between each SQL query. If you want to add comments make sure they have no empty lines around them.
 
 Ex -     
