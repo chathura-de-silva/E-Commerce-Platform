@@ -23,17 +23,19 @@ This repository contains the database design and implementation for a single ven
 * Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
 
 # Index
-1.  [Implementation Details](#implementation-details)
-2.  [Getting Started](#getting-started)
-3.  [Configuration of Initial Database](#configuration-of-initial-database)
-    * [Overview](#overview)
-    * [Tables](#tables)
-    * [Column Identifiers](#column-identifiers)
-    * [Data Entries](#data-entries)
-    * [Sample Table in CSV](#sample-table---productcsv)
-    * [Table Relations](#table-relations)
-    * [Configuration of environmental variables](#configuration-of-env-file)
-4.  [About](#about)
+- [E-Commerce Platform for 'C'](#e-commerce-platform-for-c)
+- [Index](#index)
+- [Implementation Details](#implementation-details)
+  - [Getting started](#getting-started)
+- [Configuration of Initial Database](#configuration-of-initial-database)
+  - [Overview](#overview)
+  - [Tables](#tables)
+    - [Column Identifiers](#column-identifiers)
+    - [Data Entries](#data-entries)
+    - [Sample Table - product.csv](#sample-table---productcsv)
+  - [Table relations](#table-relations)
+  - [Configuration of `.env` file.](#configuration-of-env-file)
+  - [About](#about)
 
 # Implementation Details 
 *   This project is using a SQL database to manage data. 
@@ -59,6 +61,7 @@ To get started with the platform, follow these steps :
     $ pip install -r requirements.txt
     ```
 <a name="env_setup"></a>
+
 3.  create `.env` file inside the `dbInitialData` directory including following environmental variables.(You are supposed to update variable values according to your sql environment. You can simply copy the text below, modify it and save at the specified path as a `.env` file.)
     ```dotenv
     HOST=<hostname (defaults to "localhost")>
@@ -66,7 +69,7 @@ To get started with the platform, follow these steps :
     PASSWORD=<your password (no defaults. You Must specify)>
     DATABASE=<Database name (deaults to "ecomdb")>
     ```
-4.  You can entirely alter the initial database as per your requirements without involving in any coding(sql queries will be required to specify the relations between tables and data types. But it is a simple process of modifying some text files.). For more info refer the later part of this document. 
+4.  You can entirely alter the initial database as per your requirements without involving in any coding(sql queries will be r0equired to specify the relations between tables and data types. But it is a simple process of modifying some text files.). For more info refer the later part of this document.
 
 5.  Run the Project.
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
