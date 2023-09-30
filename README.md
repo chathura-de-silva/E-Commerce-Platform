@@ -100,10 +100,18 @@ In each coloumn name only the first word should be the column identifier. There 
 Fill the CSV file with records in the regular way. But data have to be in accordance with the data type of the respective column.
  
 ### Sample Table - product.csv
+
+#### Table view
 | product_id INT | title VARCHAR(255) | description TEXT          | weight DECIMAL(10, 2) | category_id INT | product_image TEXT |
 | -------------- | ------------------ | ------------------------- |---------------------- | --------------- | ------------------ |
 | 101            | Samsung galaxy S21 | Samsung Galaxy S21, 128GB |0.35                   | 3               | /assets/s21u.jpeg  |
 | 202            | Dennim Jeans       | Classic denim jeans       |0.6                    | 6               | /assets/jean.jpeg  | 
+#### Text View
+```csv
+product_id,title,description,weight,category_id,product_image
+101,Samsung galaxy S21,"Samsung Galaxy S21, 128GB",0.35,3,/assets/s21u.jpeg
+202,Dennim Jeans,Classic denim jeans,0.6,6,/assets/jean.jpeg
+```
 
 ## Table relations
 You have to write `ALTER` SQL queries for the referencing.
