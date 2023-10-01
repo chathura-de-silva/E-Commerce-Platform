@@ -67,9 +67,10 @@ To get started with the platform, follow these steps :
     PASSWORD=<your password (no defaults. You Must specify)>
     DATABASE=<Database name (deaults to "ecomdb")>
     ```
-4.  You can entirely alter the initial database as per your requirements without involving in any coding(sql queries will be r0equired to specify the relations between tables and data types. But it is a simple process of modifying some text files.). For more info refer the later part of this document.
+4.  You can entirely alter the initial database as per your requirements without involving in any coding (sql queries will be required only to specify the relations between tables and data types. Even it is a simple process of modifying some text files.). For more info refer the [later part](#configuration-of-initial-database) of this document.
 
 5.  Run the Project.
+    *   `app.py` is the main file.
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
 # Configuration of Initial Database
 
@@ -92,9 +93,9 @@ Everything you have to modify to create the initial database you wish to have is
 * If you are editing csvs' in Excel make sure that the delimiter and quotechar is set as specified. If you are using a text editor, you have to explicitly use the quotechar and delimiter wherever required. Using Excel is the preffered way.
 
 ### Column Identifiers
-In each coloumn name only the first word should be the column identifier. There after you have to specify the Data type starting from the next word. 
+In each coloumn name, only the first word should be the column identifier. There after you have to specify the Data type starting from the next word. 
 
-**Do Not enter anything other than the "\<column identifier\> \<data type\>".**
+**Do Not enter anything other than the "\<column_identifier\> \<data type\>".**
 
 ### Data Entries
 Fill the CSV file with records in the regular way. But data have to be in accordance with the data type of the respective column.
@@ -108,7 +109,7 @@ Fill the CSV file with records in the regular way. But data have to be in accord
 | 202            | Dennim Jeans       | Classic denim jeans       |0.6                    | 6               | /assets/jean.jpeg  | 
 #### Text View
 ```csv
-product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10,2)"",category_id INT,product_image TEXT
+product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10,2)",category_id INT,product_image TEXT
 101,Samsung galaxy S21,"Samsung Galaxy S21, 128GB",0.35,3,/assets/s21u.jpeg
 202,Dennim Jeans,Classic denim jeans,0.6,6,/assets/jean.jpeg
 ```
@@ -116,7 +117,8 @@ product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10,2)"",categ
 ## Table relations
 You have to write `ALTER` SQL queries for the referencing inside `dbInitialData/database_relations.sql`.
 
-Keep an empty line between each SQL query. If you want to add comments make sure they have no empty lines around them.
+Keep an empty line between each SQL query. 
+You can add comments if you want to. But it is recommended to avoid comments.
 
 Ex -     
   ```sql
