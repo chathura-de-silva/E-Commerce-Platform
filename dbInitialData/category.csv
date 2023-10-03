@@ -1,13 +1,11 @@
-category_id INT,parent_category_id INT,category_name VARCHAR(255),category_image TEXT
-1,NULL,Electronics,put a link here
-2,NULL,Clothing,put a link here
-3,1,Smartphones,put a link here
-4,1,Laptops,put a link here
-5,2,Shirts,put a link here
-6,2,Jeans,put a link here
-7,NULL,Home & Kitchen,put a link here
-8,NULL,Books,put a link here
-9,7,Appliances,put a link here
-10,7,Furniture,put a link here
-11,8,Fiction,put a link here
-12,8,Non-Fiction,put a link here
+category_id INT,category_name VARCHAR(255),parent_category_id INT,category_image TEXT
+1,Electronics,NULL,NULL	
+2,Toys,NULL,NULL
+3,Smartphones,1,product-images/mobile.jpg
+4,Laptops,1,product-images/laptop.jpg
+5,lego,2,product-images/lego.jpg
+6,Board Games,2,product-images/board.jpg
+7,toy cars,2,product-images/cars.jpg
+8,Tablets,1,product-images/tablet.jpg
+9,Televisions,1,product-images/television.jpg
+10,Barbie,2,product-images/barbie.jpg
