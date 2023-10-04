@@ -51,17 +51,17 @@ This repository contains the database design and implementation for a single ven
 
 To get started with the platform, follow these steps : 
 1.  Clone this repository.
-    ```plaintext
+    ```bash
     https://github.com/chathura-de-silva/E-Commerce-Platform
     ```
 2.  cd in to the project directory and Install the dependencies using following command.(Activate the Virutal Environment if you are using one. It's recommended to use one.)
-    ```plaintext
+    ```bash
     $ pip install -r requirements.txt
     ```
 <a name="env_setup"></a>
 
 3.  create `.env` file inside the `dbInitialData` directory including following environmental variables.(You are supposed to update variable values according to your sql environment. You can simply copy the text below, modify it and save at the specified path as a `.env` file.)
-    ```dotenv
+    ```Dotenv
     HOST=<hostname (defaults to "localhost")>
     USER=<MySql server username (defaults to "root")>
     PASSWORD=<your password (no defaults. You Must specify)>
@@ -95,8 +95,8 @@ Everything you have to modify to create the initial database you wish to have is
 ### Column Identifiers
 In each coloumn name, only the first word should be the column identifier. There after you have to specify the Data type starting from the next word. 
 
-**Do Not enter anything other than the "\<column_identifier\> \<data type\>".**
-
+> [!WARNING]
+> Do Not enter anything other than the "\<column_identifier\> \<data type\>".
 ### Data Entries
 Fill the CSV file with records in the regular way. But data have to be in accordance with the data type of the respective column.
  
