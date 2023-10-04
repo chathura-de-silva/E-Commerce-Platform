@@ -1,6 +1,7 @@
 import csv
 import os
 import sys
+from werkzeug.security import generate_password_hash,check_password_hash
 from colorama import init, Fore, Style
 import mysql.connector
 from mysql.connector import errorcode
@@ -12,16 +13,25 @@ load_dotenv("dbInitialData/.env")
 
 def database_connector():
     # Defining the connection parameters in a config dictionary
+    # _config = {
+    #     "host": os.getenv("HOST") if os.getenv("HOST") else "localhost",
+    #     "user": os.getenv("USER") if os.getenv("USER") else "root",
+    #     "password": os.getenv("PASSWORD"),
+    #     "database": os.getenv("DATABASE") if os.getenv("DATABASE") else "ecomdb",
+    #     "raise_on_warnings": True
+    #     # Throws an exception when there is an error with other provided parameters such as when database does not
+    #     # exist.
+    # }
+
     _config = {
-        "host": os.getenv("HOST") if os.getenv("HOST") else "localhost",
-        "user": os.getenv("USER") if os.getenv("USER") else "root",
-        "password": os.getenv("PASSWORD"),
-        "database": os.getenv("DATABASE") if os.getenv("DATABASE") else "ecomdb",
+        "host": "localhost",
+        "user": "root",
+        "password": "2001",
+        "database": "ecomdb",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
     }
-
     try:
         connection = mysql.connector.connect(**_config)
         print(Style.BRIGHT + Fore.GREEN + f'Successfully Connected to the MYSQL Database "{_config["database"]}".')
@@ -84,13 +94,17 @@ def generate_tables_populate_data(dbconnection):
 
         def row_sanitizer(csv_reader_row):
             for i in range(len(csv_reader_row)):
-                try:  # Had to use a try catch block to check whether string contains a float.
-                    if csv_reader_row[i] == 'NULL':  # Adding support for NULL values in fields such as integers.
+                try:
+                    if csv_reader_row[i] == 'NULL':
                         continue
-                    float(csv_reader_row[i].replace(" ", ""))  # If the cell is a float (or an integer), it will not
-                    # raise an exception. Instead, will jump to the next for loop iteration
+                    float(csv_reader_row[i].replace(" ", ""))
                 except ValueError:
-                    csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
+                    # if password_column_index is not None and i == password_column_index:
+                    #    csv_reader_row[i] = f'''"{generate_password_hash(csv_reader_row[i], method='pbkdf2:sha256')}"'''
+                    # else:
+                        csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
+            
+
             return csv_reader_row
 
         for row in csvreader:
@@ -120,6 +134,8 @@ def generate_tables_populate_data(dbconnection):
                               columns_with_type)  # [0:-4]-Removes the .csv extension from the file name.
                 # Preprocessing the first_line_list and converting it into a list of only "column names" without types.
                 column_list = [string.split()[0] for string in first_line_list]
+                # Find the index of the password column
+                password_column_index = next((i for i, col in enumerate(column_list) if col.lower() == 'password'), None)
                 # Populating the data into the table.
                 data_populater()
     relationship_creator()

@@ -1,5 +1,6 @@
 import mysql.connector
 from app import connection_config
+from werkzeug.security import generate_password_hash
 #tried using the global connection object but it failed
 
 # connection = databaseConfig.database_connector()
