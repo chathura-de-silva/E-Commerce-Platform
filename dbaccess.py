@@ -22,7 +22,7 @@ def get_mysql_connection():
 def gen_custID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id FROM accounts ORDER BY id DESC LIMIT 1")
+    cur.execute("SELECT user_id FROM registered_user ORDER BY user_id DESC LIMIT 1")
     res = cur.fetchall()
     conn.close()
     #return the number which is 1 greater than the last entry 
@@ -64,14 +64,15 @@ def add_user(data):
     cur = conn.cursor()
     username = data["username"]
     #need to check if the username already exists
-    cur.execute("SELECT * FROM accounts WHERE username=%s", (username,))
+    cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
     result = cur.fetchall()
+    #if we already have a registered user from that username then we can't add another user
     if len(result) != 0:
         return False
     customer_id = gen_custID()
-    tup = (customer_id,data["username"], data["email"], data["password"])
+    tup = (customer_id,data["email"], data["password"],data["username"],)
     
-    cur.execute("INSERT INTO accounts (id, username, email, password) VALUES (%s, %s, %s, %s)", tup)
+    cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
     
     conn.commit()
     conn.close()
@@ -87,7 +88,7 @@ def auth_user(data):
     password = data["password"]
 
     #check if the user is already in the database
-    cur.execute("SELECT id FROM accounts WHERE password=%s AND username=%s", (password,username))
+    cur.execute("SELECT user_id FROM registered_user WHERE password=%s AND username=%s", (password,username))
 
     result = cur.fetchall()
     conn.close()

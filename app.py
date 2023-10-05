@@ -41,7 +41,10 @@ def login():
         userdat = auth_user(data)
         if userdat:
             session["user_authenticated"] = True
+
+            #the following userid will be used throught out the full session
             session["userid"] = userdat[0]
+            
             return redirect(url_for('home'))
         return render_template("login.html", err=True)
     return render_template("login.html", err=False)
@@ -145,6 +148,8 @@ def my_cart():
         update_cart(session['userid'], qty)
         return redirect("/buy/cart/confirm/")
     return render_template('my_cart.html', cart=cart)
+
+
 
 @app.route("/buy/<id>/", methods=['POST', 'GET'])
 def buy_product(id):
