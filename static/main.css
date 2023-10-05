@@ -269,3 +269,25 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   }
   
             /* Style for the tiles */
+            h1 {
+              font-family: 'Arial', sans-serif; /* Change the font to Arial for a professional look */
+              margin-top: 20px;
+              font-size: 36px;
+              color: #333; /* Use a dark gray color for a professional scheme */
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+              transition: all 0.3s ease-in-out;
+              background: linear-gradient(45deg, #000000, #00DFFC);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              transform: scale(1);
+            }
+            
+            h1:hover {
+              transform: scale(1.1);
+              color: #00A0E0; /* Change text color on hover to a lighter blue */
+              text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+            }
+            
