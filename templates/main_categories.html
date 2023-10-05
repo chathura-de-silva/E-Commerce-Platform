@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% block content %}
 <style>
@@ -25,8 +26,11 @@
     }
 
     .product-name {
-        margin-top: 10px; /* Add spacing between the image and product name */
+        margin-top: 1px; /* Add spacing between the image and product name */
+        font-size: 20px; /* Set the font size to your desired value, e.g., 18px */
     }
+
+
 </style>
 
 <div class="row">
@@ -35,14 +39,15 @@
         <div class="row">
             {% for product in products %}
                 <div class="col-md-4">
-                    <a href="#" class="product-tile">
-                        <img src="static/{{ product[1] }}" alt="{{ product[0] }}" class="product-image">
-                        <!-- <div class="product-name">{{ product[0] }}</div> -->
+                    <a href="{{ url_for('get_products', product_id=product[0]) }}" class="product-tile">
+                        <img src="static/{{ product[2] }}" alt="{{ product[1] }}" class="product-image">
                     </a>
+                    <div class="product-name">{{ product[1] }}</div>
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
 
 {% endblock content %}
