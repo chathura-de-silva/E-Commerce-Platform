@@ -27,6 +27,7 @@ def signup():
         data = request.form
         ok = add_user(data)
         if ok:
+            session["user_authenticated"] = True
             return render_template("home.html")
         else:
             flash("Username already taken. Please choose another username.", "error")
@@ -39,6 +40,7 @@ def login():
         data = request.form
         userdat = auth_user(data)
         if userdat:
+            session["user_authenticated"] = True
             session["userid"] = userdat[0]
             return redirect(url_for('home'))
         return render_template("login.html", err=True)

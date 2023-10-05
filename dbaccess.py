@@ -58,6 +58,7 @@ def gen_orderID():
 
 
 #this function will be used to add a new user to the database
+#it will return true if we are able to add a new user 
 def add_user(data):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -232,13 +233,7 @@ def cust_purchases(custID):
     conn.close()
     return result
 
-def sell_sales(sellID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.prodID, p.name, o.quantity, o.sell_price, o.date, o.custID, c.name FROM orders o JOIN product p JOIN customer c WHERE o.prodID=p.prodID AND o.custID=c.custID AND p.sellID=%s AND o.status='RECEIVED' ORDER BY o.date DESC", (sellID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
+
 
 def add_product_to_cart(prodID, custID):
     conn = get_mysql_connection()
