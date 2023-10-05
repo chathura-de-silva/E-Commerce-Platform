@@ -16,9 +16,16 @@ sess = Session()
 @app.route("/")
 def home():
     #if the user is signed in load as signed in
-    if "id" in session:
-        return render_template("home.html", signedin=True, id=session['id'])
-    return render_template("home.html", signedin=False)
+    # use userid insted of id (a point to consider)
+
+    signedin = False
+    username = None
+    
+    if "userid" in session:
+        signedin = True
+        username = session.get("username")  # Assuming username is saved in session["username"]
+
+    return render_template("home.html", signedin=signedin, username=username)
 
 @app.route("/signup/", methods = ["POST", "GET"])
 def signup():
@@ -44,6 +51,8 @@ def login():
 
             #the following userid will be used throught out the full session
             session["userid"] = userdat[0]
+            #define the username of the session
+            session["username"] = userdat[1]
 
             return redirect(url_for('home'))
         return render_template("login.html", err=True)
@@ -51,10 +60,11 @@ def login():
 
 @app.route("/logout/")
 def logout():
+    
     session.pop('userid')
     session.pop('name')
-    session.pop('type')
-    return redirect(url_for('home'))
+
+    return redirect(url_for('home.html'))
 
 
 @app.route('/products')

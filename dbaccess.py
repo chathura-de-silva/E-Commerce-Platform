@@ -88,7 +88,7 @@ def auth_user(data):
     password = data["password"]
 
     #check if the user is already in the database
-    cur.execute("SELECT user_id FROM registered_user WHERE password=%s AND username=%s", (password,username))
+    cur.execute("SELECT user_id,username FROM registered_user WHERE password=%s AND username=%s", (password,username))
 
     result = cur.fetchall()
     conn.close()
@@ -215,7 +215,7 @@ def get_cart(custID):
     result = cur.fetchall()
     conn.close()
     print(result)
-    
+
     return result
 
 def place_order(prodID, custID, qty):

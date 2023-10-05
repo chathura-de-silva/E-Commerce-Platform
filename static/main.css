@@ -291,3 +291,17 @@ body, h1, h2, h3, h4, p, ul, ol, li {
               text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
             }
             
+            .top-right {
+              position: fixed;
+              top: 20px;
+              right: 0;
+              padding: 20px;
+              background-color: transparent; /* Set background color to transparent */
+              border: none; /* Remove the border */
+              z-index: 999; /* Adjust the z-index to ensure it's on top */
+          }
+          
+          /* Additional styles for when the user is logged in (adjust as needed) */
+          .top-right.loggedin {
+              background-color: #e5e5e5; /* Change background color when logged in */
+          }
