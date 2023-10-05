@@ -44,7 +44,7 @@ def login():
 
             #the following userid will be used throught out the full session
             session["userid"] = userdat[0]
-            
+
             return redirect(url_for('home'))
         return render_template("login.html", err=True)
     return render_template("login.html", err=False)
@@ -130,24 +130,18 @@ def buy():
     return render_template('search_products.html', after_srch=False)
 
 
-@app.route("/buy/cart/", methods=["POST", "GET"])
-def my_cart():
+@app.route("/cart/", methods=["POST", "GET"])
+def cart():
 
     #user need to be logged in in order to view the cart
     if 'userid' not in session:
-        return redirect(url_for('home'))
-    # if session['type']=="Seller":
-    #     abort(403)
+        return redirect(url_for('cart.html'))
+
+    # need to define a function to get the cart according to the user id
+    
     cart = get_cart(session['userid'])
-    if request.method=="POST":
-        data = request.form
-        qty = {}
-        for i in data:
-            if i.startswith("qty"):
-                qty[i[3:]]=data[i]      #qty[prodID]=quantity
-        update_cart(session['userid'], qty)
-        return redirect("/buy/cart/confirm/")
-    return render_template('my_cart.html', cart=cart)
+    
+    return render_template('cart.html',cart = cart)
 
 
 
@@ -187,15 +181,6 @@ def my_purchases():
     res = cust_purchases(session['userid'])
     return render_template('my_purchases.html', purchases=res)
 
-
-@app.route("/sell/sales/")
-def my_sales():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Customer":
-        abort(403)
-    res = sell_sales(session['userid'])
-    return render_template('my_sales.html', sales=res)
 
 
 @app.route("/buy/cart/confirm/", methods=["POST", "GET"])

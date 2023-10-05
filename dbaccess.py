@@ -191,6 +191,32 @@ def search_products(srchBy, category, keyword):
     return result
 
 
+def get_cart(custID):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+
+    sql_query = """
+    SELECT
+        ci.quantity AS quantity,
+        v.name AS name,
+        v.price AS price,
+        v.variant_image AS variant_image,
+        p.title AS title
+    FROM
+        cart_item AS ci
+    JOIN
+        variant AS v ON ci.variant_id = v.variant_id
+    JOIN
+        product AS p ON v.product_id = p.product_id
+    WHERE
+        ci.user_id = %s
+    """
+    cur.execute(sql_query, (custID,))
+    result = cur.fetchall()
+    conn.close()
+    print(result)
+    
+    return result
 
 def place_order(prodID, custID, qty):
     conn = get_mysql_connection()
@@ -226,16 +252,6 @@ def change_order_status(orderID, new_status):
     conn.commit()
     conn.close()
 
-def cust_purchases(custID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.prodID, p.name, o.quantity, o.sell_price, o.date FROM orders o JOIN product p WHERE o.prodID=p.prodID AND o.custID=%s AND o.status='RECEIVED' ORDER BY o.date DESC", (custID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
-
-
-
 def add_product_to_cart(prodID, custID):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -243,13 +259,6 @@ def add_product_to_cart(prodID, custID):
     conn.commit()
     conn.close()
 
-def get_cart(custID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT p.prodID, p.name, p.sell_price, c.sum_qty, p.quantity FROM (SELECT custID, prodID, SUM(quantity) AS sum_qty FROM cart GROUP BY custID, prodID) c JOIN product p WHERE p.prodID=c.prodID AND c.custID=%s", (custID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
 
 def update_cart(custID, qty):
     conn = get_mysql_connection()
