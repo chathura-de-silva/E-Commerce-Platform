@@ -110,6 +110,16 @@ def get_toys():
     return render_template('main_categories.html',products = toys,category_name=category_name)
 
 
+
+#the following function will be used to get varients from the database
+@app.route('/products/<product_id>', methods=['GET'])
+def get_products(product_id):
+
+    #varients = get_products_from_database(product_id)
+
+    return render_template('product_detail.html',products = varients)
+  
+
 # when someone clicked on a tile in the product page this function will be called 
 @app.route("/product/<id>/")
 def view_product(id):
