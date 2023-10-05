@@ -61,10 +61,14 @@ def login():
 @app.route("/logout/")
 def logout():
     
-    session.pop('userid')
-    session.pop('name')
+    # Check if 'userid' and 'username' keys exist in the session
+    if 'userid' in session:
+        session.pop('userid')
+    if 'username' in session:
+        session.pop('username')  # Use 'username' instead of 'name'
 
-    return redirect(url_for('home.html'))
+    # Redirect to the home route (assuming 'home' is the name of the route)
+    return redirect(url_for('home'))
 
 
 @app.route('/products')
