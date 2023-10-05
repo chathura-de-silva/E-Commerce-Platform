@@ -119,7 +119,7 @@ def get_categories(category):
     #select all the subproducts related to the given category
         # Execute the SQL query
     query = """
-            SELECT Category.category_name, Category.category_image
+            SELECT Category.category_name, Category.category_image,Category.category_id
             FROM Category
             WHERE Category.parent_category_id = (
                 SELECT category_id FROM Category WHERE category_name = %s
