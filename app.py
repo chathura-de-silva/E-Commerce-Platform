@@ -115,7 +115,7 @@ def get_toys():
 @app.route('/products/<product_id>', methods=['GET'])
 def get_products(product_id):
 
-    #varients = get_products_from_database(product_id)
+    varients = get_products_from_database(product_id)
 
     return render_template('product_detail.html',products = varients)
   

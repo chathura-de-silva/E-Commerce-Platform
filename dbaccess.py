@@ -132,6 +132,20 @@ def get_categories(category):
 
     return results
 
+#this function will be used to get products from the database
+def get_products_from_database(id):
+    # use try catch statements to handle errors
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    # query = "SELECT * FROM products WHERE category_id = %s", (id,)
+    # cur.execute(query, (id,))
+
+    query = "SELECT product.title,product.description,product.weight,product.product_image FROM product WHERE category_id = %s"
+    cur.execute(query, (id,))  # Pass the integer id as a parameter
+
+    results = cur.fetchall()
+    return results
+    
 
 
 def get_product_info():
