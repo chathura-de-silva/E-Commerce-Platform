@@ -157,15 +157,19 @@ def buy():
 @app.route("/cart/", methods=["POST", "GET"])
 def cart():
 
-    #user need to be logged in in order to view the cart
-    if 'userid' not in session:
-        return redirect(url_for('cart.html'))
+    # Check if the user is signed in
+    try:
+        signedin = session['userid']
+        
+        if signedin:
+            # Load the cart data for the signed-in user
+            cart = get_cart(session['userid'])
+            return render_template('cart.html', cart=cart, signedin=True)
+    except KeyError:
 
-    # need to define a function to get the cart according to the user id
     
-    cart = get_cart(session['userid'])
-    
-    return render_template('cart.html',cart = cart)
+        # User is not signed in or cart is empty
+        return render_template('cart.html', cart=[], signedin=False)
 
 
 

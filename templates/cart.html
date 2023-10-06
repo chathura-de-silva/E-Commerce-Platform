@@ -39,7 +39,9 @@
 
 <body>
     <h1>Your Cart</h1>
+    {% if signedin %}
     <table>
+        <!-- Display cart data if user is signed in -->
         <thead>
             <tr>
                 <th>Product</th>
@@ -50,8 +52,7 @@
         </thead>
         <tbody>
             {% for item in cart %}
-            <!-- Order of the query = quantity, name, price, variant_image, title
-                 Name refers to the variant name and title is the main product title -->
+            <!-- Order of the query = quantity, name, price, variant_image, title -->
             <tr>
                 <td>{{ item[4] +" " + item[1] }}</td>
                 <td>{{ item[0] }}</td>
@@ -61,6 +62,10 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <!-- Display a message if the user is not signed in or the cart is empty -->
+    <p>Your cart is currently empty.</p>
+    {% endif %}
 </body>
 
 {% endblock content %}
