@@ -1,13 +1,92 @@
 {% extends 'layout.html' %}
 {% block title %} {{ title }} {% endblock %}
 {% block content%}
+<style>
+    /* Add some styles to the background image and container */
+    body {
+        background-image: url('/path/to/your/background-image.jpg'); /* Replace with your image path */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .register {
+        background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background for the form */
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .links {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Add some styles to the form */
+    form {
+        text-align: center;
+    }
+
+    .form-group {
+        margin: 15px 0;
+        position: relative;
+    }
+
+    label {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        padding-left: 40px;
+    }
+
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .msg {
+        color: red;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .register {
+    /* ... (your existing styles) */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
+
 <div class="register">
     {% include "alert.html" %}
     
     <div class="links">
         <p>Already a user ? <a href="{{ url_for('login') }}">login</a></p>
     </div>
-    <form action="{{ url_for('signup') }}" method="post" autocomplete="off">
+    <form action="{{ url_for('signup') }}" method="post" autocomplete="off" >
         <div class="form-group">
             <label for="username">
                 <i class="fas fa-user"></i>
