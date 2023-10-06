@@ -17,13 +17,17 @@
         height: 100vh; /* Ensure the background covers the entire viewport height */
     }
 
-    .login {
+    .form-container {
         background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background for the form */
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         max-width: 400px;
         width: 100%; /* Ensure the form takes up the available width */
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center the form items horizontally */
     }
 
     .links {
@@ -31,14 +35,7 @@
         margin-top: 20px;
     }
 
-    /* Add some styles to the form */
-    form {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Center the form items horizontally */
-    }
-
+    /* Add some styles to the form elements */
     .form-group {
         margin: 15px 0;
         position: relative;
@@ -77,19 +74,19 @@
         font-weight: bold;
         margin-top: 10px;
     }
-    .login {
-    /* ... (your existing styles) */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+
+    /* Position the form container in the center */
+    .form-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
 
-<div class="login">
+<div class="form-container">
     {% include "alert.html" %}
     <div class="links">
-        <!-- <a href="{{ url_for('login') }}" class="active">Login</a> -->
         <p>Not a user already? <a href="{{ url_for('signup') }}">Register</a></p>
     </div>
     <form action="{{ url_for('login') }}" method="post">
