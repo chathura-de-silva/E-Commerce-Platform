@@ -22,7 +22,7 @@ This repository contains the database design and implementation for a single ven
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
 * Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
 
-# Index
+# Quick Links
 1.  [Implementation Details](#implementation-details)
 2.  [Getting Started](#getting-started)
 3.  [Configuration of Initial Database](#configuration-of-initial-database)
