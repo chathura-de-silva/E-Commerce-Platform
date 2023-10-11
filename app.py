@@ -128,7 +128,20 @@ def view_product(id):
     # type = session["type"]
     tup = get_single_product_info(id)
 
+    print(tup)
     return render_template('product_detail.html',product = tup)
+
+
+# need to create a function to get varient details from the database
+@app.route('/varients/<product_id>', methods=['GET'])
+def get_varient(product_id):
+    #need to write the business logic here
+
+    tup = get_varient_info(product_id)
+
+
+    return render_template('variants.html',variants = tup)
+
 
 @app.route('/search', methods=['GET'])
 def search_products():

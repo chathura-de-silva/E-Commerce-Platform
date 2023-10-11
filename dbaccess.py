@@ -140,7 +140,7 @@ def get_products_from_database(id):
     # query = "SELECT * FROM products WHERE category_id = %s", (id,)
     # cur.execute(query, (id,))
 
-    query = "SELECT product.title,product.description,product.weight,product.product_image FROM product WHERE category_id = %s"
+    query = "SELECT product.title,product.description,product.weight,product.product_image,product.product_id FROM product WHERE category_id = %s"
     cur.execute(query, (id,))  # Pass the integer id as a parameter
 
     results = cur.fetchall()
@@ -178,6 +178,16 @@ def get_single_product_info(product_id):
     except Exception as e:
         # Handle the exception (e.g., log the error or return an error message)
         return None  # Return None or an appropriate error indicator
+
+def get_varient_info(product_id):
+
+    conn = get_mysql_connection()
+    with conn.cursor() as cur:
+        
+        cur.execute("SELECT variant.name,variant.price,variant.custom_attrbutes,variant.variant_image FROM variant WHERE product_id = %s", (product_id,))
+        result =cur.fetchall()
+
+    return result
 
 
 def search_products(srchBy, category, keyword):

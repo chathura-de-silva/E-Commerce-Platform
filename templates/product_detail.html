@@ -1,20 +1,85 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-<!-- product_detail.html -->
-<html>
-<head>
-    <!-- Include necessary CSS and JS files here -->
-</head>
-<body>
     <h1>Product Detail</h1>
-    <h2>{{ products[1] }}</h2>
-    <p>Description: this is a nice product</p>
-    <p>Price: ${{ products[0] }}</p>
-    <!-- Add more product details as needed -->
-</body>
-</html>
+    
+    <style>
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
 
+        .product-tile {
+            height: 400px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-tile:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-name {
+            margin-top: 1px;
+            font-size: 20px;
+        }
+
+        .see-more-button {
+            background: #007BFF;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .description-overlay {
+            display: none;
+            background: #fff;
+            color: #000;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-tile:hover .description-overlay {
+            display: block;
+        }
+    </style>
+<!-- product.title,product.description,product.weight,product.product_image,product.product_id -->
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ category_name }}</h1>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="product-tile">
+                                <img src="/static/{{ product[3] }}" alt="{{ product[0] }}" class="product-image">
+                                <div class="product-name">{{ product[0] }}</div>
+                                <div class="description-overlay">
+                                    <p>{{ product[1] }}</p>
+                                    <a href="{{ url_for('get_varient', product_id=product[4]) }}" class="see-more-button">See More</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
+
