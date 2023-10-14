@@ -259,12 +259,12 @@ def get_guest_cart(variant_ids):
         v.variant_id = %s
     """
 
-    # Execute the query and fetch all the rows for all variant_ids at once
-    cur.execute(query, variant_ids)
-    rows = cur.fetchall()
-    
-    for row in rows:
-        result.append(row)
+    for variant_id in variant_ids:
+        # Execute the query for each variant_id
+        cur.execute(query, (variant_id,))
+        rows = cur.fetchall()
+        for row in rows:
+            result.append(row)
 
     return result
 

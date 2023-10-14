@@ -54,6 +54,8 @@ def login():
             #define the username of the session
             session["username"] = userdat[1]
 
+            session['signedin'] = True
+
             return redirect(url_for('home'))
         return render_template("login.html", err=True)
     return render_template("login.html", err=False)
@@ -66,7 +68,7 @@ def logout():
         session.pop('userid')
     if 'username' in session:
         session.pop('username')  # Use 'username' instead of 'name'
-
+    session['signedin'] = False
     # Redirect to the home route (assuming 'home' is the name of the route)
     return redirect(url_for('home'))
 
@@ -161,27 +163,23 @@ def search_products():
 @app.route("/cart/", methods=["POST", "GET"])
 def cart():
     # Check if the user is signed in
-    try:
-        signedin = session['userid']      
-        if signedin:
-            # Load the cart data for the signed-in user
-            cart = get_cart(session['userid'])
-            return render_template('cart.html', cart=cart, signedin=True)
+    
+    signedin =  session['signedin']  
+    if signedin is True:
+        username = session['username']
+        cart = get_cart(session['userid'])
+        return render_template('cart.html', cart=cart, signedin=signedin,username = username)
+    else:
+        signedin = False
+        session_cart = session.get('cart', {})
+                #get a list of all the varient ID's that are added to the cart
+        variant_ids_string = list(session_cart.keys())
+        variant_ids = [int(i) for i in variant_ids_string]
+                #need to implement the function to fetch values from the database for the given id's
+        variant_details = get_guest_cart(variant_ids)
+        return render_template('cart.html',guest_cart = variant_details , signedin = False , session_cart=session_cart)
         
-        else:
 
-            session_cart = session.get('cart', {})
-            #get a list of all the varient ID's that are added to the cart
-            variant_ids = list(session_cart.keys())
-            #need to implement the function to fetch values from the database for the given id's
-            variant_details = get_guest_cart(variant_ids)
-            return render_template('cart.html',cart = variant_details , signedin = False , session_cart=session_cart)
-        
-
-    except KeyError:
-
-        # User is not signed in or cart is empty
-        return render_template('cart.html', cart=[], signedin=False)
 
 
 @app.route('/add_to_cart', methods=['POST'])
