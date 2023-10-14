@@ -1,91 +1,69 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <h1>Products</h1>
+<div class="container">
+    <h1 class="text-center mt-5">Products</h1>
 
-        <!-- <form action="{{ url_for('search_products') }}" method="GET" class="mb-3">
-            <div class="input-group">
-                <input type="text" name="query" class="form-control" placeholder="Search products..." onkeypress="return searchOnEnter(event)">
-            </div>
-        </form> -->
-
-        <!-- Add the Electronics and Toys tiles -->
-        <!-- Container for the tiles with equal spacing -->
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-6">
-                <a href="{{ url_for('get_electronics') }}" class="tile" onmouseover="glowTile(this);" onmouseout="unglowTile(this);">
-                    <img src="/static/electronics.png" alt="electronics" class="tile-image">
-                </a>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <a href="{{ url_for('get_toys') }}" class="tile" onmouseover="glowTile(this);" onmouseout="unglowTile(this);">
-                    <img src="/static/toys.jpg" alt="Toys" class="tile-image">
-                </a>
-            </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6 col-sm-6">
+            <a href="{{ url_for('get_electronics') }}" class="tile" onmouseover="glowTile(this);" onmouseout="unglowTile(this);">
+                <img src="/static/electronics.png" alt="Electronics" class="tile-image">
+            </a>
         </div>
-        <script>
-            function searchOnEnter(event) {
-                if (event.keyCode === 13) { // 13 is the key code for Enter
-                    event.preventDefault(); // Prevent the form from submitting
-                    // Perform the search here, e.g., by submitting the form
-                    document.forms[0].submit(); // Submit the first form in the document
-                }
-            }
-            function glowTile(tile) {
-                tile.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-            }
-
-            function unglowTile(tile) {
-                tile.style.boxShadow = 'none';
-            }
-        </script>
-        <style>
-            /* Style for the tiles */
-            .tile {
-                background-color: #fff;
-                padding: 20px;
-                margin: 10px; /* Add margin for spacing between tiles */
-                text-align: center;
-                transition: box-shadow 0.3s ease-in-out;
-                height: 400px; /* Set a fixed height for the tiles */
-                display: block; /* Make sure the anchor tag is a block-level element */
-                text-decoration: none; /* Remove default underline on anchor tags */
-                color: inherit; /* Inherit text color from parent */
-            }
-
-            .tile:hover {
-                /* Add hover effect if needed */
-                background-color: #f0f0f0;
-            }
-
-            .tile-image {
-                max-width: 100%; /* Ensure the image fits inside the tile */
-                max-height: 80%; /* Limit the image height within the tile */
-                display: block;
-                margin: 0 auto; /* Center-align the image horizontally */
-            }
-
-            /* Add more styling as needed */
-        </style>
-
+        <div class="col-md-6 col-sm-6">
+            <a href="{{ url_for('get_toys') }}" class="tile" onmouseover="glowTile(this);" onmouseout="unglowTile(this);">
+                <img src="/static/toys.jpg" alt="Toys" class="tile-image">
+            </a>
+        </div>
     </div>
+
+    <script>
+        function searchOnEnter(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.forms[0].submit();
+            }
+        }
+
+        function glowTile(tile) {
+            tile.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+        }
+
+        function unglowTile(tile) {
+            tile.style.boxShadow = 'none';
+        }
+    </script>
+
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .tile {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            transition: box-shadow 0.3s ease-in-out;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .tile:hover {
+            background-color: #e9e9e9;
+        }
+
+        .tile-image {
+            max-width: 100%;
+            max-height: 80%;
+            margin: 0 auto;
+        }
+    </style>
 </div>
 {% endblock %}
-
-        <!-- <div class="row">
-            this code was used to fetch the products in the database 
-            {% for product in product %}
-            <div class="col-md-4">  
-
-                <a href="{{ url_for('view_product', id=product[0]) }}">{{ product[1] }}</a> -->
-                <!-- fetch the product URL from the database and use it here  -->
-                <!-- <img src="static/{{ product[3]}}" alt="{{ product[2]}}" class="product-image">
-                <h3>{{ product[1] }}</h3>
-                <p>{{ product.description }}</p>
-                <p>Price: ${{ product[4] }}</p>
-            </div>
-            {% endfor %}
-            </div>
-        </div> -->

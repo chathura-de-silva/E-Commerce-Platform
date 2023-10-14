@@ -1,8 +1,9 @@
 product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)",category_id INT,product_image TEXT
 101,iPhone 12,"Apple iPhone 12, 64GB",0.4,3,put a link here
 102,Samsung Galaxy S21,"Samsung Galaxy S21, 128GB",0.35,3,put a link here
-103,MacBook Air,"Apple MacBook Air, 13-inch",2.8,4,subproduct-images/macbook.jpg
-104,Dell XPS 13,"Dell XPS 13, 13-inch",2.7,4,subproduct-images/Dell XPS 13.jpeg
+103,MacBook Air,"The Apple MacBook Air 13 combines style, innovation, and power. It's a lightweight, high-performance laptop that caters to professionals, students, and business users, delivering an unmatched computing experience.",2.8,4,subproduct-images/macbook.jpg
+104,Dell XPS 13,"
+The Dell XPS 13: A pinnacle of style and performance. It's a compact, powerful laptop designed for professionals, students, and business enthusiasts seeking top-tier computing excellence.",2.7,4,subproduct-images/Dell XPS 13.jpeg
 201,Cotton T-shirt,Comfortable cotton t-shirt,0.2,5,put a link here
 202,Denim Jeans,Classic denim jeans,0.6,6,put a link here
 301,Coffee Maker,Drip coffee maker,3,9,put a link here

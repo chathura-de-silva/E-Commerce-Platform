@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, abort, session,flash
+from flask import Flask, render_template, request, url_for, redirect, abort, session ,flash
 from flask_session import Session
 from dbaccess import *
 from databaseConfig import database_connector
@@ -138,9 +138,11 @@ def get_varient(product_id):
     #need to write the business logic here
 
     tup = get_varient_info(product_id)
+    signedin = False
+    if "userid" in session:
+        signedin = True
 
-
-    return render_template('variants.html',variants = tup)
+    return render_template('variants.html',variants = tup, signedin=signedin)
 
 
 @app.route('/search', methods=['GET'])
@@ -153,121 +155,58 @@ def search_products():
     return render_template('search_results.html', products = products)
 
 
-@app.route("/buy/", methods=["POST", "GET"])
-def buy():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if request.method=="POST":
-        data = request.form
-        srchBy = data["search method"]
-        category = None if srchBy=='by keyword' else data["category"]
-        keyword = data["keyword"]
-        results = search_products(srchBy, category, keyword)
-        return render_template('search_products.html', after_srch=True, results=results)
-    return render_template('search_products.html', after_srch=False)
+
 
 
 @app.route("/cart/", methods=["POST", "GET"])
 def cart():
-
     # Check if the user is signed in
     try:
-        signedin = session['userid']
-        
+        signedin = session['userid']      
         if signedin:
             # Load the cart data for the signed-in user
             cart = get_cart(session['userid'])
             return render_template('cart.html', cart=cart, signedin=True)
+        
+        else:
+
+            session_cart = session.get('cart', {})
+            #get a list of all the varient ID's that are added to the cart
+            variant_ids = list(session_cart.keys())
+            #need to implement the function to fetch values from the database for the given id's
+            variant_details = get_guest_cart(variant_ids)
+            return render_template('cart.html',cart = variant_details , signedin = False , session_cart=session_cart)
+        
+
     except KeyError:
 
-    
         # User is not signed in or cart is empty
         return render_template('cart.html', cart=[], signedin=False)
 
 
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    variant_id = request.form.get('variant_id')
+    quantity = int(request.form.get('quantity'))
 
-@app.route("/buy/<id>/", methods=['POST', 'GET'])
-def buy_product(id):
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
-    ispresent, tup = get_product_info(id)
-    if not ispresent:
-        abort(404)
-    (name, quantity, category, cost_price, sell_price, sellID, desp, sell_name) = tup
-    if request.method=="POST":
-        data = request.form
-        total = int(data['qty'])*float(sell_price)
-        return redirect(url_for('buy_confirm', total=total, quantity=data['qty'], id=id))
-    return render_template('buy_product.html', name=name, category=category, desp=desp, quantity=quantity, price=sell_price)
+    if 'user_id' in session:
+        # User is logged in, update the database cart
+        user_id = session['user_id']
+        # Update the cart_items table in the database
+        # Insert or update the cart item for the user
+        # You can use SQL or an ORM like SQLAlchemy for this
+    else:
+        # User is not logged in, update the session cart
+        if 'cart' not in session:
+            session['cart'] = {}
+        cart = session['cart']
+        if variant_id in cart:
+            cart[variant_id] += quantity
+        else:
+            cart[variant_id] = quantity
+        session.modified = True  # Mark the session as modified
 
-
-@app.route("/buy/myorders/")
-def my_orders():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
-    res = cust_orders(session['userid'])
-    return render_template('my_orders.html', orders=res)
-
-
-@app.route("/buy/purchases/")
-def my_purchases():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
-    res = cust_purchases(session['userid'])
-    return render_template('my_purchases.html', purchases=res)
-
-
-
-@app.route("/buy/cart/confirm/", methods=["POST", "GET"])
-def cart_purchase_confirm():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['type']=="Seller":
-        abort(403)
-    if request.method=="POST":
-        choice = request.form['choice']
-        if choice=="PLACE ORDER":
-            cart_purchase(session['userid'])
-            return redirect(url_for('my_orders'))
-        elif choice=="CANCEL":
-            return redirect(url_for('my_cart'))
-    cart = get_cart(session['userid'])
-    items = [(i[1], i[3], float(i[2])*float(i[3])) for i in cart]
-    total = 0
-    for i in cart:
-        total += float(i[2])*int(i[3])
-    return render_template('buy_confirm.html', items=items, total=total)
-
-@app.route("/buy/cart/<prodID>/")
-def add_to_cart(prodID):
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    add_product_to_cart(prodID, session['userid'])
-    return redirect(url_for('view_product', id=prodID))
-
-@app.route("/buy/cart/delete/")
-def delete_cart():
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['userid']=="Seller":
-        abort(403)
-    empty_cart(session['userid'])
-    return redirect(url_for('my_cart'))
-
-@app.route("/buy/cart/delete/<prodID>/")
-def delete_prod_cart(prodID):
-    if 'userid' not in session:
-        return redirect(url_for('home'))
-    if session['userid']=="Seller":
-        abort(403)
-    remove_from_cart(session['userid'], prodID)
-    return redirect(url_for('my_cart'))
+    return redirect(url_for('cart'))  
 
 
 app.config['SECRET_KEY'] = os.urandom(17)

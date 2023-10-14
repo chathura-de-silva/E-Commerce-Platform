@@ -184,7 +184,7 @@ def get_varient_info(product_id):
     conn = get_mysql_connection()
     with conn.cursor() as cur:
         
-        cur.execute("SELECT variant.name,variant.price,variant.custom_attrbutes,variant.variant_image FROM variant WHERE product_id = %s", (product_id,))
+        cur.execute("SELECT variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id FROM variant WHERE product_id = %s", (product_id,))
         result =cur.fetchall()
 
     return result
@@ -242,39 +242,32 @@ def get_cart(custID):
 
     return result
 
-def place_order(prodID, custID, qty):
+#this function will fetch variant details for a guest's cart
+def get_guest_cart(variant_ids):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    orderID = gen_orderID()
-    cur.execute("INSERT INTO orders (orderID, custID, prodID, quantity, date, cost_price, sell_price, status) SELECT %s, %s, %s, %s, NOW(), cost_price*%s, sell_price*%s, 'PLACED' FROM product WHERE prodID=%s", (orderID, custID, prodID, qty, qty, qty, prodID))
-    conn.commit()
-    conn.close()
 
-def cust_orders(custID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.orderID, o.prodID, p.name, o.quantity, o.sell_price, o.date, o.status FROM orders o JOIN product p WHERE o.prodID=p.prodID AND o.custID=%s AND o.status!='RECEIVED' ORDER BY o.date DESC", (custID,))
-    result = cur.fetchall()
-    conn.close()
+    # Create a list to store the results
+    result = []
+
+    # Construct the SQL query using JOIN to fetch the required columns from both tables
+    query = """
+    SELECT p.title, v.name, v.price, v.variant_image
+    FROM product AS p
+    JOIN variant AS v ON p.product_id = v.product_id
+    WHERE 
+        v.variant_id = %s
+    """
+
+    # Execute the query and fetch all the rows for all variant_ids at once
+    cur.execute(query, variant_ids)
+    rows = cur.fetchall()
+    
+    for row in rows:
+        result.append(row)
+
     return result
 
-
-def get_order_details(orderID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.custID, p.sellID, o.status FROM orders o JOIN product p WHERE o.orderID=%s AND o.prodID=p.prodID", (orderID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
-
-def change_order_status(orderID, new_status):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE orders SET status=%s WHERE orderID=%s", (new_status, orderID))
-    if new_status == 'DISPATCHED':
-        cur.execute("UPDATE product SET quantity=quantity-(SELECT quantity FROM orders WHERE orderID=%s) WHERE prodID=(SELECT prodID FROM orders WHERE orderID=%s)", (orderID, orderID))
-    conn.commit()
-    conn.close()
 
 def add_product_to_cart(prodID, custID):
     conn = get_mysql_connection()
