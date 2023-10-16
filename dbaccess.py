@@ -158,14 +158,25 @@ def get_product_info():
 
 
 
-# def get_single_product_info(product_id):
+def update_cart(user_id,variant_id,quantity):
 
-#     conn = get_mysql_connection()
-#     cur = conn.cursor()
-#     #run the query to get all the details based on the user ID
-#     cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
-#     details = cur.fetchall()
-#     return details 
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    print("hello world")
+    # Define the SQL statement using the INSERT ... ON DUPLICATE KEY UPDATE syntax
+    # Define the SQL statement with an alias for VALUES
+    query ="""
+        INSERT INTO cart_item (user_id, variant_id, quantity)
+        VALUES (%s, %s, %s)
+        ON DUPLICATE KEY UPDATE quantity = cart_item.quantity
+        """
+    # Execute the SQL statement with the provided user_id, variant_id, and quantity
+    cur.execute(query, (user_id, variant_id, quantity))
+
+    conn.commit()
+    conn.close()
+    return
+
 
 def get_single_product_info(product_id):
     try:
@@ -277,27 +288,7 @@ def add_product_to_cart(prodID, custID):
     conn.close()
 
 
-def update_cart(custID, qty):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    for prodID in qty:
-        cur.execute("DELETE FROM cart WHERE prodID=%s AND custID=%s", (prodID, custID))
-        cur.execute("INSERT INTO cart VALUES (%s, %s, %s)", (custID, prodID, qty[prodID]))
-    conn.commit()
-    conn.close()
 
-def cart_purchase(custID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cart = get_cart(custID)
-    for item in cart:
-        orderID = gen_orderID()
-        prodID = item[0]
-        qty = item[3]
-        cur.execute("INSERT INTO orders (orderID, custID, prodID, quantity, date, cost_price, sell_price, status) SELECT %s, %s, %s, %s, NOW(), cost_price*%s, sell_price*%s, 'PLACED' FROM product WHERE prodID=%s", (orderID, custID, prodID, qty, qty, qty, prodID))
-        cur.execute("DELETE FROM cart WHERE custID=%s AND prodID=%s", (custID, prodID))
-        conn.commit()
-    conn.close()
 
 def empty_cart(custID):
     conn = get_mysql_connection()

@@ -86,8 +86,13 @@
             {% endfor %}
         </tbody>
     </table>
-
     {% endif %}
+
+        <!-- Buttons to navigate to checkout and product pages -->
+    <div>
+        <a href="{{ url_for('checkout') }}" class="btn btn-primary">Go to Checkout</a>
+        <a href="{{ url_for('products') }}" class="btn btn-secondary">Continue Shopping</a>
+    </div>
 </body>
 
 {% endblock content %}

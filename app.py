@@ -158,8 +158,6 @@ def search_products():
 
 
 
-
-
 @app.route("/cart/", methods=["POST", "GET"])
 def cart():
     # Check if the user is signed in
@@ -186,15 +184,18 @@ def cart():
 def add_to_cart():
     variant_id = request.form.get('variant_id')
     quantity = int(request.form.get('quantity'))
+    try:
+        username = session['username']
 
-    if 'user_id' in session:
-        # User is logged in, update the database cart
-        user_id = session['user_id']
-        # Update the cart_items table in the database
-        # Insert or update the cart item for the user
-        # You can use SQL or an ORM like SQLAlchemy for this
-    else:
-        # User is not logged in, update the session cart
+        if username is not None:
+            print('hi')
+            # User is logged in, update the database cart
+            user_id = session['userid']
+            # Update the cart_items table in the database
+            # user_id, variant_id, quantity 
+            update_cart(user_id,variant_id,quantity)
+    except KeyError:
+            # User is not logged in, update the session cart
         if 'cart' not in session:
             session['cart'] = {}
         cart = session['cart']
@@ -204,8 +205,13 @@ def add_to_cart():
             cart[variant_id] = quantity
         session.modified = True  # Mark the session as modified
 
-    return redirect(url_for('cart'))  
+        return redirect(url_for('cart'))  
+    
 
+@app.route('/checkout')
+def checkout():
+
+    return render_template('checkout.html')
 
 app.config['SECRET_KEY'] = os.urandom(17)
 app.config['SESSION_TYPE'] = 'filesystem'
