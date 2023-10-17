@@ -1,6 +1,60 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<style>
+  /* Define CSS styles here */
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .col-25,
+  .col-50,
+  .col-75 {
+    flex: 0 0 25%;
+  }
+
+  .container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .icon-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .fa {
+    font-size: 24px;
+  }
+
+  input[type="text"], input[type="checkbox"], input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  /* Add more CSS styles as needed */
+</style>
+
+
 <div class="row">
     <div class="col-75">
       <div class="container">
@@ -32,13 +86,13 @@
   
             <div class="col-50">
               <h3>Payment</h3>
-              <label for="fname">Accepted Cards</label>
+              <!-- <label for="fname">Accepted Cards</label>
               <div class="icon-container">
-                <i class="fa fa-cc-visa" style="color:navy;"></i>
-                <i class="fa fa-cc-amex" style="color:blue;"></i>
-                <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                <i class="fa fa-cc-discover" style="color:orange;"></i>
-              </div>
+                <i class="fas fa-cc-visa" style="color: navy;"></i>
+                <i class="fas fa-cc-amex" style="color: blue;"></i>
+                <i class="fas fa-cc-mastercard" style="color: red;"></i>
+                <i class="fas fa-cc-discover" style="color: orange;"></i>
+            </div> -->
               <label for="cname">Name on Card</label>
               <input type="text" id="cname" name="cardname" placeholder="John More Doe">
               <label for="ccnum">Credit card number</label>
