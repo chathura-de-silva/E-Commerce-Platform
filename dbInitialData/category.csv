@@ -1,11 +1,15 @@
 category_id INT,category_name VARCHAR(255),parent_category_id INT,category_image TEXT
 1,Electronics,NULL,NULL	
 2,Toys,NULL,NULL
-3,Smartphones,1,product-images/mobile.jpg
-4,Laptops,1,product-images/laptop.jpg
-5,lego,2,product-images/lego.jpg
-6,Board Games,2,product-images/board.jpg
-7,toy cars,2,product-images/cars.jpg
-8,Tablets,1,product-images/tablet.jpg
-9,Televisions,1,product-images/television.jpg
-10,Barbie,2,product-images/barbie.jpg
+3,Smartphones,1,category-images/mobile.jpg
+4,Laptops,1,category-images//laptop.jpg
+5,lego,2,category-images//lego.jpg
+6,Board Games,2,category-images//board.jpg
+7,toy cars,2,category-images//cars.jpg
+8,Tablets,1,category-images//tablet.jpg
+9,Televisions,1,category-images//television.jpg
+10,Barbie,2,category-images//barbie.jpg
+11,Headphones,1,category-images/headphones.jpg
+12,Digital Cameras,1,category-images/camera.jpg
+13,Remote Control Helicopter,2,category-images/helicopter.jpg
+14,Puzzle Sets,2,category-images/puzzles.jpg
