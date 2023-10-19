@@ -194,6 +194,8 @@ def add_to_cart():
             # Update the cart_items table in the database
             # user_id, variant_id, quantity 
             update_cart(user_id,variant_id,quantity)
+
+            return redirect(url_for('cart'))
     except KeyError:
             # User is not logged in, update the session cart
         if 'cart' not in session:
@@ -210,6 +212,14 @@ def add_to_cart():
 
 @app.route('/checkout')
 def checkout():
+    #need to fetch the cart for the checkout page 
+    #get_cart()
+    # if the user if not logged in he should be redirected to the login page 
+    
+    #also need to find the total price 
+
+    #the nneed to render the checkout successfull page 
+
 
     return render_template('checkout.html')
 
