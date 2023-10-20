@@ -54,11 +54,46 @@
   /* Add more CSS styles as needed */
 </style>
 
+<script>
+  function validateForm() {
+    // Get references to the form fields
+    var fname = document.getElementById("fname");
+    var email = document.getElementById("email");
+    var adr = document.getElementById("adr");
+    var city = document.getElementById("city");
+    var state = document.getElementById("state");
+    var zip = document.getElementById("zip");
+    var cname = document.getElementById("cname");
+    var ccnum = document.getElementById("ccnum");
+    var expmonth = document.getElementById("expmonth");
+    var expyear = document.getElementById("expyear");
+    var cvv = document.getElementById("cvv");
+
+    // Check if any of the fields are empty
+    if (
+      fname.value === "" ||
+      email.value === "" ||
+      adr.value === "" ||
+      city.value === "" ||
+      state.value === "" ||
+      zip.value === "" ||
+      cname.value === "" ||
+      ccnum.value === "" ||
+      expmonth.value === "" ||
+      expyear.value === "" ||
+      cvv.value === ""
+    ) {
+      alert("Please fill in all the required fields.");
+      return false; // Prevent form submission
+    }
+    return true; // Allow form submission
+  }
+</script>
 
 <div class="row">
     <div class="col-75">
       <div class="container">
-        <form action="/action_page.php">
+        <form action="{{ url_for('checkout_successful') }}" method="POST" onsubmit="return validateForm();">
   
           <div class="row">
             <div class="col-50">
@@ -86,13 +121,7 @@
   
             <div class="col-50">
               <h3>Payment</h3>
-              <!-- <label for="fname">Accepted Cards</label>
-              <div class="icon-container">
-                <i class="fas fa-cc-visa" style="color: navy;"></i>
-                <i class="fas fa-cc-amex" style="color: blue;"></i>
-                <i class="fas fa-cc-mastercard" style="color: red;"></i>
-                <i class="fas fa-cc-discover" style="color: orange;"></i>
-            </div> -->
+
               <label for="cname">Name on Card</label>
               <input type="text" id="cname" name="cardname" placeholder="John More Doe">
               <label for="ccnum">Credit card number</label>

@@ -212,16 +212,31 @@ def add_to_cart():
 
 @app.route('/checkout')
 def checkout():
-    #need to fetch the cart for the checkout page 
+
     #get_cart()
     # if the user if not logged in he should be redirected to the login page 
-    
+    is_logged = session['signedin']
+    if is_logged is True:
+
+        return render_template('checkout.html')
     #also need to find the total price 
+    else:
+        flash('You need to be logged in to proceed with the checkout.', 'error')
+        return redirect(url_for('login')) 
 
-    #the nneed to render the checkout successfull page 
 
+@app.route('/checkout_successful', methods=['POST'])
+def checkout_successful():
+    if request.method == 'POST':
+        # Here, you can process the form data as needed
+        # For example, you can access form data using request.form
+        full_name = request.form.get('firstname')
+        email = request.form.get('email')
+        # Process other form data here as necessary
 
-    return render_template('checkout.html')
+        # After processing the form data, you can render a success page
+        return render_template('login.html', full_name=full_name, email=email)
+
 
 app.config['SECRET_KEY'] = os.urandom(17)
 app.config['SESSION_TYPE'] = 'filesystem'
