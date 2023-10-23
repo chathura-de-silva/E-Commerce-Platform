@@ -97,7 +97,7 @@ def generate_tables_populate_data(dbconnection):
             try:
                 dbconnection.cursor().execute(
                     f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
-                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name}' table")
+                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name[0:-4]}' table")
             except mysql.connector.Error as errr:
                 print(Style.BRIGHT + Fore.RED + f"Error: {errr}")
                 sys.exit(1)
