@@ -15,8 +15,7 @@ def database_connector():
     _config = {
         "host": os.getenv("HOST") if os.getenv("HOST") else "localhost",
         "user": os.getenv("USER") if os.getenv("USER") else "root",
-        # "password": os.getenv("PASSWORD"),
-        "password": 'SaviYa1000!!',
+        "password": os.getenv("PASSWORD"),
         "database": os.getenv("DATABASE") if os.getenv("DATABASE") else "ecomdb",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
@@ -98,7 +97,7 @@ def generate_tables_populate_data(dbconnection):
             try:
                 dbconnection.cursor().execute(
                     f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
-                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name}' table")
+                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name[0:-4]}' table")
             except mysql.connector.Error as errr:
                 print(Style.BRIGHT + Fore.RED + f"Error: {errr}")
                 sys.exit(1)

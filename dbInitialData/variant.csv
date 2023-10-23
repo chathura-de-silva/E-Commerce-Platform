@@ -1,10 +1,10 @@
 variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_attrbutes TEXT,variant_image TEXT
-501,101,MacBook Air 13 - Space Gray,1199.99,"8GB RAM,Lightweight and powerful",put a link here
-502,101,MacBook Air 13 - Silver,1249.99,"16GB RAM,Enhanced performance",put a link here
+501,103,MacBook Air 13 - Space Gray,1199.99,"8GB RAM,Lightweight and powerful",put a link here
+502,103,MacBook Air 13 - Silver,1249.99,"16GB RAM,Enhanced performance",put a link here
 503,102,Dell XPS 13 - Silver,1099.99,"16GB RAM,Top-tier computing excellence",put a link here
 504,102,Dell XPS 13 - Black,1149.99,"32GB RAM,Upgrade for more power",put a link here
-505,103,LEGO Star Wars Millennium Falcon - Standard,49.99,Regular edition,put a link here
-506,103,LEGO Star Wars Millennium Falcon - Deluxe,69.99,Larger and more detailed version,put a link here
+505,101,LEGO Star Wars Millennium Falcon - Standard,49.99,Regular edition,put a link here
+506,101,LEGO Star Wars Millennium Falcon - Deluxe,69.99,Larger and more detailed version,put a link here
 507,104,iPhone 12 Pro - Silver,1099.99,"128GB Storage,Exceptional camera capabilities",put a link here
 508,104,iPhone 12 Pro - Gold,1149.99,"256GB Storage,More storage for your photos",put a link here
 509,105,Samsung Galaxy S21 Ultra - Phantom Black,1199.99,"256GB Storage,Unmatched performance and camera system",put a link here
@@ -58,8 +58,8 @@ variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_at
 557,130,Catan Expansion,39.99,Expand your Catan experience!,put a link here
 558,131,Neon Blue,299.99,Includes two controllers!,put a link here
 559,131,Gray,299.99,Includes two controllers!,put a link here
-560,32,Black,999.99,Ultra-slim design,put a link here
-561,32,Silver,1099.99,High-resolution display,put a link here
+560,132,Black,999.99,Ultra-slim design,put a link here
+561,132,Silver,1099.99,High-resolution display,put a link here
 562,133,75-Inch,1499.99,Smart TV with voice control,put a link here
 563,133,85-Inch,1899.99,Large 4K screen for an immersive experience,put a link here
 564,134,Roller Coaster Set,199.99,Working roller coaster with minifigures,put a link here
