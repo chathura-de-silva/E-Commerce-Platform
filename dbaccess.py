@@ -88,6 +88,7 @@ def get_stock_count(variant_id):
 
 
 
+
 #this function will be used to add a new user to the database
 #it will return true if we are able to add a new user 
 def add_user(data):
@@ -235,9 +236,7 @@ def get_varient_info(product_id):
 def update_order_items(order_items):
     conn = get_mysql_connection()
     cursor = conn.cursor()
-
     try:
-
         order_item_id, order_id, variant_id, quantity, price = order_items[0]
         # Assuming you have a table named 'order_item'
         insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
@@ -250,6 +249,23 @@ def update_order_items(order_items):
     finally:
         cursor.close()
         conn.close()
+
+
+def update_order_table(order_table_details):
+    conn = get_mysql_connection()
+    cursor = conn.cursor()
+    try:
+        order_id, date, delivery_method, payment_method, user_id = order_table_details
+
+        insert_query = "INSERT INTO orders (order_id, date, delivery_method, payment_method, user_id) VALUES (%s, %s, %s, %s, %s)"
+
+        cursor.execute(insert_query, (order_id, date, delivery_method, payment_method, user_id) )
+
+        conn.commit()
+
+    except mysql.connector.Error as err:
+        # Handle any potential errors here
+        print("Error: {}".format(err))
 
 def get_cart(custID):
     conn = get_mysql_connection()

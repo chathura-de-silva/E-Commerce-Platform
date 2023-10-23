@@ -3,6 +3,8 @@ from flask_session import Session
 from dbaccess import *
 from databaseConfig import database_connector
 import os
+from datetime import date
+
 
 
 #creating a global cursor
@@ -242,6 +244,21 @@ def checkout_successful():
 
         signedin =  session['signedin'] 
         order_id = gen_orderID()
+        #need to update the order table in order to get rid of the foregin key constraint
+
+        # Get the current date
+        current_date = date.today()
+        # Format the current date as a string in 'YYYY-MM-DD' format
+        formatted_date = current_date.strftime('%Y-%m-%d')
+
+        # order_id, date, delivery_method, payment_method, user_id
+
+        user_id = session['userid']
+
+        order_table_details = [order_id,formatted_date,'Express','visa',user_id]
+
+        update_order_table(order_table_details)
+
         if signedin:
             #get the user's cart
             cart = get_cart(session['userid'])
