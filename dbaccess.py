@@ -66,6 +66,28 @@ def gen_order_item_ID():
         # If there are no results (e.g., the table is empty), start with 1
         return 0
 
+def get_stock_count(variant_id):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    # Define the query with a placeholder for variant_id
+    query = "SELECT stock_count FROM inventory WHERE variant_id = %s"
+
+    # Execute the query with the provided variant_id
+    cur.execute(query, (variant_id,))
+
+    # Fetch the result
+    result = cur.fetchone()
+
+    print(result)
+
+    if result:
+        stock_count = result[0]
+        return stock_count
+    else:
+        return None
+
+
+
 #this function will be used to add a new user to the database
 #it will return true if we are able to add a new user 
 def add_user(data):
@@ -210,29 +232,29 @@ def get_varient_info(product_id):
     return result
 
 
-def search_products(srchBy, category, keyword):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    keyword = ['%' + i + '%' for i in keyword.split()]
-    if len(keyword) == 0:
-        keyword.append('%%')
-    if srchBy == "by category":
-        cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE category=%s AND quantity!=0", (category,))
-        result = cur.fetchall()
-    elif srchBy == "by keyword":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s OR category LIKE %s) AND quantity!=0", (word, word, word))
-            result += cur.fetchall()
-        result = list(set(result))
-    elif srchBy == "both":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s) AND quantity!=0 AND category=%s", (word, word, category))
-            result += cur.fetchall()
-        result = list(set(result))
-    conn.close()
-    return result
+# def search_products(srchBy, category, keyword):
+#     conn = get_mysql_connection()
+#     cur = conn.cursor()
+#     keyword = ['%' + i + '%' for i in keyword.split()]
+#     if len(keyword) == 0:
+#         keyword.append('%%')
+#     if srchBy == "by category":
+#         cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE category=%s AND quantity!=0", (category,))
+#         result = cur.fetchall()
+#     elif srchBy == "by keyword":
+#         result = []
+#         for word in keyword:
+#             cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s OR category LIKE %s) AND quantity!=0", (word, word, word))
+#             result += cur.fetchall()
+#         result = list(set(result))
+#     elif srchBy == "both":
+#         result = []
+#         for word in keyword:
+#             cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s) AND quantity!=0 AND category=%s", (word, word, category))
+#             result += cur.fetchall()
+#         result = list(set(result))
+#     conn.close()
+#     return result
 
 
 def get_cart(custID):

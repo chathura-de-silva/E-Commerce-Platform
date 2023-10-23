@@ -140,11 +140,18 @@ def get_varient(product_id):
     #need to write the business logic here
 
     tup = get_varient_info(product_id)
+
+    #variant id is the last elemet in the fetched tuple 
+    # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
+    variant_id = (tup[-1][-1])
+
+    print(variant_id)
+    stock_count = get_stock_count(variant_id)
     signedin = False
     if "userid" in session:
         signedin = True
 
-    return render_template('variants.html',variants = tup, signedin=signedin)
+    return render_template('variants.html',variants = tup, signedin=signedin , stock_count = stock_count)
 
 
 @app.route('/search', methods=['GET'])
