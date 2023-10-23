@@ -34,28 +34,37 @@ def gen_custID():
         # If there are no results (e.g., the table is empty), start with 1
         return 0
 
-def gen_prodID():
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE metadata SET prodnum = prodnum + 1")
-    conn.commit()
-    cur.execute("SELECT prodnum FROM metadata")
-    prodnum = str(cur.fetchone()[0])
-    conn.close()
-    id = "PID" + "0" * (7 - len(prodnum)) + prodnum
-    return id
-
+#this function generates an order ID
 def gen_orderID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("UPDATE metadata SET ordernum = ordernum + 1")
-    conn.commit()
-    cur.execute("SELECT ordernum FROM metadata")
-    ordernum = str(cur.fetchone()[0])
+    cur.execute("SELECT order_id FROM order_item ORDER BY order_id DESC LIMIT 1")
+    res = cur.fetchall()
     conn.close()
-    id = "OID" + "0" * (7 - len(ordernum)) + ordernum
-    return id
-
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+    
+#this function generates ID for a single order item
+def gen_order_item_ID():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT order_item_id FROM order_item ORDER BY order_item_id DESC LIMIT 1")
+    res = cur.fetchall()
+    conn.close()
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
 
 #this function will be used to add a new user to the database
 #it will return true if we are able to add a new user 
@@ -236,7 +245,8 @@ def get_cart(custID):
         v.name AS name,
         v.price AS price,
         v.variant_image AS variant_image,
-        p.title AS title
+        p.title AS title,
+        v.variant_id as variant_id
     FROM
         cart_item AS ci
     JOIN

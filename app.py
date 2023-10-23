@@ -217,12 +217,11 @@ def checkout():
     # if the user if not logged in he should be redirected to the login page 
     is_logged = session['signedin']
     if is_logged is True:
-
         return render_template('checkout.html')
     #also need to find the total price 
     else:
-        flash('You need to be logged in to proceed with the checkout.', 'error')
-        return redirect(url_for('login')) 
+        flash('You are going to checkout as a guest. Some features may not be not available')
+        return render_template('checkout.html')
 
 
 @app.route('/checkout_successful', methods=['POST'])
@@ -234,8 +233,38 @@ def checkout_successful():
         email = request.form.get('email')
         # Process other form data here as necessary
 
+        signedin =  session['signedin'] 
+        order_id = gen_orderID()
+        order_items = []
+        if signedin:
+            #get the user's cart
+            cart = get_cart(session['userid'])
+            #extract the variant ID's from the cart
+            for item in cart:
+                # ci.quantity AS quantity,
+                # v.name AS name,
+                # v.price AS price,
+                # v.variant_image AS variant_image,
+                # p.title AS title,
+                # v.variant_id as variant_id
+                new_ID = gen_order_item_ID()
+                variant_Id = item[5]
+                quantity = item[0]
+                price = item[2]
+
+                temp = []
+                temp.append(new_ID,order_id,variant_Id,quantity,price)
+                order_items.append(temp)
+        
+            print(order_items)
+
+        else:
+            #get the session cart
+            
+
+        # try to implement and transaction to finish the checkout functionality
         # After processing the form data, you can render a success page
-        return render_template('login.html', full_name=full_name, email=email)
+            return render_template('login.html', full_name=full_name, email=email)
 
 
 app.config['SECRET_KEY'] = os.urandom(17)

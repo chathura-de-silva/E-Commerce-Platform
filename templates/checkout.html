@@ -93,7 +93,8 @@
 <div class="row">
     <div class="col-75">
       <div class="container">
-        <form action="{{ url_for('checkout_successful') }}" method="POST" onsubmit="return validateForm();">
+        <!-- onsubmit="return validateForm();" -->
+        <form action="{{ url_for('checkout_successful') }}" method="POST" >
   
           <div class="row">
             <div class="col-50">
@@ -159,6 +160,7 @@
           </span>
         </h4>
 
+        need to fetch the total price from the 
         <hr>
         <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
       </div>
