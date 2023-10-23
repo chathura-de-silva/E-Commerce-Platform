@@ -242,7 +242,6 @@ def checkout_successful():
 
         signedin =  session['signedin'] 
         order_id = gen_orderID()
-        order_items = []
         if signedin:
             #get the user's cart
             cart = get_cart(session['userid'])
@@ -260,10 +259,11 @@ def checkout_successful():
                 price = item[2]
 
                 temp = []
-                temp.append(new_ID,order_id,variant_Id,quantity,price)
-                order_items.append(temp)
-        
-            print(order_items)
+                temp.append((new_ID,order_id,variant_Id,quantity,price))
+                 #need to update the order item table from the above details 
+                update_order_items(temp)
+
+            return(render_template('home.html'))
 
         else:
             #get the session cart

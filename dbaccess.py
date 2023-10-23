@@ -232,30 +232,24 @@ def get_varient_info(product_id):
     return result
 
 
-# def search_products(srchBy, category, keyword):
-#     conn = get_mysql_connection()
-#     cur = conn.cursor()
-#     keyword = ['%' + i + '%' for i in keyword.split()]
-#     if len(keyword) == 0:
-#         keyword.append('%%')
-#     if srchBy == "by category":
-#         cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE category=%s AND quantity!=0", (category,))
-#         result = cur.fetchall()
-#     elif srchBy == "by keyword":
-#         result = []
-#         for word in keyword:
-#             cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s OR category LIKE %s) AND quantity!=0", (word, word, word))
-#             result += cur.fetchall()
-#         result = list(set(result))
-#     elif srchBy == "both":
-#         result = []
-#         for word in keyword:
-#             cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s) AND quantity!=0 AND category=%s", (word, word, category))
-#             result += cur.fetchall()
-#         result = list(set(result))
-#     conn.close()
-#     return result
+def update_order_items(order_items):
+    conn = get_mysql_connection()
+    cursor = conn.cursor()
 
+    try:
+
+        order_item_id, order_id, variant_id, quantity, price = order_items[0]
+        # Assuming you have a table named 'order_item'
+        insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
+    
+        conn.commit()  # Commit the changes to the database
+    except mysql.connector.Error as err:
+        # Handle any potential errors here
+        print("Error: {}".format(err))
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_cart(custID):
     conn = get_mysql_connection()
