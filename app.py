@@ -187,6 +187,13 @@ def cart():
         variant_ids = [int(i) for i in variant_ids_string]
                 #need to implement the function to fetch values from the database for the given id's
         variant_details = get_guest_cart(variant_ids)
+
+        # append the count to each tuple in the variant details 
+
+        for i in range(len(variant_details)):
+
+            variant_details[i] = variant_details[i] + (variant_ids[i], )
+
         return render_template('cart.html',guest_cart = variant_details , signedin = False , session_cart=session_cart)
         
 
@@ -286,7 +293,6 @@ def checkout_successful():
             # when updating the order tables we need a user_id and we don't have a user ID for a guest user 
 
             # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
-            
             user_id = 0
             order_table_details = [order_id,formatted_date,'Express','visa',user_id]
             #first of all we need to update the order_table in order to avoid the primary key constraint 
