@@ -253,23 +253,19 @@ def checkout_successful():
 
         # order_id, date, delivery_method, payment_method, user_id
 
-        user_id = session['userid']
-
-        order_table_details = [order_id,formatted_date,'Express','visa',user_id]
-
-        update_order_table(order_table_details)
-
         if signedin:
+            
+            user_id = session['userid']
+
+            order_table_details = [order_id,formatted_date,'Express','visa',user_id]
+            #first of all we need to update the order_table in order to avoid the primary key constraint 
+            update_order_table(order_table_details)
+
             #get the user's cart
             cart = get_cart(session['userid'])
             #extract the variant ID's from the cart
             for item in cart:
-                # ci.quantity AS quantity,
-                # v.name AS name,
-                # v.price AS price,
-                # v.variant_image AS variant_image,
-                # p.title AS title,
-                # v.variant_id as variant_id
+
                 new_ID = gen_order_item_ID()
                 variant_Id = item[5]
                 quantity = item[0]
@@ -282,9 +278,37 @@ def checkout_successful():
 
             return(render_template('home.html'))
 
-        else:
-            #get the session cart
+        if not signedin:
+            # get the session cart
+            # when updating the order tables we need a user_id and we don't have a user ID for a guest user 
+
+            # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
             
+            user_id = 00000
+            order_table_details = [order_id,formatted_date,'Express','visa',user_id]
+            #first of all we need to update the order_table in order to avoid the primary key constraint 
+            update_order_table(order_table_details)
+
+            # p.title, v.name, v.price, v.variant_image,v.variant_id
+            session_cart = session.get('cart', {})
+            #get a list of all the varient ID's that are added to the cart
+            variant_ids_string = list(session_cart.keys())
+            variant_ids = [int(i) for i in variant_ids_string]
+            #need to implement the function to fetch values from the database for the given id's
+            guest_cart = get_guest_cart(variant_ids)
+
+            for item in guest_cart:
+
+                new_ID = gen_order_item_ID()
+                variant_Id = item[4]
+                # quantity is in the hashmap of the session cart
+                quantity = session_cart[str(variant_Id)]
+                price = item[2]
+
+                temp = []
+                temp.append((new_ID,order_id,variant_Id,quantity,price))
+
+                update_order_items(temp)
 
         # try to implement and transaction to finish the checkout functionality
         # After processing the form data, you can render a success page

@@ -314,7 +314,7 @@ def get_guest_cart(variant_ids):
 
     # Construct the SQL query using JOIN to fetch the required columns from both tables
     query = """
-    SELECT p.title, v.name, v.price, v.variant_image
+    SELECT p.title, v.name, v.price, v.variant_image,v.variant_id
     FROM product AS p
     JOIN variant AS v ON p.product_id = v.product_id
     WHERE 
