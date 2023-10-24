@@ -29,7 +29,10 @@
     font-size: 24px;
   }
 
-  input[type="text"], input[type="checkbox"], input[type="submit"] {
+  input[type="text"],
+  input[type="checkbox"],
+  input[type="submit"],
+  input[type="radio"] {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -55,6 +58,18 @@
 </style>
 
 <script>
+  function togglePaymentFields() {
+    var cashOnDeliveryRadio = document.getElementById("cashOnDeliveryRadio");
+    var cardPaymentRadio = document.getElementById("cardPaymentRadio");
+    var cardFields = document.getElementById("cardFields");
+
+    if (cardPaymentRadio.checked) {
+      cardFields.style.display = "block";
+    } else {
+      cardFields.style.display = "none";
+    }
+  }
+
   function validateForm() {
     // Get references to the form fields
     var fname = document.getElementById("fname");
@@ -76,16 +91,26 @@
       adr.value === "" ||
       city.value === "" ||
       state.value === "" ||
-      zip.value === "" ||
-      cname.value === "" ||
-      ccnum.value === "" ||
-      expmonth.value === "" ||
-      expyear.value === "" ||
-      cvv.value === ""
+      zip.value === ""
     ) {
       alert("Please fill in all the required fields.");
       return false; // Prevent form submission
     }
+
+    // Additional validation logic for card payment (you can add more checks here)
+    if (cardPaymentRadio.checked) {
+      if (
+        cname.value === "" ||
+        ccnum.value === "" ||
+        expmonth.value === "" ||
+        expyear.value === "" ||
+        cvv.value === ""
+      ) {
+        alert("Please fill in all the card payment details.");
+        return false; // Prevent form submission
+      }
+    }
+
     return true; // Allow form submission
   }
 </script>
@@ -93,7 +118,8 @@
 <div class="row">
     <div class="col-75">
       <div class="container">
-        <form action="{{ url_for('checkout_successful') }}" method="POST" onsubmit="return validateForm();">
+        <!-- onsubmit="return validateForm();" -->
+        <form action="{{ url_for('checkout_successful') }}" method="POST">
   
           <div class="row">
             <div class="col-50">
@@ -121,26 +147,33 @@
   
             <div class="col-50">
               <h3>Payment</h3>
-
-              <label for="cname">Name on Card</label>
-              <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-              <label for="ccnum">Credit card number</label>
-              <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-              <label for="expmonth">Exp Month</label>
-              <input type="text" id="expmonth" name="expmonth" placeholder="September">
   
-              <div class="row">
-                <div class="col-50">
-                  <label for="expyear">Exp Year</label>
-                  <input type="text" id="expyear" name="expyear" placeholder="2018">
-                </div>
-                <div class="col-50">
-                  <label for="cvv">CVV</label>
-                  <input type="text" id="cvv" name="cvv" placeholder="352">
+              <label for="paymentMethod">Select Payment Method:</label>
+              <input type="radio" id="cashOnDeliveryRadio" name="payment" value="cash" onclick="togglePaymentFields()">
+              <label for="cashOnDeliveryRadio">Cash on Delivery</label>
+              <input type="radio" id="cardPaymentRadio" name="payment" value="card" onclick="togglePaymentFields()">
+              <label for="cardPaymentRadio">Card Payment</label>
+  
+              <div id="cardFields" style="display: none;">
+                <label for="cname">Name on Card</label>
+                <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                <label for="ccnum">Credit card number</label>
+                <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                <label for="expmonth">Exp Month</label>
+                <input type="text" id="expmonth" name="expmonth" placeholder="September">
+  
+                <div class="row">
+                  <div class="col-50">
+                    <label for="expyear">Exp Year</label>
+                    <input type="text" id="expyear" name="expyear" placeholder="2018">
+                  </div>
+                  <div class="col-50">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="352">
+                  </div>
                 </div>
               </div>
             </div>
-  
           </div>
           <label>
             <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
@@ -159,11 +192,10 @@
           </span>
         </h4>
 
+        need to fetch the total price from the cart
         <hr>
         <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
       </div>
     </div>
   </div>
-
-
 {% endblock %}

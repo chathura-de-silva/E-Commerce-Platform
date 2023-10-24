@@ -34,27 +34,59 @@ def gen_custID():
         # If there are no results (e.g., the table is empty), start with 1
         return 0
 
-def gen_prodID():
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE metadata SET prodnum = prodnum + 1")
-    conn.commit()
-    cur.execute("SELECT prodnum FROM metadata")
-    prodnum = str(cur.fetchone()[0])
-    conn.close()
-    id = "PID" + "0" * (7 - len(prodnum)) + prodnum
-    return id
-
+#this function generates an order ID
 def gen_orderID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("UPDATE metadata SET ordernum = ordernum + 1")
-    conn.commit()
-    cur.execute("SELECT ordernum FROM metadata")
-    ordernum = str(cur.fetchone()[0])
+    cur.execute("SELECT order_id FROM order_item ORDER BY order_id DESC LIMIT 1")
+    res = cur.fetchall()
     conn.close()
-    id = "OID" + "0" * (7 - len(ordernum)) + ordernum
-    return id
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+    
+#this function generates ID for a single order item
+def gen_order_item_ID():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT order_item_id FROM order_item ORDER BY order_item_id DESC LIMIT 1")
+    res = cur.fetchall()
+    conn.close()
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+
+def get_stock_count(variant_id):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    # Define the query with a placeholder for variant_id
+    query = "SELECT stock_count FROM inventory WHERE variant_id = %s"
+
+    # Execute the query with the provided variant_id
+    cur.execute(query, (variant_id,))
+
+    # Fetch the result
+    result = cur.fetchone()
+
+    print(result)
+
+    if result:
+        stock_count = result[0]
+        return stock_count
+    else:
+        return None
+
+
 
 
 #this function will be used to add a new user to the database
@@ -201,30 +233,54 @@ def get_varient_info(product_id):
     return result
 
 
-def search_products(srchBy, category, keyword):
+def update_order_items(order_items,is_signedin):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    keyword = ['%' + i + '%' for i in keyword.split()]
-    if len(keyword) == 0:
-        keyword.append('%%')
-    if srchBy == "by category":
-        cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE category=%s AND quantity!=0", (category,))
-        result = cur.fetchall()
-    elif srchBy == "by keyword":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s OR category LIKE %s) AND quantity!=0", (word, word, word))
-            result += cur.fetchall()
-        result = list(set(result))
-    elif srchBy == "both":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s) AND quantity!=0 AND category=%s", (word, word, category))
-            result += cur.fetchall()
-        result = list(set(result))
-    conn.close()
-    return result
+    cursor = conn.cursor()
+        # create a transaction
+        # inventry should be updated
+        # cart item table should be cleared 
 
+        # we should handle this separately for logged in users and guest users 
+
+        # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated 
+        # cart table should be inserted with a new entry
+    try:
+
+        if is_signedin:
+            order_item_id, order_id, variant_id, quantity, price = order_items[0]
+
+            insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
+
+            conn.commit()  # Commit the changes to the database
+        if not is_signedin:
+            # set the session cart to null (empty the session cart)
+
+            pass
+    except mysql.connector.Error as err:
+        # Handle any potential errors here
+        print("Error: {}".format(err))
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def update_order_table(order_table_details):
+    conn = get_mysql_connection()
+    cursor = conn.cursor()
+    try:
+        order_id, date, delivery_method, payment_method, user_id = order_table_details
+
+
+        insert_query = "INSERT INTO orders (order_id, date, delivery_method, payment_method, user_id) VALUES (%s, %s, %s, %s, %s)"
+
+        cursor.execute(insert_query, (order_id, date, delivery_method, payment_method, user_id) )
+
+        conn.commit()
+
+    except mysql.connector.Error as err:
+        # Handle any potential errors here
+        print("Error: {}".format(err))
 
 def get_cart(custID):
     conn = get_mysql_connection()
@@ -236,7 +292,8 @@ def get_cart(custID):
         v.name AS name,
         v.price AS price,
         v.variant_image AS variant_image,
-        p.title AS title
+        p.title AS title,
+        v.variant_id as variant_id
     FROM
         cart_item AS ci
     JOIN
@@ -263,7 +320,7 @@ def get_guest_cart(variant_ids):
 
     # Construct the SQL query using JOIN to fetch the required columns from both tables
     query = """
-    SELECT p.title, v.name, v.price, v.variant_image
+    SELECT p.title, v.name, v.price, v.variant_image,v.variant_id
     FROM product AS p
     JOIN variant AS v ON p.product_id = v.product_id
     WHERE 

@@ -3,6 +3,8 @@ from flask_session import Session
 from dbaccess import *
 from databaseConfig import database_connector
 import os
+from datetime import date
+
 
 
 #creating a global cursor
@@ -140,11 +142,18 @@ def get_varient(product_id):
     #need to write the business logic here
 
     tup = get_varient_info(product_id)
+
+    #variant id is the last elemet in the fetched tuple 
+    # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
+    variant_id = (tup[-1][-1])
+
+    print(variant_id)
+    stock_count = get_stock_count(variant_id)
     signedin = False
     if "userid" in session:
         signedin = True
 
-    return render_template('variants.html',variants = tup, signedin=signedin)
+    return render_template('variants.html',variants = tup, signedin=signedin , stock_count = stock_count)
 
 
 @app.route('/search', methods=['GET'])
@@ -217,25 +226,96 @@ def checkout():
     # if the user if not logged in he should be redirected to the login page 
     is_logged = session['signedin']
     if is_logged is True:
-
         return render_template('checkout.html')
     #also need to find the total price 
     else:
-        flash('You need to be logged in to proceed with the checkout.', 'error')
-        return redirect(url_for('login')) 
+        flash('You are going to checkout as a guest. Some features may not be not available')
+        return render_template('checkout.html')
 
 
 @app.route('/checkout_successful', methods=['POST'])
 def checkout_successful():
     if request.method == 'POST':
-        # Here, you can process the form data as needed
-        # For example, you can access form data using request.form
+        # Here, we can process the form data as needed
+        # you can access form data using request.form
         full_name = request.form.get('firstname')
         email = request.form.get('email')
         # Process other form data here as necessary
 
+        signedin =  session['signedin'] 
+        order_id = gen_orderID()
+        #need to update the order table in order to get rid of the foregin key constraint
+
+        # Get the current date
+        current_date = date.today()
+        # Format the current date as a string in 'YYYY-MM-DD' format
+        formatted_date = current_date.strftime('%Y-%m-%d')
+
+        # order_id, date, delivery_method, payment_method, user_id
+
+        if signedin:
+            
+            user_id = session['userid']
+
+            order_table_details = [order_id,formatted_date,'Express','visa',user_id]
+            #first of all we need to update the order_table in order to avoid the primary key constraint 
+            update_order_table(order_table_details)
+
+            #get the user's cart
+            cart = get_cart(session['userid'])
+            #extract the variant ID's from the cart
+            for item in cart:
+
+                new_ID = gen_order_item_ID()
+                variant_Id = item[5]
+                quantity = item[0]
+                price = item[2]
+
+                temp = []
+                temp.append((new_ID,order_id,variant_Id,quantity,price))
+                 #need to update the order item table from the above details 
+                update_order_items(temp,signedin)
+
+            return(render_template('home.html'))
+
+        if not signedin:
+            # get the session cart
+            # when updating the order tables we need a user_id and we don't have a user ID for a guest user 
+
+            # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
+            
+            user_id = 0
+            order_table_details = [order_id,formatted_date,'Express','visa',user_id]
+            #first of all we need to update the order_table in order to avoid the primary key constraint 
+            update_order_table(order_table_details)
+
+            # p.title, v.name, v.price, v.variant_image,v.variant_id
+            session_cart = session.get('cart', {})
+            #get a list of all the varient ID's that are added to the cart
+            variant_ids_string = list(session_cart.keys())
+            variant_ids = [int(i) for i in variant_ids_string]
+            #need to implement the function to fetch values from the database for the given id's
+            guest_cart = get_guest_cart(variant_ids)
+
+            for item in guest_cart:
+
+                new_ID = gen_order_item_ID()
+                variant_Id = item[4]
+                # quantity is in the hashmap of the session cart
+                quantity = session_cart[str(variant_Id)]
+                price = item[2]
+
+                temp = []
+                temp.append((new_ID,order_id,variant_Id,quantity,price))
+
+                update_order_items(temp,signedin)
+            
+            # clear the session cart
+            session['cart'].clear()
+
+        # try to implement and transaction to finish the checkout functionality
         # After processing the form data, you can render a success page
-        return render_template('login.html', full_name=full_name, email=email)
+            return render_template('login.html', full_name=full_name, email=email)
 
 
 app.config['SECRET_KEY'] = os.urandom(17)

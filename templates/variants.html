@@ -59,6 +59,18 @@
         }
     </style>
 
+
+<script>
+    // Add an event listener to the quantity select element
+    document.getElementById('quantitySelect').addEventListener('change', function() {
+        // Get the selected quantity from the dropdown
+        var selectedQuantity = this.value;
+
+        // Update the hidden input field with the selected quantity
+        document.getElementById('hiddenQuantity').value = selectedQuantity;
+    });
+</script>
+
 <!-- variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id -->
 
     <div class="row">
@@ -68,11 +80,17 @@
                     <div class="product-tile">
                         <img src="/static/laptop.jpg" alt="{{ variant[0] }}" class="product-image">
                         <div class="product-name">{{ variant[0] }}</div>
+                        <p>Available Stock: {{ stock_count }}</p> <!-- Display stock count -->
                         <p>Price: ${{ variant[1] }}</p>
                         <p>Custom Attributes: {{ variant[2] }}</p>
                         <form action="/add_to_cart" method="post">
                             <input type="hidden" name="variant_id" value="{{ variant[4] }}">
-                            <input type="hidden" name="quantity" value="1">
+                            <select name="quantity" id="quantitySelect">
+                                {% for i in range(1, 11) %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
                             <button type="submit" class="add-to-cart-button">Add to Cart</button>
                         </form>
                     </div>
