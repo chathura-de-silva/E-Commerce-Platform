@@ -236,12 +236,20 @@ def get_varient_info(product_id):
 def update_order_items(order_items):
     conn = get_mysql_connection()
     cursor = conn.cursor()
+        # create a transaction
+        # inventry should be updated
+        # cart item table should be cleared 
+
+        # we should handle this separately for logged in users and guest users 
+
+        # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated 
+        # cart table should be inserted with a new entry
     try:
         order_item_id, order_id, variant_id, quantity, price = order_items[0]
-        # Assuming you have a table named 'order_item'
+
         insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
         cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
-    
+
         conn.commit()  # Commit the changes to the database
     except mysql.connector.Error as err:
         # Handle any potential errors here
@@ -256,6 +264,7 @@ def update_order_table(order_table_details):
     cursor = conn.cursor()
     try:
         order_id, date, delivery_method, payment_method, user_id = order_table_details
+
 
         insert_query = "INSERT INTO orders (order_id, date, delivery_method, payment_method, user_id) VALUES (%s, %s, %s, %s, %s)"
 

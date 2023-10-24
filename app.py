@@ -236,8 +236,8 @@ def checkout():
 @app.route('/checkout_successful', methods=['POST'])
 def checkout_successful():
     if request.method == 'POST':
-        # Here, you can process the form data as needed
-        # For example, you can access form data using request.form
+        # Here, we can process the form data as needed
+        # you can access form data using request.form
         full_name = request.form.get('firstname')
         email = request.form.get('email')
         # Process other form data here as necessary
