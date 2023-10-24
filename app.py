@@ -219,7 +219,7 @@ def add_to_cart():
             cart[variant_id] = quantity
         session.modified = True  # Mark the session as modified
 
-        return redirect(url_for('cart'))  
+        return redirect(url_for('cart'))
     
 
 @app.route('/checkout')
