@@ -154,7 +154,7 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   }
   
   body {
-    background: #fafafa;
+    background: #ece7b5;
     margin-top: 5rem;
     color: #00264d;
     text-align: center;
@@ -163,8 +163,9 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   
   /* Header */
   header {
+    background: #f9f5d8;
     height: 90px;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid #a5a390;
   }
   
   #logo {
@@ -173,22 +174,23 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   
   /* Navigation */
   #navbarToggle {
-    margin-top: 20px;
+    margin-top: 25px;
     font-family: 'Manjari', sans-serif;
-    font-size: 18px;
+    font-size: 19px;
   }
   
   .site-header .navbar-nav .nav-link {
-    color: #00264d;
+    color: #26103d;
   }
   
   .site-header .navbar-nav .nav-link:hover {
-    color: #43b9f0;
+    color: #975f31;
   }
   
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
     text-decoration: underline;
+    font-style: italic;
   }
   
   /* Content Section */
