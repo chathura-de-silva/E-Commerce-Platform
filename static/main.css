@@ -212,6 +212,7 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   /* Carousel */
   .carousel-inner {
     height: 500px;
+    border-radius: 2%;
   }
   
   /* Form */
