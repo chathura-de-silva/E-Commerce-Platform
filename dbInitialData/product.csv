@@ -1,45 +1,45 @@
 product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)",category_id INT,product_image TEXT
 104,iPhone 12 Pro,"The Apple iPhone 12 Pro is a flagship smartphone known for its exceptional camera capabilities and performance. With its A14 Bionic chip, Pro camera system, and ProRAW support, it's a top choice for photography enthusiasts and power users.",0.4,3,product-images/iphone_12.png
 105,Samsung Galaxy S21 Ultra,"The Samsung Galaxy S21 Ultra is the pinnacle of Samsung's Galaxy S series, offering unmatched performance, a versatile camera system, and a stunning AMOLED display. It's a flagship smartphone that caters to users seeking the best of Samsung's technology.",0.35,3,product-images/galaxy_s21.png
-103,MacBook Air,"The Apple MacBook Air 13 combines style, innovation, and power. It's a lightweight, high-performance laptop that caters to professionals, students, and business users, delivering an unmatched computing experience.",2.8,4,product-images/macbook.jpg
-102,Dell XPS 13,"The Dell XPS 13: A pinnacle of style and performance. It's a compact, powerful laptop designed for professionals, students, and business enthusiasts seeking top-tier computing excellence.",2.7,4,product-images/Dell XPS 13.jpeg
-101,LEGO Star Wars Millennium Falcon,"Build the ultimate Millennium Falcon with LEGO Star Wars. This iconic spaceship is a must-have for fans of the series.",1.5,5,product-images/lego_falcon.jpg
-106,Monopoly Board Game,"Classic Monopoly board game for hours of family fun. Buy, sell, and trade your way to success!",1.2,6,product-images/monopoly.jpg
-107,Hot Wheels Die-Cast Cars Set,"A set of 10 die-cast Hot Wheels cars for kids who love fast and furious racing action.",0.5,7,product-images/hot_wheels.jpg
-108,iPad Air,"The iPad Air offers a perfect blend of power, performance, and portability. It's great for work and play.",1.0,8,product-images/ipad_air.jpg
-109,Samsung 65-Inch 4K Smart TV,"Experience stunning visuals and smart features with this 65-inch Samsung 4K Smart TV.",30.0,9,product-images/samsung_tv.jpg
-110,Barbie Dreamhouse,"The Barbie Dreamhouse is a dream come true for Barbie enthusiasts. It features multiple rooms and accessories for endless play.",4.5,10,product-images/barbie_dreamhouse.jpg
-111,Bose Noise-Canceling Headphones,"Immerse yourself in high-quality audio with these Bose noise-canceling headphones.",0.3,11,product-images/bose_headphones.jpg
-112,Canon EOS Rebel T7 DSLR Camera,"Capture stunning photos and videos with the Canon EOS Rebel T7. Perfect for photography enthusiasts.",2.2,12,product-images/canon_camera.jpg
-113,Remote Control Helicopter,"Enjoy hours of remote control flying fun with this helicopter. Great for both kids and adults!",0.8,13,product-images/helicopter.jpg
-114,1000-Piece Jigsaw Puzzle Set,"Challenge your puzzle-solving skills with this 1000-piece puzzle set. Various designs available.",1.0,14,product-images/puzzle_set.jpg
+103,MacBook Air m1,"The Apple MacBook Air 13 combines style, innovation, and power. It's a lightweight, high-performance laptop that caters to professionals, students, and business users, delivering an unmatched computing experience.",2.8,4,product-images/macbook_air.png
+102,Dell XPS 13,"The Dell XPS 13: A pinnacle of style and performance. It's a compact, powerful laptop designed for professionals, students, and business enthusiasts seeking top-tier computing excellence.",2.7,4,product-images/Dell_XPS_13.png
+101,LEGO Star Wars Millennium Falcon,"Build the ultimate Millennium Falcon with LEGO Star Wars. This iconic spaceship is a must-have for fans of the series.",1.5,5,product-images/lego_falcon.png
+106,Monopoly Board Game,"Classic Monopoly board game for hours of family fun. Buy, sell, and trade your way to success!",1.2,6,product-images/monopoly.png
+107,Hot Wheels Die-Cast Cars Set,"A set of 10 die-cast Hot Wheels cars for kids who love fast and furious racing action.",0.5,7,product-images/hot_wheels.png
+108,iPad Air,"The iPad Air offers a perfect blend of power, performance, and portability. It's great for work and play.",1.0,8,product-images/ipad_air.png
+109,Samsung 65-Inch 4K Smart TV,"Experience stunning visuals and smart features with this 65-inch Samsung 4K Smart TV.",30.0,9,product-images/samsung_tv.png
+110,Barbie Dreamhouse,"The Barbie Dreamhouse is a dream come true for Barbie enthusiasts. It features multiple rooms and accessories for endless play.",4.5,10,product-images/barbie_dreamhouse.png
+111,Bose Noise-Canceling Headphones,"Immerse yourself in high-quality audio with these Bose noise-canceling headphones.",0.3,11,product-images/bose_headphones.png
+112,Canon EOS Rebel T7 DSLR Camera,"Capture stunning photos and videos with the Canon EOS Rebel T7. Perfect for photography enthusiasts.",2.2,12,product-images/canon_camera.png
+113,Remote Control Helicopter,"Enjoy hours of remote control flying fun with this helicopter. Great for both kids and adults!",0.8,13,product-images/helicopter.png
+114,1000-Piece Jigsaw Puzzle Set,"Challenge your puzzle-solving skills with this 1000-piece puzzle set. Various designs available.",1.0,14,product-images/puzzle_set.png
 115,Sony Xperia 1 III,"The Sony Xperia 1 III is a high-end smartphone with a focus on photography and multimedia. It boasts a 4K display and a versatile camera system.",0.38,3,product-images/sony_xperia.png
-116,Acer Predator Helios 300,"The Acer Predator Helios 300 is a gaming laptop with powerful hardware for an immersive gaming experience.",2.9,4,subproduct-images/acer_predator.jpg
-117,LEGO Harry Potter Hogwarts Castle,"Build the iconic Hogwarts Castle with LEGO Harry Potter. Perfect for fans of the wizarding world.",2.3,5,product-images/lego_hogwarts.jpg
-118,Scrabble Board Game,"Scrabble is a classic word game that challenges your vocabulary and strategic skills.",1.0,6,product-images/scrabble.jpg
-119,Nerf N-Strike Elite Disruptor Blaster,"The Nerf N-Strike Elite Disruptor Blaster is a high-performance foam dart blaster for exciting battles.",0.9,7,product-images/nerf_blaster.jpg
-120,Microsoft Surface Pro 7,"The Microsoft Surface Pro 7 is a versatile 2-in-1 laptop that's perfect for productivity on the go.",1.7,8,product-images/surface_pro.jpg
-121,LG 55-Inch OLED 4K TV,"Experience stunning visuals and vibrant colors with this LG 55-Inch OLED 4K TV.",25.0,9,product-images/lg_oled_tv.jpg
-122,American Girl Doll,"The American Girl Doll is a beloved collectible doll that comes with various accessories and stories.",2.0,10,product-images/american_girl.jpg
-123,Sony WH-1000XM4 Wireless Headphones,"Enjoy exceptional sound quality and noise-canceling features with these Sony wireless headphones.",0.29,11,product-images/sony_headphones.jpg
-124,Nikon D7500 DSLR Camera,"Capture incredible photos and videos with the Nikon D7500 DSLR camera, perfect for photography enthusiasts.",1.6,12,product-images/nikon_camera.jpg
-125,R/C Off-Road Buggy,"Experience off-road racing excitement with this remote control off-road buggy.",1.1,13,product-images/offroad_buggy.jpg
-126,1000-Piece World Map Jigsaw Puzzle,"Challenge yourself with this world map jigsaw puzzle, perfect for geography enthusiasts.",1.0,14,product-images/world_map_puzzle.jpg
+116,Acer Predator Helios 300,"The Acer Predator Helios 300 is a gaming laptop with powerful hardware for an immersive gaming experience.",2.9,4,product-images/acer_predator.png
+117,LEGO Harry Potter Hogwarts Castle,"Build the iconic Hogwarts Castle with LEGO Harry Potter. Perfect for fans of the wizarding world.",2.3,5,product-images/lego_hogwarts.png
+118,Scrabble Board Game,"Scrabble is a classic word game that challenges your vocabulary and strategic skills.",1.0,6,product-images/scrabble.png
+119,Nerf N-Strike Elite Disruptor Blaster,"The Nerf N-Strike Elite Disruptor Blaster is a high-performance foam dart blaster for exciting battles.",0.9,7,product-images/nerf_blaster.png
+120,Microsoft Surface Pro 7,"The Microsoft Surface Pro 7 is a versatile 2-in-1 laptop that's perfect for productivity on the go.",1.7,8,product-images/surface_pro.png
+121,LG 55-Inch OLED 4K TV,"Experience stunning visuals and vibrant colors with this LG 55-Inch OLED 4K TV.",25.0,9,product-images/lg_oled_tv.png
+122,American Girl Doll,"The American Girl Doll is a beloved collectible doll that comes with various accessories and stories.",2.0,10,product-images/american_girl.png
+123,Sony WH-1000XM4 Wireless Headphones,"Enjoy exceptional sound quality and noise-canceling features with these Sony wireless headphones.",0.29,11,product-images/sony_headphones.png
+124,Nikon D7500 DSLR Camera,"Capture incredible photos and videos with the Nikon D7500 DSLR camera, perfect for photography enthusiasts.",1.6,12,product-images/nikon_camera.png
+125,R/C Off-Road Buggy,"Experience off-road racing excitement with this remote control off-road buggy.",1.1,13,product-images/offroad_buggy.png
+126,1000-Piece World Map Jigsaw Puzzle,"Challenge yourself with this world map jigsaw puzzle, perfect for geography enthusiasts.",1.0,14,product-images/world_map_puzzle.png
 127,Google Pixel 7 Pro,"Google pixel 7 Pro powered by google latest Tensor G2 Processor with a Tensor Processing unit.",4.5,3,product-images/pixel_7_pro.png
-128,HP Spectre x360,"The HP Spectre x360 is a premium 2-in-1 laptop with a sleek design and powerful performance.",2.6,4,subproduct-images/hp_spectre.jpg
-129,LEGO Technic Bugatti Chiron,"Experience the thrill of building a detailed LEGO replica of the Bugatti Chiron sports car.",3.0,5,product-images/lego_bugatti.jpg
-130,Catan Board Game,"Settle the island of Catan and trade your way to victory in this popular strategy board game.",2.2,6,product-images/catan.jpg
-131,Nintendo Switch,"The Nintendo Switch is a versatile gaming console for gaming on the go or at home.",0.88,7,product-images/nintendo_switch.jpg
-132,Microsoft Surface Laptop 4,"The Microsoft Surface Laptop 4 is a lightweight and powerful laptop for professionals and students.",2.8,8,product-images/surface_laptop.jpg
-133,Sony 75-Inch 4K Smart TV,"Enjoy cinematic entertainment at home with this 75-inch Sony 4K Smart TV.",46.0,9,product-images/sony_4k_tv.jpg
-134,LEGO Creator Expert Roller Coaster,"Build an impressive roller coaster with this LEGO Creator Expert set, complete with working features.",4.2,5,product-images/lego_roller_coaster.jpg
-135,Ticket to Ride Board Game,"Embark on a cross-country adventure with the Ticket to Ride board game.",1.5,6,product-images/ticket_to_ride.jpg
-136,Nintendo Switch Lite,"The Nintendo Switch Lite is a compact and portable gaming console for on-the-go gaming fun.",0.61,7,product-images/nintendo_switch_lite.jpg
-137,HP Envy 13 Laptop,"The HP Envy 13 is a stylish and lightweight laptop designed for work and entertainment.",2.3,4,subproduct-images/hp_envy.jpg
-138,Samsung 85-Inch 8K Smart TV,"Experience the future of TV with this 85-inch Samsung 8K Smart TV, offering incredible clarity and detail.",68.0,9,product-images/samsung_8k_tv.jpg
-139,LEGO Ideas International Space Station,"Recreate the International Space Station with this detailed LEGO Ideas set.",1.5,5,product-images/lego_iss.jpg
-140,Jenga Classic Game,"Test your skills and balance with the classic Jenga game, a perfect party or family activity.",0.7,6,product-images/jenga.jpg
-141,Sony WF-1000XM4 Wireless Earbuds,"Experience premium audio quality and noise-canceling with Sony WF-1000XM4 wireless earbuds.",0.025,11,product-images/sony_earbuds.jpg
-142,Canon EOS 90D DSLR Camera,"Capture stunning photos and videos with the Canon EOS 90D DSLR camera, suitable for both enthusiasts and professionals.",1.3,12,product-images/canon_90d.jpg
-143,R/C Speed Boat,"Enjoy high-speed water adventures with this remote control speed boat, perfect for outdoor fun.",1.4,13,product-images/speed_boat.jpg
-144,1000-Piece National Parks Puzzle Set,"Explore the beauty of national parks with this 1000-piece puzzle set featuring stunning scenery.",1.0,14,product-images/national_parks_puzzle.jpg
+128,HP Spectre x360,"The HP Spectre x360 is a premium 2-in-1 laptop with a sleek design and powerful performance.",2.6,4,product-images/hp_spectre.png
+129,LEGO Technic Bugatti Chiron,"Experience the thrill of building a detailed LEGO replica of the Bugatti Chiron sports car.",3.0,5,product-images/lego_bugatti.png
+130,Catan Board Game,"Settle the island of Catan and trade your way to victory in this popular strategy board game.",2.2,6,product-images/catan.png
+131,Nintendo Switch,"The Nintendo Switch is a versatile gaming console for gaming on the go or at home.",0.88,7,product-images/nintendo_switch.png
+132,Microsoft Surface Laptop 4,"The Microsoft Surface Laptop 4 is a lightweight and powerful laptop for professionals and students.",2.8,8,product-images/surface_laptop.png
+133,Sony 75-Inch 4K Smart TV,"Enjoy cinematic entertainment at home with this 75-inch Sony 4K Smart TV.",46.0,9,product-images/sony_4k_tv.png
+134,LEGO Creator Expert Roller Coaster,"Build an impressive roller coaster with this LEGO Creator Expert set, complete with working features.",4.2,5,product-images/lego_roller_coaster.png
+135,Ticket to Ride Board Game,"Embark on a cross-country adventure with the Ticket to Ride board game.",1.5,6,product-images/ticket_to_ride.png
+136,Nintendo Switch Lite,"The Nintendo Switch Lite is a compact and portable gaming console for on-the-go gaming fun.",0.61,7,product-images/nintendo_switch_lite.png
+137,HP Envy 13 Laptop,"The HP Envy 13 is a stylish and lightweight laptop designed for work and entertainment.",2.3,4,product-images/hp_envy.png
+138,Samsung 85-Inch 8K Smart TV,"Experience the future of TV with this 85-inch Samsung 8K Smart TV, offering incredible clarity and detail.",68.0,9,product-images/samsung_8k_tv.png
+139,LEGO Ideas International Space Station,"Recreate the International Space Station with this detailed LEGO Ideas set.",1.5,5,product-images/lego_iss.png
+140,Jenga Classic Game,"Test your skills and balance with the classic Jenga game, a perfect party or family activity.",0.7,6,product-images/jenga.png
+141,Sony WF-1000XM4 Wireless Earbuds,"Experience premium audio quality and noise-canceling with Sony WF-1000XM4 wireless earbuds.",0.025,11,product-images/sony_earbuds.png
+142,Canon EOS 90D DSLR Camera,"Capture stunning photos and videos with the Canon EOS 90D DSLR camera, suitable for both enthusiasts and professionals.",1.3,12,product-images/canon_90d.png
+143,R/C Speed Boat,"Enjoy high-speed water adventures with this remote control speed boat, perfect for outdoor fun.",1.4,13,product-images/speed_boat.png
+144,1000-Piece National Parks Puzzle Set,"Explore the beauty of national parks with this 1000-piece puzzle set featuring stunning scenery.",1.0,14,product-images/national_parks_puzzle.png
