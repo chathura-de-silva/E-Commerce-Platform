@@ -1,8 +1,8 @@
 product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)",category_id INT,product_image TEXT
-104,iPhone 12 Pro,"The Apple iPhone 12 Pro is a flagship smartphone known for its exceptional camera capabilities and performance. With its A14 Bionic chip, Pro camera system, and ProRAW support, it's a top choice for photography enthusiasts and power users.",0.4,3,subproduct-images/iphone_12.jpg
-105,Samsung Galaxy S21 Ultra,"The Samsung Galaxy S21 Ultra is the pinnacle of Samsung's Galaxy S series, offering unmatched performance, a versatile camera system, and a stunning AMOLED display. It's a flagship smartphone that caters to users seeking the best of Samsung's technology.",0.35,3,subproduct-images/galaxy_s21.jpg
-103,MacBook Air,"The Apple MacBook Air 13 combines style, innovation, and power. It's a lightweight, high-performance laptop that caters to professionals, students, and business users, delivering an unmatched computing experience.",2.8,4,subproduct-images/macbook.jpg
-102,Dell XPS 13,"The Dell XPS 13: A pinnacle of style and performance. It's a compact, powerful laptop designed for professionals, students, and business enthusiasts seeking top-tier computing excellence.",2.7,4,subproduct-images/Dell XPS 13.jpeg
+104,iPhone 12 Pro,"The Apple iPhone 12 Pro is a flagship smartphone known for its exceptional camera capabilities and performance. With its A14 Bionic chip, Pro camera system, and ProRAW support, it's a top choice for photography enthusiasts and power users.",0.4,3,product-images/iphone_12.png
+105,Samsung Galaxy S21 Ultra,"The Samsung Galaxy S21 Ultra is the pinnacle of Samsung's Galaxy S series, offering unmatched performance, a versatile camera system, and a stunning AMOLED display. It's a flagship smartphone that caters to users seeking the best of Samsung's technology.",0.35,3,product-images/galaxy_s21.png
+103,MacBook Air,"The Apple MacBook Air 13 combines style, innovation, and power. It's a lightweight, high-performance laptop that caters to professionals, students, and business users, delivering an unmatched computing experience.",2.8,4,product-images/macbook.jpg
+102,Dell XPS 13,"The Dell XPS 13: A pinnacle of style and performance. It's a compact, powerful laptop designed for professionals, students, and business enthusiasts seeking top-tier computing excellence.",2.7,4,product-images/Dell XPS 13.jpeg
 101,LEGO Star Wars Millennium Falcon,"Build the ultimate Millennium Falcon with LEGO Star Wars. This iconic spaceship is a must-have for fans of the series.",1.5,5,product-images/lego_falcon.jpg
 106,Monopoly Board Game,"Classic Monopoly board game for hours of family fun. Buy, sell, and trade your way to success!",1.2,6,product-images/monopoly.jpg
 107,Hot Wheels Die-Cast Cars Set,"A set of 10 die-cast Hot Wheels cars for kids who love fast and furious racing action.",0.5,7,product-images/hot_wheels.jpg
@@ -13,7 +13,7 @@ product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)",categ
 112,Canon EOS Rebel T7 DSLR Camera,"Capture stunning photos and videos with the Canon EOS Rebel T7. Perfect for photography enthusiasts.",2.2,12,product-images/canon_camera.jpg
 113,Remote Control Helicopter,"Enjoy hours of remote control flying fun with this helicopter. Great for both kids and adults!",0.8,13,product-images/helicopter.jpg
 114,1000-Piece Jigsaw Puzzle Set,"Challenge your puzzle-solving skills with this 1000-piece puzzle set. Various designs available.",1.0,14,product-images/puzzle_set.jpg
-115,Sony Xperia 1 III,"The Sony Xperia 1 III is a high-end smartphone with a focus on photography and multimedia. It boasts a 4K display and a versatile camera system.",0.38,3,subproduct-images/sony_xperia.jpg
+115,Sony Xperia 1 III,"The Sony Xperia 1 III is a high-end smartphone with a focus on photography and multimedia. It boasts a 4K display and a versatile camera system.",0.38,3,product-images/sony_xperia.png
 116,Acer Predator Helios 300,"The Acer Predator Helios 300 is a gaming laptop with powerful hardware for an immersive gaming experience.",2.9,4,subproduct-images/acer_predator.jpg
 117,LEGO Harry Potter Hogwarts Castle,"Build the iconic Hogwarts Castle with LEGO Harry Potter. Perfect for fans of the wizarding world.",2.3,5,product-images/lego_hogwarts.jpg
 118,Scrabble Board Game,"Scrabble is a classic word game that challenges your vocabulary and strategic skills.",1.0,6,product-images/scrabble.jpg
@@ -25,7 +25,7 @@ product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)",categ
 124,Nikon D7500 DSLR Camera,"Capture incredible photos and videos with the Nikon D7500 DSLR camera, perfect for photography enthusiasts.",1.6,12,product-images/nikon_camera.jpg
 125,R/C Off-Road Buggy,"Experience off-road racing excitement with this remote control off-road buggy.",1.1,13,product-images/offroad_buggy.jpg
 126,1000-Piece World Map Jigsaw Puzzle,"Challenge yourself with this world map jigsaw puzzle, perfect for geography enthusiasts.",1.0,14,product-images/world_map_puzzle.jpg
-127,PlayStation 5,"The PlayStation 5 is the latest gaming console from Sony, offering powerful gaming experiences and stunning graphics.",4.5,3,subproduct-images/ps5.jpg
+127,Google Pixel 7 Pro,"Google pixel 7 Pro powered by google latest Tensor G2 Processor with a Tensor Processing unit.",4.5,3,product-images/pixel_7_pro.png
 128,HP Spectre x360,"The HP Spectre x360 is a premium 2-in-1 laptop with a sleek design and powerful performance.",2.6,4,subproduct-images/hp_spectre.jpg
 129,LEGO Technic Bugatti Chiron,"Experience the thrill of building a detailed LEGO replica of the Bugatti Chiron sports car.",3.0,5,product-images/lego_bugatti.jpg
 130,Catan Board Game,"Settle the island of Catan and trade your way to victory in this popular strategy board game.",2.2,6,product-images/catan.jpg
