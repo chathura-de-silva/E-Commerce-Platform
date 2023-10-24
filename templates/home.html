@@ -2,6 +2,14 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<!-- Add the search bar at the top of the page -->
+<div class="search-bar my-4">
+  <form class="form-inline justify-content-center">
+    <input class="form-control mr-3" type="search" placeholder="Search" aria-label="Search" style="width: 600px;">
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
+</div>
+
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height: 450px">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -10,13 +18,13 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="/static/warehouse.jpeg" class="d-block w-100" alt="..." >
+      <img src="/static/mainslide.png" class="d-block w-100" alt="..." >
     </div>
     <div class="carousel-item">
-      <img src="/static/electronics.png" class="d-block w-100" alt="...">
+      <img src="/static/category-images/electronics.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="/static/toys.jpg" class="d-block w-100" alt="...">
+      <img src="/static/category-images/toys.png" class="d-block w-100" alt="...">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
