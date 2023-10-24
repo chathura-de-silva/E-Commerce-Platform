@@ -143,12 +143,15 @@ def get_varient(product_id):
 
     tup = get_varient_info(product_id)
 
+    print(tup)
     #variant id is the last elemet in the fetched tuple 
     # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
     variant_id = (tup[-1][-1])
 
     print(variant_id)
     stock_count = get_stock_count(variant_id)
+
+    print(stock_count , "is the stock count")
     signedin = False
     if "userid" in session:
         signedin = True
@@ -274,7 +277,7 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
                  #need to update the order item table from the above details 
-                update_order_items(temp,signedin)
+                update_order_items(temp,signedin,user_id = user_id)
 
             return(render_template('home.html'))
 
@@ -308,7 +311,7 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
 
-                update_order_items(temp,signedin)
+                update_order_items(temp,signedin,user_id = user_id)
             
             # clear the session cart
             session['cart'].clear()

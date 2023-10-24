@@ -233,35 +233,42 @@ def get_varient_info(product_id):
     return result
 
 
-def update_order_items(order_items,is_signedin):
+def update_order_items(order_items,is_signedin,user_id):
     conn = get_mysql_connection()
     cursor = conn.cursor()
         # create a transaction
         # inventry should be updated
-        # cart item table should be cleared 
-
         # we should handle this separately for logged in users and guest users 
 
         # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated 
         # cart table should be inserted with a new entry
     try:
+        # Start a transaction
+        cursor.execute("START TRANSACTION")
 
         if is_signedin:
             order_item_id, order_id, variant_id, quantity, price = order_items[0]
 
+            # INSERT INTO order_item
             insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
             cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
 
-            conn.commit()  # Commit the changes to the database
-        if not is_signedin:
-            # set the session cart to null (empty the session cart)
+            # DELETE FROM cart_item
+            delete_query = "DELETE FROM cart_item WHERE user_id = %s"
+            cursor.execute(delete_query, (user_id,))
 
-            pass
-    except mysql.connector.Error as err:
-        # Handle any potential errors here
-        print("Error: {}".format(err))
+            # Reduce stock count in inventory
+            update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
+            cursor.execute(update_query, (quantity, variant_id))
+
+        # Commit the transaction
+        cursor.execute("COMMIT")
+
+    except Exception as e:
+        # Handle any exceptions and possibly roll back the transaction
+        cursor.execute("ROLLBACK")
+        raise e
     finally:
-        cursor.close()
         conn.close()
 
 
