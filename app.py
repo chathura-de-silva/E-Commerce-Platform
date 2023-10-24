@@ -274,7 +274,7 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
                  #need to update the order item table from the above details 
-                update_order_items(temp)
+                update_order_items(temp,signedin)
 
             return(render_template('home.html'))
 
@@ -284,7 +284,7 @@ def checkout_successful():
 
             # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
             
-            user_id = 00000
+            user_id = 0
             order_table_details = [order_id,formatted_date,'Express','visa',user_id]
             #first of all we need to update the order_table in order to avoid the primary key constraint 
             update_order_table(order_table_details)
@@ -308,7 +308,10 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
 
-                update_order_items(temp)
+                update_order_items(temp,signedin)
+            
+            # clear the session cart
+            session['cart'].clear()
 
         # try to implement and transaction to finish the checkout functionality
         # After processing the form data, you can render a success page

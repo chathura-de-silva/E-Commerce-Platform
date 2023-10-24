@@ -1,5 +1,5 @@
 user_id INT,email VARCHAR(255),password VARCHAR(255),username VARCHAR(255)
-00000,guest@gmail.com,guest,guest
+0,guest@gmail.com,guest,guest
 10001,john@example.com,password123,johndoe
 10002,jane@example.com,pass456,janesmith
 10003,david@example.com,secure789,davidj
