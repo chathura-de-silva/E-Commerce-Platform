@@ -232,13 +232,33 @@ def add_to_cart():
 @app.route('/checkout')
 def checkout():
 
+    #need to show an estimated delivary time , total prices should be fetched from the cart
     #get_cart()
-    # if the user if not logged in he should be redirected to the login page 
+
     is_logged = session['signedin']
+    
+
     if is_logged is True:
-        return render_template('checkout.html')
+        user_id =session['userid']
+        # ci.quantity AS quantity,
+        # v.name AS name,
+        # v.price AS price,
+        # v.variant_image AS variant_image,
+        # p.title AS title,
+        # v.variant_id as variant_id
+        items = get_cart(user_id)
+        # manipulating the tuple to meet our requirements 
+
+        total_price = sum([(tup[0] * tup[2]) for tup in items])
+
+        print(total_price)
+
+        return render_template('checkout.html',total_price = total_price)
     #also need to find the total price 
     else:
+
+        #find a way to calculate the total price from the session cart
+
         flash('You are going to checkout as a guest. Some features may not be not available')
         return render_template('checkout.html')
 
@@ -251,6 +271,8 @@ def checkout_successful():
         full_name = request.form.get('firstname')
         email = request.form.get('email')
         # Process other form data here as necessary
+        city = request.form.get('city')  # Assuming 'city' is the name attribute of the city input field
+
 
         signedin =  session['signedin'] 
         order_id = gen_orderID()
@@ -283,8 +305,18 @@ def checkout_successful():
 
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
+
+                # update the delivary module 
+                stock_count = get_stock_count(variant_Id)
+                destination_city = city
+                delivary_module = [(stock_count,destination_city,new_ID)]
+
+                update_delivary_module(delivary_module)
                  #need to update the order item table from the above details 
                 update_order_items(temp,signedin,user_id = user_id)
+
+
+
 
             return(render_template('home.html'))
 

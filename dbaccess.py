@@ -66,6 +66,23 @@ def gen_order_item_ID():
         # If there are no results (e.g., the table is empty), start with 1
         return 0
 
+#this function generates ID for a delivary module 
+def gen_delivery_ID():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT delivery_module_id FROM delivery_module ORDER BY order_item_id DESC LIMIT 1")
+    res = cur.fetchall()
+    conn.close()
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+
+
 def get_stock_count(variant_id):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -344,15 +361,36 @@ def get_guest_cart(variant_ids):
     return result
 
 
-def add_product_to_cart(prodID, custID):
+def update_delivary_module(module):
+
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("INSERT INTO cart VALUES (%s, %s, 1)", (custID, prodID))
+
+    # create a list of main cities 
+    main_cities = ['Colombo' , 'Panadura' , 'Galle' , 'Kandy']
+
+    new_id = gen_delivery_ID()
+    # stock_count,destination_city,new_ID
+    tup = new_id , module[2] , module[1]
+
+    #checking if the stock count is greater than zero
+    if module[0] > 0:
+
+        if (module[1] in main_cities):
+            #add fibve days to the end of the tuple 
+
+            tup = tup + (5,)   
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+        else:
+            tup = tup + (7,)
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+
+
+    
+
+    
+
     conn.commit()
-    conn.close()
-
-
-
 
 def empty_cart(custID):
     conn = get_mysql_connection()
