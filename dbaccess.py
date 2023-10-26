@@ -385,6 +385,16 @@ def update_delivary_module(module):
             tup = tup + (7,)
             cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
 
+    else:
+        if (module[1] in main_cities):
+            tup = tup + (8,)   
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+        else:
+            tup = tup + (10,)
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+
+
+
 
     
 

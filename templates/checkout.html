@@ -118,8 +118,8 @@
 <div class="row">
     <div class="col-75">
       <div class="container">
-        <!-- onsubmit="return validateForm();" -->
-        <form action="{{ url_for('checkout_successful') }}" method="POST">
+        
+        <form action="{{ url_for('checkout_successful') }}" method="POST" onsubmit="return validateForm();">
   
           <div class="row">
             <div class="col-50">

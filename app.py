@@ -309,14 +309,12 @@ def checkout_successful():
                 # update the delivary module 
                 stock_count = get_stock_count(variant_Id)
                 destination_city = city
-                delivary_module = [(stock_count,destination_city,new_ID)]
+                delivary_module = [stock_count,destination_city,new_ID]
 
-                update_delivary_module(delivary_module)
                  #need to update the order item table from the above details 
                 update_order_items(temp,signedin,user_id = user_id)
 
-
-
+                update_delivary_module(delivary_module)
 
             return(render_template('home.html'))
 
