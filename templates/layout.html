@@ -15,9 +15,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-
+    
+    <link rel="icon" type="image/png" href="static/favicon.png">
     {% if title %}
         <title>C retailors - {{ title }}</title>
     {% else %}
@@ -29,17 +31,26 @@
       <nav class="navbar  navbar-expand-md navbar-light fixed-top">
         <div class="container">
           <a class="navbar-brand" href="/"> 
-            <img id="logo" alt="Logo" src= "{{ url_for('static', filename='logo.png') }}"  />
+            <img id="logo" alt="Logo"  src= "{{ url_for('static', filename='logo.png') }}"  />
           </a>
           
           <div class="collapse navbar-collapse" id="navbarToggle" >
-            <div class="navbar-nav mr-auto" >
-              <a class="nav-item nav-link" href="{{ url_for('products') }}">products</a>
-              <a class="nav-item nav-link" href="{{ url_for('my_cart') }}">cart</a>
-              <a class="nav-item nav-link" href="{{ url_for('signup') }}">signup</a>
-              <a class="nav-item nav-link" href="{{ url_for('analytics') }}">Analytics</a>
-            </div>
 
+            <div class="navbar-nav mr-auto" >
+
+              <a class="nav-item nav-link" href="{{ url_for('products') }}">products</a>
+              <a class="nav-item nav-link" href="{{ url_for('cart') }}">cart</a>
+              <!-- <a class="nav-item nav-link ml-auto" href="{{ url_for('signup') }}">signup</a> Move this link to the right -->
+              <a class="nav-item nav-link" href="{{ url_for('analytics') }}">Analytics</a>
+              <a class="nav-item nav-link ml-auto" href="{{ url_for('signup') }}">
+                <!-- <i class="fas fa-user"></i> Add the account icon here -->
+                signup
+            </a>
+            <div class="top-right">
+              {% if signedin %}
+                  <p>Welcome, {{ username }}</p>
+                  <a href="{{ url_for('logout') }}">Logout</a>
+              {% endif %}
           </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +95,27 @@
         <!--    Website built by HM <a href="https://google.com/">linkedin</a>.-->
         <!--</footer>-->
       </footer>
+
+        <!-- Include your CSS and other head content here -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    footer {
+      background-color: #f8f8f8; /* Set your preferred background color */
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

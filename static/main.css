@@ -154,7 +154,7 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   }
   
   body {
-    background: #fafafa;
+    background: #ece7b5;
     margin-top: 5rem;
     color: #00264d;
     text-align: center;
@@ -163,8 +163,9 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   
   /* Header */
   header {
+    background: #f9f5d8;
     height: 90px;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid #a5a390;
   }
   
   #logo {
@@ -173,22 +174,23 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   
   /* Navigation */
   #navbarToggle {
-    margin-top: 20px;
+    margin-top: 25px;
     font-family: 'Manjari', sans-serif;
-    font-size: 18px;
+    font-size: 19px;
   }
   
   .site-header .navbar-nav .nav-link {
-    color: #00264d;
+    color: #26103d;
   }
   
   .site-header .navbar-nav .nav-link:hover {
-    color: #43b9f0;
+    color: #975f31;
   }
   
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
     text-decoration: underline;
+    font-style: italic;
   }
   
   /* Content Section */
@@ -210,6 +212,7 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   /* Carousel */
   .carousel-inner {
     height: 500px;
+    border-radius: 2%;
   }
   
   /* Form */
@@ -269,3 +272,39 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   }
   
             /* Style for the tiles */
+            h1 {
+              font-family: 'Arial', sans-serif; /* Change the font to Arial for a professional look */
+              margin-top: 20px;
+              font-size: 36px;
+              color: #333; /* Use a dark gray color for a professional scheme */
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+              transition: all 0.3s ease-in-out;
+              background: linear-gradient(45deg, #000000, #00DFFC);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              transform: scale(1);
+            }
+            
+            h1:hover {
+              transform: scale(1.1);
+              color: #00A0E0; /* Change text color on hover to a lighter blue */
+              text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+            }
+            
+            .top-right {
+              position: fixed;
+              top: 20px;
+              right: 0;
+              padding: 20px;
+              background-color: transparent; /* Set background color to transparent */
+              border: none; /* Remove the border */
+              z-index: 999; /* Adjust the z-index to ensure it's on top */
+          }
+          
+          /* Additional styles for when the user is logged in (adjust as needed) */
+          .top-right.loggedin {
+              background-color: #e5e5e5; /* Change background color when logged in */
+          }

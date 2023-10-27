@@ -22,7 +22,7 @@ def get_mysql_connection():
 def gen_custID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id FROM accounts ORDER BY id DESC LIMIT 1")
+    cur.execute("SELECT user_id FROM registered_user ORDER BY user_id DESC LIMIT 1")
     res = cur.fetchall()
     conn.close()
     #return the number which is 1 greater than the last entry 
@@ -34,43 +34,94 @@ def gen_custID():
         # If there are no results (e.g., the table is empty), start with 1
         return 0
 
-def gen_prodID():
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE metadata SET prodnum = prodnum + 1")
-    conn.commit()
-    cur.execute("SELECT prodnum FROM metadata")
-    prodnum = str(cur.fetchone()[0])
-    conn.close()
-    id = "PID" + "0" * (7 - len(prodnum)) + prodnum
-    return id
-
+#this function generates an order ID
 def gen_orderID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("UPDATE metadata SET ordernum = ordernum + 1")
-    conn.commit()
-    cur.execute("SELECT ordernum FROM metadata")
-    ordernum = str(cur.fetchone()[0])
+    cur.execute("SELECT order_id FROM order_item ORDER BY order_id DESC LIMIT 1")
+    res = cur.fetchall()
     conn.close()
-    id = "OID" + "0" * (7 - len(ordernum)) + ordernum
-    return id
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+    
+#this function generates ID for a single order item
+def gen_order_item_ID():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT order_item_id FROM order_item ORDER BY order_item_id DESC LIMIT 1")
+    res = cur.fetchall()
+    conn.close()
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+
+#this function generates ID for a delivary module 
+def gen_delivery_ID():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT delivery_module_id FROM delivery_module ORDER BY order_item_id DESC LIMIT 1")
+    res = cur.fetchall()
+    conn.close()
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+
+
+def get_stock_count(variant_id):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    # Define the query with a placeholder for variant_id
+    query = "SELECT stock_count FROM inventory WHERE variant_id = %s"
+
+    # Execute the query with the provided variant_id
+    cur.execute(query, (variant_id,))
+
+    # Fetch the result
+    result = cur.fetchone()
+
+    print(result)
+
+    if result:
+        stock_count = result[0]
+        return stock_count
+    else:
+        return None
+
+
 
 
 #this function will be used to add a new user to the database
+#it will return true if we are able to add a new user 
 def add_user(data):
     conn = get_mysql_connection()
     cur = conn.cursor()
     username = data["username"]
     #need to check if the username already exists
-    cur.execute("SELECT * FROM accounts WHERE username=%s", (username,))
+    cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
     result = cur.fetchall()
+    #if we already have a registered user from that username then we can't add another user
     if len(result) != 0:
         return False
     customer_id = gen_custID()
-    tup = (customer_id,data["username"], data["email"], data["password"])
+    tup = (customer_id,data["email"], data["password"],data["username"],)
     
-    cur.execute("INSERT INTO accounts (id, username, email, password) VALUES (%s, %s, %s, %s)", tup)
+    cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
     
     conn.commit()
     conn.close()
@@ -86,7 +137,7 @@ def auth_user(data):
     password = data["password"]
 
     #check if the user is already in the database
-    cur.execute("SELECT id FROM accounts WHERE password=%s AND username=%s", (password,username))
+    cur.execute("SELECT user_id,username FROM registered_user WHERE password=%s AND username=%s", (password,username))
 
     result = cur.fetchall()
     conn.close()
@@ -117,10 +168,10 @@ def get_categories(category):
     #select all the subproducts related to the given category
         # Execute the SQL query
     query = """
-            SELECT Category.name, Category.category_image
+            SELECT Category.category_name, Category.category_image,Category.category_id
             FROM Category
             WHERE Category.parent_category_id = (
-                SELECT category_id FROM Category WHERE name = %s
+                SELECT category_id FROM Category WHERE category_name = %s
             )
         """
     
@@ -130,6 +181,20 @@ def get_categories(category):
 
     return results
 
+#this function will be used to get products from the database
+def get_products_from_database(id):
+    # use try catch statements to handle errors
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    # query = "SELECT * FROM products WHERE category_id = %s", (id,)
+    # cur.execute(query, (id,))
+
+    query = "SELECT product.title,product.description,product.weight,product.product_image,product.product_id FROM product WHERE category_id = %s"
+    cur.execute(query, (id,))  # Pass the integer id as a parameter
+
+    results = cur.fetchall()
+    return results
+    
 
 
 def get_product_info():
@@ -142,14 +207,25 @@ def get_product_info():
 
 
 
-# def get_single_product_info(product_id):
+def update_cart(user_id,variant_id,quantity):
 
-#     conn = get_mysql_connection()
-#     cur = conn.cursor()
-#     #run the query to get all the details based on the user ID
-#     cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
-#     details = cur.fetchall()
-#     return details 
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    print("hello world")
+    # Define the SQL statement using the INSERT ... ON DUPLICATE KEY UPDATE syntax
+    # Define the SQL statement with an alias for VALUES
+    query ="""
+        INSERT INTO cart_item (user_id, variant_id, quantity)
+        VALUES (%s, %s, %s)
+        ON DUPLICATE KEY UPDATE quantity = cart_item.quantity
+        """
+    # Execute the SQL statement with the provided user_id, variant_id, and quantity
+    cur.execute(query, (user_id, variant_id, quantity))
+
+    conn.commit()
+    conn.close()
+    return
+
 
 def get_single_product_info(product_id):
     try:
@@ -163,119 +239,168 @@ def get_single_product_info(product_id):
         # Handle the exception (e.g., log the error or return an error message)
         return None  # Return None or an appropriate error indicator
 
+def get_varient_info(product_id):
 
-def search_products(srchBy, category, keyword):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    keyword = ['%' + i + '%' for i in keyword.split()]
-    if len(keyword) == 0:
-        keyword.append('%%')
-    if srchBy == "by category":
-        cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE category=%s AND quantity!=0", (category,))
-        result = cur.fetchall()
-    elif srchBy == "by keyword":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s OR category LIKE %s) AND quantity!=0", (word, word, word))
-            result += cur.fetchall()
-        result = list(set(result))
-    elif srchBy == "both":
-        result = []
-        for word in keyword:
-            cur.execute("SELECT prodID, name, category, sell_price FROM product WHERE (name LIKE %s OR description LIKE %s) AND quantity!=0 AND category=%s", (word, word, category))
-            result += cur.fetchall()
-        result = list(set(result))
-    conn.close()
+    with conn.cursor() as cur:
+        
+        cur.execute("SELECT variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id FROM variant WHERE product_id = %s", (product_id,))
+        result =cur.fetchall()
+
     return result
 
 
-
-def place_order(prodID, custID, qty):
+def update_order_items(order_items,is_signedin,user_id):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    orderID = gen_orderID()
-    cur.execute("INSERT INTO orders (orderID, custID, prodID, quantity, date, cost_price, sell_price, status) SELECT %s, %s, %s, %s, NOW(), cost_price*%s, sell_price*%s, 'PLACED' FROM product WHERE prodID=%s", (orderID, custID, prodID, qty, qty, qty, prodID))
-    conn.commit()
-    conn.close()
+    cursor = conn.cursor()
+        # create a transaction
+        # inventry should be updated
+        # we should handle this separately for logged in users and guest users 
 
-def cust_orders(custID):
+        # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated 
+        # cart table should be inserted with a new entry
+    try:
+        # Start a transaction
+        cursor.execute("START TRANSACTION")
+
+        if is_signedin:
+            order_item_id, order_id, variant_id, quantity, price = order_items[0]
+
+            # INSERT INTO order_item
+            insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
+
+            # DELETE FROM cart_item
+            delete_query = "DELETE FROM cart_item WHERE user_id = %s"
+            cursor.execute(delete_query, (user_id,))
+
+            # Reduce stock count in inventory
+            update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
+            cursor.execute(update_query, (quantity, variant_id))
+
+        # Commit the transaction
+        cursor.execute("COMMIT")
+
+    except Exception as e:
+        # Handle any exceptions and possibly roll back the transaction
+        cursor.execute("ROLLBACK")
+        raise e
+    finally:
+        conn.close()
+
+
+def update_order_table(order_table_details):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.orderID, o.prodID, p.name, o.quantity, o.sell_price, o.date, o.status FROM orders o JOIN product p WHERE o.prodID=p.prodID AND o.custID=%s AND o.status!='RECEIVED' ORDER BY o.date DESC", (custID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
+    cursor = conn.cursor()
+    try:
+        order_id, date, delivery_method, payment_method, user_id = order_table_details
 
 
-def get_order_details(orderID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.custID, p.sellID, o.status FROM orders o JOIN product p WHERE o.orderID=%s AND o.prodID=p.prodID", (orderID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
+        insert_query = "INSERT INTO orders (order_id, date, delivery_method, payment_method, user_id) VALUES (%s, %s, %s, %s, %s)"
 
-def change_order_status(orderID, new_status):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("UPDATE orders SET status=%s WHERE orderID=%s", (new_status, orderID))
-    if new_status == 'DISPATCHED':
-        cur.execute("UPDATE product SET quantity=quantity-(SELECT quantity FROM orders WHERE orderID=%s) WHERE prodID=(SELECT prodID FROM orders WHERE orderID=%s)", (orderID, orderID))
-    conn.commit()
-    conn.close()
+        cursor.execute(insert_query, (order_id, date, delivery_method, payment_method, user_id) )
 
-def cust_purchases(custID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.prodID, p.name, o.quantity, o.sell_price, o.date FROM orders o JOIN product p WHERE o.prodID=p.prodID AND o.custID=%s AND o.status='RECEIVED' ORDER BY o.date DESC", (custID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
+        conn.commit()
 
-def sell_sales(sellID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT o.prodID, p.name, o.quantity, o.sell_price, o.date, o.custID, c.name FROM orders o JOIN product p JOIN customer c WHERE o.prodID=p.prodID AND o.custID=c.custID AND p.sellID=%s AND o.status='RECEIVED' ORDER BY o.date DESC", (sellID,))
-    result = cur.fetchall()
-    conn.close()
-    return result
-
-def add_product_to_cart(prodID, custID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("INSERT INTO cart VALUES (%s, %s, 1)", (custID, prodID))
-    conn.commit()
-    conn.close()
+    except mysql.connector.Error as err:
+        # Handle any potential errors here
+        print("Error: {}".format(err))
 
 def get_cart(custID):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("SELECT p.prodID, p.name, p.sell_price, c.sum_qty, p.quantity FROM (SELECT custID, prodID, SUM(quantity) AS sum_qty FROM cart GROUP BY custID, prodID) c JOIN product p WHERE p.prodID=c.prodID AND c.custID=%s", (custID,))
+
+    sql_query = """
+    SELECT
+        ci.quantity AS quantity,
+        v.name AS name,
+        v.price AS price,
+        v.variant_image AS variant_image,
+        p.title AS title,
+        v.variant_id as variant_id
+    FROM
+        cart_item AS ci
+    JOIN
+        variant AS v ON ci.variant_id = v.variant_id
+    JOIN
+        product AS p ON v.product_id = p.product_id
+    WHERE
+        ci.user_id = %s
+    """
+    cur.execute(sql_query, (custID,))
     result = cur.fetchall()
     conn.close()
+    print(result)
+
     return result
 
-def update_cart(custID, qty):
+#this function will fetch variant details for a guest's cart
+def get_guest_cart(variant_ids):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    for prodID in qty:
-        cur.execute("DELETE FROM cart WHERE prodID=%s AND custID=%s", (prodID, custID))
-        cur.execute("INSERT INTO cart VALUES (%s, %s, %s)", (custID, prodID, qty[prodID]))
-    conn.commit()
-    conn.close()
 
-def cart_purchase(custID):
+    # Create a list to store the results
+    result = []
+
+    # Construct the SQL query using JOIN to fetch the required columns from both tables
+    query = """
+    SELECT p.title, v.name, v.price, v.variant_image,v.variant_id
+    FROM product AS p
+    JOIN variant AS v ON p.product_id = v.product_id
+    WHERE 
+        v.variant_id = %s
+    """
+
+    for variant_id in variant_ids:
+        # Execute the query for each variant_id
+        cur.execute(query, (variant_id,))
+        rows = cur.fetchall()
+        for row in rows:
+            result.append(row)
+
+    return result
+
+
+def update_delivary_module(module):
+
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cart = get_cart(custID)
-    for item in cart:
-        orderID = gen_orderID()
-        prodID = item[0]
-        qty = item[3]
-        cur.execute("INSERT INTO orders (orderID, custID, prodID, quantity, date, cost_price, sell_price, status) SELECT %s, %s, %s, %s, NOW(), cost_price*%s, sell_price*%s, 'PLACED' FROM product WHERE prodID=%s", (orderID, custID, prodID, qty, qty, qty, prodID))
-        cur.execute("DELETE FROM cart WHERE custID=%s AND prodID=%s", (custID, prodID))
-        conn.commit()
-    conn.close()
+
+    # create a list of main cities 
+    main_cities = ['Colombo' , 'Panadura' , 'Galle' , 'Kandy']
+
+    new_id = gen_delivery_ID()
+    # stock_count,destination_city,new_ID
+    tup = new_id , module[2] , module[1]
+
+    #checking if the stock count is greater than zero
+    if module[0] > 0:
+
+        if (module[1] in main_cities):
+            #add fibve days to the end of the tuple 
+
+            tup = tup + (5,)   
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+        else:
+            tup = tup + (7,)
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+
+    else:
+        if (module[1] in main_cities):
+            tup = tup + (8,)   
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+        else:
+            tup = tup + (10,)
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+
+
+
+
+    
+
+    
+
+    conn.commit()
 
 def empty_cart(custID):
     conn = get_mysql_connection()

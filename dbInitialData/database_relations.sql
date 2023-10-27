@@ -63,9 +63,9 @@ REFERENCES product(product_id);
 inventory table keys
 */
 
-ALTER TABLE inventory
-ADD CONSTRAINT pk_inventory_id
-PRIMARY KEY (inventory_id);
+-- ALTER TABLE inventory
+-- ADD CONSTRAINT pk_inventory_id
+-- PRIMARY KEY (inventory_id);
 
 ALTER TABLE inventory
 ADD CONSTRAINT fk_inventory
