@@ -7,20 +7,26 @@ from mysql.connector import errorcode
 from dotenv import load_dotenv
 
 init(autoreset=True)
-load_dotenv("dbInitialData/.env")
+dotenv_path = os.path.join(os.path.dirname(__file__), 'dbInitialData', '.env')
+load_dotenv(dotenv_path)
 
 
-def database_connector():
-    # Defining the connection parameters in a config dictionary
+def get_db_config_data():
     _config = {
         "host": os.getenv("HOST") if os.getenv("HOST") else "localhost",
         "user": os.getenv("USER") if os.getenv("USER") else "root",
-        "password":  os.getenv("PASSWORD") ,
+        "password": os.getenv("PASSWORD"),
         "database": os.getenv("DATABASE") if os.getenv("DATABASE") else "ecomdb",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
     }
+    return _config
+
+
+def database_connector():
+    # Defining the connection parameters in a config dictionary
+    _config = get_db_config_data()
 
     try:
         connection = mysql.connector.connect(**_config)
@@ -67,7 +73,7 @@ def generate_tables_populate_data(dbconnection):
 
     def relationship_creator():
         try:
-            with open('dbInitialData/database_relations.sql', 'r') as sql_file:
+            with open('./webapp/dbInitialData/database_relations.sql', 'r') as sql_file:
                 queries = sql_file.read().split('\n\n')
                 # print(queries) # Uncomment for debugging.
             for query in queries:
@@ -97,16 +103,16 @@ def generate_tables_populate_data(dbconnection):
             try:
                 dbconnection.cursor().execute(
                     f"INSERT INTO {file_name[0:-4]} ({','.join(column_list)}) VALUES ({','.join(row_sanitizer(row))})")
-                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name[0:-4]}' table")
+                print(Style.BRIGHT + Fore.BLUE + f"Record '{row[0]}...'Inserted in to '{file_name}' table")
             except mysql.connector.Error as errr:
                 print(Style.BRIGHT + Fore.RED + f"Error: {errr}")
                 sys.exit(1)
         print('\n')
 
-    table_files_list = os.listdir('dbInitialData')
+    table_files_list = os.listdir('./webapp/dbInitialData')
     for file_name in table_files_list:
         if file_name.endswith('.csv'):  # Filters out non CSV files
-            with open(f"dbInitialData/{file_name}", newline='') as csvfile:
+            with open(f"./webapp/dbInitialData/{file_name}", newline='') as csvfile:
                 try:
                     csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
                     # Default EXCEL values provided for quote character and delimiter in csv.

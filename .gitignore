@@ -1,4 +1,5 @@
 /flask_session/
 /__pycache__/
 /.idea/
-dbInitialData/.env
+/webapp/dbInitialData/.env
+/webapp/__pycache__/
