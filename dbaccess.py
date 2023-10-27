@@ -66,6 +66,23 @@ def gen_order_item_ID():
         # If there are no results (e.g., the table is empty), start with 1
         return 0
 
+#this function generates ID for a delivary module 
+def gen_delivery_ID():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT delivery_module_id FROM delivery_module ORDER BY order_item_id DESC LIMIT 1")
+    res = cur.fetchall()
+    conn.close()
+    #return the number which is 1 greater than the last entry 
+    if res:
+        last_id = res[0][0]
+        # Return the number which is 1 greater than the last entry
+        return last_id + 1
+    else:
+        # If there are no results (e.g., the table is empty), start with 1
+        return 0
+
+
 def get_stock_count(variant_id):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -233,35 +250,42 @@ def get_varient_info(product_id):
     return result
 
 
-def update_order_items(order_items,is_signedin):
+def update_order_items(order_items,is_signedin,user_id):
     conn = get_mysql_connection()
     cursor = conn.cursor()
         # create a transaction
         # inventry should be updated
-        # cart item table should be cleared 
-
         # we should handle this separately for logged in users and guest users 
 
         # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated 
         # cart table should be inserted with a new entry
     try:
+        # Start a transaction
+        cursor.execute("START TRANSACTION")
 
         if is_signedin:
             order_item_id, order_id, variant_id, quantity, price = order_items[0]
 
+            # INSERT INTO order_item
             insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
             cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
 
-            conn.commit()  # Commit the changes to the database
-        if not is_signedin:
-            # set the session cart to null (empty the session cart)
+            # DELETE FROM cart_item
+            delete_query = "DELETE FROM cart_item WHERE user_id = %s"
+            cursor.execute(delete_query, (user_id,))
 
-            pass
-    except mysql.connector.Error as err:
-        # Handle any potential errors here
-        print("Error: {}".format(err))
+            # Reduce stock count in inventory
+            update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
+            cursor.execute(update_query, (quantity, variant_id))
+
+        # Commit the transaction
+        cursor.execute("COMMIT")
+
+    except Exception as e:
+        # Handle any exceptions and possibly roll back the transaction
+        cursor.execute("ROLLBACK")
+        raise e
     finally:
-        cursor.close()
         conn.close()
 
 
@@ -337,15 +361,46 @@ def get_guest_cart(variant_ids):
     return result
 
 
-def add_product_to_cart(prodID, custID):
+def update_delivary_module(module):
+
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("INSERT INTO cart VALUES (%s, %s, 1)", (custID, prodID))
+
+    # create a list of main cities 
+    main_cities = ['Colombo' , 'Panadura' , 'Galle' , 'Kandy']
+
+    new_id = gen_delivery_ID()
+    # stock_count,destination_city,new_ID
+    tup = new_id , module[2] , module[1]
+
+    #checking if the stock count is greater than zero
+    if module[0] > 0:
+
+        if (module[1] in main_cities):
+            #add fibve days to the end of the tuple 
+
+            tup = tup + (5,)   
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+        else:
+            tup = tup + (7,)
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+
+    else:
+        if (module[1] in main_cities):
+            tup = tup + (8,)   
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+        else:
+            tup = tup + (10,)
+            cur.execute("INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)", tup )
+
+
+
+
+    
+
+    
+
     conn.commit()
-    conn.close()
-
-
-
 
 def empty_cart(custID):
     conn = get_mysql_connection()

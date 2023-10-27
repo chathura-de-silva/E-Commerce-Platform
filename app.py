@@ -143,12 +143,15 @@ def get_varient(product_id):
 
     tup = get_varient_info(product_id)
 
+    print(tup)
     #variant id is the last elemet in the fetched tuple 
     # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
     variant_id = (tup[-1][-1])
 
     print(variant_id)
     stock_count = get_stock_count(variant_id)
+
+    print(stock_count , "is the stock count")
     signedin = False
     if "userid" in session:
         signedin = True
@@ -184,6 +187,13 @@ def cart():
         variant_ids = [int(i) for i in variant_ids_string]
                 #need to implement the function to fetch values from the database for the given id's
         variant_details = get_guest_cart(variant_ids)
+
+        # append the count to each tuple in the variant details 
+
+        for i in range(len(variant_details)):
+
+            variant_details[i] = variant_details[i] + (variant_ids[i], )
+
         return render_template('cart.html',guest_cart = variant_details , signedin = False , session_cart=session_cart)
         
 
@@ -216,19 +226,39 @@ def add_to_cart():
             cart[variant_id] = quantity
         session.modified = True  # Mark the session as modified
 
-        return redirect(url_for('cart'))  
+        return redirect(url_for('cart'))
     
 
 @app.route('/checkout')
 def checkout():
 
+    #need to show an estimated delivary time , total prices should be fetched from the cart
     #get_cart()
-    # if the user if not logged in he should be redirected to the login page 
+
     is_logged = session['signedin']
+    
+
     if is_logged is True:
-        return render_template('checkout.html')
+        user_id =session['userid']
+        # ci.quantity AS quantity,
+        # v.name AS name,
+        # v.price AS price,
+        # v.variant_image AS variant_image,
+        # p.title AS title,
+        # v.variant_id as variant_id
+        items = get_cart(user_id)
+        # manipulating the tuple to meet our requirements 
+
+        total_price = sum([(tup[0] * tup[2]) for tup in items])
+
+        print(total_price)
+
+        return render_template('checkout.html',total_price = total_price)
     #also need to find the total price 
     else:
+
+        #find a way to calculate the total price from the session cart
+
         flash('You are going to checkout as a guest. Some features may not be not available')
         return render_template('checkout.html')
 
@@ -241,6 +271,8 @@ def checkout_successful():
         full_name = request.form.get('firstname')
         email = request.form.get('email')
         # Process other form data here as necessary
+        city = request.form.get('city')  # Assuming 'city' is the name attribute of the city input field
+
 
         signedin =  session['signedin'] 
         order_id = gen_orderID()
@@ -273,8 +305,16 @@ def checkout_successful():
 
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
+
+                # update the delivary module 
+                stock_count = get_stock_count(variant_Id)
+                destination_city = city
+                delivary_module = [stock_count,destination_city,new_ID]
+
                  #need to update the order item table from the above details 
-                update_order_items(temp,signedin)
+                update_order_items(temp,signedin,user_id = user_id)
+
+                update_delivary_module(delivary_module)
 
             return(render_template('home.html'))
 
@@ -283,7 +323,6 @@ def checkout_successful():
             # when updating the order tables we need a user_id and we don't have a user ID for a guest user 
 
             # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
-            
             user_id = 0
             order_table_details = [order_id,formatted_date,'Express','visa',user_id]
             #first of all we need to update the order_table in order to avoid the primary key constraint 
@@ -308,7 +347,14 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
 
-                update_order_items(temp,signedin)
+                # update the delivary module 
+                stock_count = get_stock_count(variant_Id)
+                destination_city = city
+                delivary_module = [stock_count,destination_city,new_ID]
+
+                update_order_items(temp,signedin,user_id = user_id)
+
+                update_delivary_module(delivary_module)
             
             # clear the session cart
             session['cart'].clear()

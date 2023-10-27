@@ -70,6 +70,9 @@
         // Update the hidden input field with the selected quantity
         document.getElementById('hiddenQuantity').value = selectedQuantity;
     });
+
+
+    
 </script>
 
 <!-- variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id -->
@@ -81,6 +84,7 @@
                     <div class="product-tile">
                         <img src="/static/laptop.jpg" alt="{{ variant[0] }}" class="product-image">
                         <div class="product-name">{{ variant[0] }}</div>
+                        
                         <p>Available Stock: {{ stock_count }}</p> <!-- Display stock count -->
                         <p>Price: ${{ variant[1] }}</p>
                         <p>Custom Attributes: {{ variant[2] }}</p>
