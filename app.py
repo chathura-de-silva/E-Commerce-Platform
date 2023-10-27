@@ -347,7 +347,14 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
 
+                # update the delivary module 
+                stock_count = get_stock_count(variant_Id)
+                destination_city = city
+                delivary_module = [stock_count,destination_city,new_ID]
+
                 update_order_items(temp,signedin,user_id = user_id)
+
+                update_delivary_module(delivary_module)
             
             # clear the session cart
             session['cart'].clear()
