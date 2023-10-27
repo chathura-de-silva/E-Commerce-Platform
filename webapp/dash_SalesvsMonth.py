@@ -6,11 +6,12 @@ import pandas as pd
 from .dbaccess import product_list, get_product_sales
 
 df = pd.DataFrame(
-        {
-            "Sales": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            "month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        }
- )
+    {
+        "Sales": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    }
+)
+
 
 def sales_for_product(flask_app):
     dash_app = dash.Dash(server=flask_app, name="Dashboard", url_base_pathname="/dash4/")
@@ -44,12 +45,11 @@ def sales_for_product(flask_app):
         new_sales = get_product_sales(value)
         # Update the DataFrame with the new sales values
         df = pd.DataFrame(
-        {
-            "Sales": new_sales,
-            "month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        }
+            {
+                "Sales": new_sales,
+                "month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            }
         )
-
 
         # Find the month with the highest sales
         highest_month = df.loc[df["Sales"].idxmax()]["month"]

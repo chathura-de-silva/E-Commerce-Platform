@@ -7,8 +7,9 @@ from mysql.connector import errorcode
 from dotenv import load_dotenv
 
 init(autoreset=True)
-dotenv_path = os.path.join(os.path.dirname(__file__),'dbInitialData','.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), 'dbInitialData', '.env')
 load_dotenv(dotenv_path)
+
 
 def get_db_config_data():
     _config = {
@@ -22,10 +23,11 @@ def get_db_config_data():
     }
     return _config
 
+
 def database_connector():
     # Defining the connection parameters in a config dictionary
     _config = get_db_config_data()
-    
+
     try:
         connection = mysql.connector.connect(**_config)
         print(Style.BRIGHT + Fore.GREEN + f'Successfully Connected to the MYSQL Database "{_config["database"]}".')

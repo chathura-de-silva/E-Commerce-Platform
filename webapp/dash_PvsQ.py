@@ -3,15 +3,16 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
-import random
-from .dbaccess import getProductQuantityList,  select_year
+from .dbaccess import getProductQuantityList, select_year
 
 df = pd.DataFrame(
-        {
-            "Sales": [],
-            "month": [],
-        }
- )
+    {
+        "Sales": [],
+        "month": [],
+    }
+)
+
+
 # def getProductQuantityList(from_year , to_year):
 #     return ['How', 'The', 'Refrig', 'Coffee', 'Denim', 'Cotton', 'DellXPS', 'MacBook', 'Samsung', 'iPhone'], [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
 
@@ -33,7 +34,7 @@ def dash_productVStime(flask_app):
                 options=[
                     {"label": year[0], "value": year[0]} for year in years
                 ],
-                value=selected_value,  
+                value=selected_value,
 
             ),
             html.P("Select To Year:"),
@@ -42,8 +43,8 @@ def dash_productVStime(flask_app):
                 options=[
                     {"label": year[0], "value": year[0]} for year in years
                 ],
-                value=selected_value, 
-                
+                value=selected_value,
+
             ),
             dcc.Graph(id="example-graph"),
         ]
@@ -55,9 +56,8 @@ def dash_productVStime(flask_app):
          Input("to_year", "value")]
     )
     def update_graph(from_year, to_year):
-  
         product_list, quantity_list = getProductQuantityList(from_year, to_year)
-        
+
         df = pd.DataFrame({"products": product_list, "quantity": quantity_list})
 
         fig = px.bar(df, x="quantity", y="products", title=f"product sales quantity over {from_year} to {to_year}")
