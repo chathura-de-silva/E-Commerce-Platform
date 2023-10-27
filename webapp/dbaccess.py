@@ -1,16 +1,10 @@
 import mysql.connector
-from app import connection_config
-#tried using the global connection object but it failed
+from .databaseConfig import database_connector
 
-# connection = databaseConfig.database_connector()
-# # Create a function to establish a MySQL database connection
-# def get_mysql_connection():
 
-#     return connection
+config=database_connector()
 
-#creating another function to create the connection with the database everytime we want to communicate with it
 def get_mysql_connection():
-    config =  connection_config
     return mysql.connector.connect(**config)
 
 
@@ -413,3 +407,143 @@ def remove_from_cart(custID, prodID):
     cur = conn.cursor()
     cur.execute("DELETE FROM cart WHERE custID=%s AND prodID=%s", (custID, prodID))
     conn.commit()
+
+
+def Quarterly_sales(year):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+
+
+    cur.execute(f'''CREATE VIEW year{year}orderitem AS
+                    select v.price*oi.quantity as total_price , t23.date , oi.order_id, oi.variant_id
+                    from order_item as oi
+                    join (SELECT * FROM orders WHERE YEAR(date) = {year}) AS t23 on oi.order_id = t23.order_id
+                    join variant as v on v.variant_id = oi.variant_id''')
+    conn.commit()
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (1,2,3);''')
+    q1 = cur.fetchone()[0]
+    q1 = int(q1) if q1 is not None else 0
+
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (4,5,6);''')
+    q2 = cur.fetchone()[0]
+    q2 = int(q2) if q2 is not None else 0
+
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (7,8,9);''')
+    q3 = cur.fetchone()[0]
+    q3 = int(q3) if q3 is not None else 0
+
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (10,11,12);''')
+    q4 = cur.fetchone()[0]
+    q4 = int(q4) if q4 is not None else 0
+
+    cur.execute(f'DROP VIEW IF EXISTS year{year}orderitem;')
+    conn.commit()
+    
+    q_sale = [q1,q2,q3,q4]
+    conn.close()
+    return q_sale
+    
+    
+def select_year():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute('''select distinct year(date) as year
+                    from orders 
+                    order by year(date) desc''')
+    result =cur.fetchall()
+    cur.execute('''select distinct year(date) as year
+                    from orders 
+                    order by year(date) desc''')
+    year = cur.fetchone()[0]
+    return (result,year)
+       
+
+
+def getProductQuantityList(from_year , to_year):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute(F'''select title,count(quantity) as quantity
+                    from order_item
+                    natural join orders
+                    natural join product
+                    where year(date) between {from_year} and {to_year}
+                    group by title ''')
+    result =cur.fetchall()
+    product_list=[]
+    quantity_list = []
+    for i,j in result:
+        product_list.append(i)
+        quantity_list.append(j)
+    return product_list,quantity_list
+
+
+def getCategoriesandOrders():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute(F'''select c.category_name,count(oi.order_id)
+                from order_item as oi
+                right join variant as v
+                on oi.variant_id = v.variant_id 
+                join product as p 
+                on p.product_id = v.product_id
+                right join category as c
+                on c.category_id = p.category_id
+                group by c.category_id,c.category_name
+                order by count(oi.order_id) asc;
+                ; ''')
+    result =cur.fetchall()
+    category=[]
+    orders = []
+    for i,j in result:
+        category.append(i)
+        orders.append(j)
+    return category,orders
+
+
+def product_list():
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    cur.execute('''select product_id , title
+                    from product ;
+                ''')
+    result =cur.fetchall()
+    return result
+
+def get_product_sales(product_id):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+
+    # Parameterized SQL query
+    cur.execute('''select count(oi.quantity), month(o.date)
+                    from order_item as oi
+                    inner join orders as o on o.order_id = oi.order_id
+                    right join variant as v on v.variant_id = oi.variant_id
+                    join product as p on p.product_id = v.product_id
+                    where p.product_id = %s
+                    group by month(o.date)
+                    order by month(o.date);
+                ''', (product_id,))
+    
+    result = cur.fetchall()
+
+    # Initialize a dictionary with keys for each month (1-12) and default values of 0
+    monthly_values = {month: 0 for month in range(1, 13)}
+
+    # Update the dictionary with the actual sales data from the query
+    for value, month in result:
+        if month:  # Only update if month is not None
+            monthly_values[month] = value
+
+    # Convert the dictionary values to a list
+    result_list = list(monthly_values.values())
+
+    return result_list
+
