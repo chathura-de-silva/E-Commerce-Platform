@@ -10,19 +10,21 @@ init(autoreset=True)
 dotenv_path = os.path.join(os.path.dirname(__file__),'dbInitialData','.env')
 load_dotenv(dotenv_path)
 
-
-
-def database_connector():
-    # Defining the connection parameters in a config dictionary
+def get_db_config_data():
     _config = {
         "host": os.getenv("HOST") if os.getenv("HOST") else "localhost",
         "user": os.getenv("USER") if os.getenv("USER") else "root",
-        "password": os.getenv("PASSWORD") ,
+        "password": os.getenv("PASSWORD"),
         "database": os.getenv("DATABASE") if os.getenv("DATABASE") else "ecomdb",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
         # exist.
     }
+    return _config
+
+def database_connector():
+    # Defining the connection parameters in a config dictionary
+    _config = get_db_config_data()
     
     try:
         connection = mysql.connector.connect(**_config)

@@ -1,16 +1,11 @@
-import dash
-from dash import dcc, html
-from dash.dependencies import Input, Output
-import plotly.express as px
-import pandas as pd
-import random
+from .databaseConfig import database_connector
+database_connector()
 
-from flask import Flask, render_template, request, url_for, redirect, abort, session,flash
+from datetime import date
+from flask import Flask, render_template, request, url_for, redirect, session, flash
 from flask_session import Session
 from .dbaccess import *
-from .databaseConfig import database_connector
 import os
-import json
 from .dashapp import create_dash_application
 from .dash_PvsQ import dash_productVStime
 from .dash_CtvsOr import categories_Orders
@@ -18,8 +13,7 @@ from .dash_SalesvsMonth import sales_for_product
 
 
 
-database_connector()
-database_connector()
+
 #creating a global cursor
 app = Flask(__name__)
 create_dash_application(app)
@@ -38,7 +32,7 @@ def home():
 
     signedin = False
     username = None
-    
+
     if "userid" in session:
         signedin = True
         username = session.get("username")  # Assuming username is saved in session["username"]
@@ -47,7 +41,7 @@ def home():
 
 @app.route("/signup/", methods = ["POST", "GET"])
 def signup():
-    #we need to call the add user function here 
+    #we need to call the add user function here
     if request.method == "POST":
         data = request.form
         ok = add_user(data)
@@ -80,7 +74,7 @@ def login():
 
 @app.route("/logout/")
 def logout():
-    
+
     # Check if 'userid' and 'username' keys exist in the session
     if 'userid' in session:
         session.pop('userid')
@@ -108,7 +102,7 @@ def products():
 # it would be good if we could make a function which takes product type as an arugment and bla bla 
 @app.route('/electronics')
 def get_electronics():
-    #we need to get all the electrnoics items from our database 
+    #we need to get all the electrnoics items from our database
     #for this we are going to get the primary key of the electronics category in the database and fetch all the data which has that value as the parent category id
     category_name = "ELECTRONIC PRODUCTS"  # The category name you want to display
     electronics  = get_categories("Electronics")
@@ -117,7 +111,7 @@ def get_electronics():
 
 @app.route('/toys')
 def get_toys():
-    #we need to get all the electrnoics items from our database 
+    #we need to get all the electrnoics items from our database
     #for this we are going to get the primary key of the electronics category in the database and fetch all the data which has that value as the parent category id
     category_name = "TOY PRODUCTS"
     toys = get_categories("Toys")
@@ -132,7 +126,7 @@ def get_products(product_id):
     varients = get_products_from_database(product_id)
 
     return render_template('product_detail.html',products = varients)
-  
+
 
 # when someone clicked on a tile in the product page this function will be called 
 @app.route("/product/<id>/")
@@ -154,7 +148,7 @@ def get_varient(product_id):
     tup = get_varient_info(product_id)
 
     print(tup)
-    #variant id is the last elemet in the fetched tuple 
+    #variant id is the last elemet in the fetched tuple
     # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
     variant_id = (tup[-1][-1])
 
@@ -183,8 +177,8 @@ def search_products():
 @app.route("/cart/", methods=["POST", "GET"])
 def cart():
     # Check if the user is signed in
-    
-    signedin =  session['signedin']  
+
+    signedin =  session['signedin']
     if signedin is True:
         username = session['username']
         cart = get_cart(session['userid'])
@@ -205,7 +199,7 @@ def cart():
             variant_details[i] = variant_details[i] + (variant_ids[i], )
 
         return render_template('cart.html',guest_cart = variant_details , signedin = False , session_cart=session_cart)
-        
+
 
 
 
@@ -237,7 +231,7 @@ def add_to_cart():
         session.modified = True  # Mark the session as modified
 
         return redirect(url_for('cart'))
-    
+
 
 @app.route('/checkout')
 def checkout():
@@ -246,7 +240,7 @@ def checkout():
     #get_cart()
 
     is_logged = session['signedin']
-    
+
 
     if is_logged is True:
         user_id =session['userid']
@@ -264,7 +258,7 @@ def checkout():
         print(total_price)
 
         return render_template('checkout.html',total_price = total_price)
-    #also need to find the total price 
+    #also need to find the total price
     else:
 
         #find a way to calculate the total price from the session cart
@@ -284,7 +278,7 @@ def checkout_successful():
         city = request.form.get('city')  # Assuming 'city' is the name attribute of the city input field
 
 
-        signedin =  session['signedin'] 
+        signedin =  session['signedin']
         order_id = gen_orderID()
         #need to update the order table in order to get rid of the foregin key constraint
 
@@ -296,11 +290,11 @@ def checkout_successful():
         # order_id, date, delivery_method, payment_method, user_id
 
         if signedin:
-            
+
             user_id = session['userid']
 
             order_table_details = [order_id,formatted_date,'Express','visa',user_id]
-            #first of all we need to update the order_table in order to avoid the primary key constraint 
+            #first of all we need to update the order_table in order to avoid the primary key constraint
             update_order_table(order_table_details)
 
             #get the user's cart
@@ -321,7 +315,7 @@ def checkout_successful():
                 destination_city = city
                 delivary_module = [stock_count,destination_city,new_ID]
 
-                 #need to update the order item table from the above details 
+                 #need to update the order item table from the above details
                 update_order_items(temp,signedin,user_id = user_id)
 
                 update_delivary_module(delivary_module)
@@ -335,7 +329,7 @@ def checkout_successful():
             # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
             user_id = 0
             order_table_details = [order_id,formatted_date,'Express','visa',user_id]
-            #first of all we need to update the order_table in order to avoid the primary key constraint 
+            #first of all we need to update the order_table in order to avoid the primary key constraint
             update_order_table(order_table_details)
 
             # p.title, v.name, v.price, v.variant_image,v.variant_id
@@ -358,7 +352,7 @@ def checkout_successful():
                 temp.append((new_ID,order_id,variant_Id,quantity,price))
 
                 update_order_items(temp,signedin,user_id = user_id)
-            
+
             # clear the session cart
             session['cart'].clear()
 

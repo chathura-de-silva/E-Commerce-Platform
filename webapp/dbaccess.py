@@ -1,8 +1,8 @@
 import mysql.connector
-from .databaseConfig import database_connector
+from .databaseConfig import get_db_config_data
 
 
-config=database_connector()
+config= get_db_config_data()
 
 def get_mysql_connection():
     return mysql.connector.connect(**config)
