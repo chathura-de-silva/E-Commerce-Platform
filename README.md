@@ -215,9 +215,9 @@ These are essential Python libraries and packages that your project relies on to
 3. *Exploring Products*: Browse through our wide range of products by clicking on the various categories displayed on the product page. 
 
       
-       Ex - Electronic product 
+       Ex - Electronic products 
 
-            Toy product
+            Toy products
 
 4. *Product Details*: Click on a product to view its details. This includes the product's name, description, price, and any available variants. You can also see images of the product.
 
