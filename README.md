@@ -186,6 +186,84 @@ These are essential Python libraries and packages that your project relies on to
 - Werkzeug
 - zipp
 
+## User Guide And How To Instructions
+
+### Getting Started
+
+1. *Creating an Account*: To get started with our e-commerce platform, you'll need to create an account. Click on the "Sign Up" button on the homepage, and provide your details, including your name, email address, and a secure password.
+
+2. *Logging In*: If you already have an account, simply click on the "Log In" button on the homepage. Enter your registered email and password to access your account.
+
+
+<p align="center">
+    <picture>
+      <source 
+        srcset="./banner.png"
+        media="(prefers-color-scheme: dark)"
+      />
+      <img 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
+        alt="Academease Preview"
+        width="500"
+        height="400"
+       />
+    </picture>
+  </p>
+
+### Browsing and Shopping
+
+3. *Exploring Products*: Browse through our wide range of products by clicking on the various categories displayed on the homepage. You can also use the search bar to find specific items.
+
+      
+       Ex - Electronic product 
+
+            Toy product
+
+4. *Product Details*: Click on a product to view its details. This includes the product's name, description, price, and any available variants. You can also see images of the product.
+
+5. **Adding to Cart*: When you've found an item you'd like to purchase, click the "Add to Cart" button. You can specify the quantity and select variants, if applicable.
+
+6. *Shopping Cart*: To review your selected items, click on the shopping cart icon at the top of the page. Here, you can make any necessary adjustments to your order.
+
+7. *Proceed to Checkout*: Once you're satisfied with your selections, click "Proceed to Checkout" to complete your purchase.
+
+### Checkout and Payment
+
+8. *Delivery Information*: Provide the necessary delivery information, including your shipping address. If you have an account, this information may already be saved.
+
+9. *Payment*: Select your preferred payment method (e.g., credit card, PayPal). Enter your payment details securely. 
+
+10. *Review Order*: Take a moment to review your order, including the items, shipping address, and payment details. Confirm that everything is correct.
+
+11. *Place Order*: When you're ready, click "Place Order." You'll receive an order confirmation, and we'll start processing your order.
+
+### Managing Your Account
+
+12. *User Dashboard*: As a registered user, you can access your user dashboard. Here, you can view your order history, manage your personal information, and update your password.
+
+13. *Logging Out*: To log out of your account, simply click the "Log Out" button. It's important to log out, especially if you're using a shared computer.
+
+### Analytics
+
+
+14. *Total Quarterly Sales Over the Years*: This section provides information about our total sales for each quarter over the years. It gives you an overview of our sales performance.
+
+15. *Product Sales Quantities*: Here, you can explore data related to product sales quantities. It helps you understand which products are the most popular among our customers.
+
+16. *Trending Categories*: Discover the product categories that are currently trending on our platform. This data can be helpful for making informed shopping decisions.
+
+17. *Sales Throughout the Year*: Get insights into how our sales perform throughout the year. It can help you plan your shopping based on seasonal trends and discounts.
+
+
+
+### Contacting Support
+
+18. *Need Help*: If you encounter any issues or have questions about our products or services, you can reach out to our customer support team. Click on the "Contact Us" link to find our contact details.
+
+19. *Feedback*: We value your feedback! If you have suggestions or comments about your shopping experience, please feel free to share your thoughts with us.
+
+That's it! You're now ready to explore and shop on our e-commerce platform. If you have any further questions or need assistance, don't hesitate to reach out to our friendly customer support team. Happy shopping!
+
 ## About
 
 This project was created as part of a 2<sup>nd</sup> year university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!
