@@ -202,7 +202,7 @@ These are essential Python libraries and packages that your project relies on to
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/registration.png" 
         alt="Academease Preview"
         width="500"
         height="400"
