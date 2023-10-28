@@ -33,7 +33,16 @@ This repository contains the database design and implementation for a single ven
     * [Sample Table in CSV](#sample-table---productcsv)
     * [Table Relations](#table-relations)
     * [Configuration of environmental variables](#configuration-of-env-file)
-4.  [About](#about)
+4.  [Requirments](#requirments)
+5.  [User Guide And How To Instructions](#User-Guide-And-How-To-Instructions)
+    * [Getting Started](#Getting-Started)
+    * [Browsing and Shopping](#Browsing-and-Shopping)
+    * [Checkout and Paymen](#Checkout-and-Payment)
+    * [Managing Your Account](#Managing-Your-Account)
+    * [Analytics](#Analytics)
+    * [Contacting Support](#Contacting-Support)
+
+6.  [About](#about)
 
 # Implementation Details 
 *   This project is using a SQL database to manage data. 
