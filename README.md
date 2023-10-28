@@ -142,6 +142,50 @@ Ex -
 ## Configuration of `.env` file.
 *  Refer the [Getting Started](#getting-started) segment of this document.
 
+## Requirments
+
+#### Python Package Dependencies
+
+These are essential Python libraries and packages that your project relies on to operate successfully. They provide various functionalities and services to help you develop your application. Below is a list of these packages.
+
+- ansi2html
+- blinker
+- cachelib
+- certifi
+- charset-normalizer
+- click
+- colorama
+- dash
+- dash-core-components
+- dash-html-components
+- dash-table
+- Flask
+- Flask-Session
+- idna
+- importlib-metadata
+- itsdangerous
+- Jinja2
+- MarkupSafe
+- mysql-connector-python
+- nest-asyncio
+- numpy
+- packaging
+- pandas
+- plotly
+- protobuf
+- python-dateutil
+- python-dotenv
+- pytz
+- requests
+- retrying
+- six
+- tenacity
+- typing_extensions
+- tzdata
+- urllib3
+- Werkzeug
+- zipp
+
 ## About
 
 This project was created as part of a 2<sup>nd</sup> year university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!
