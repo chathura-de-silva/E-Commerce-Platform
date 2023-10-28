@@ -198,7 +198,7 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="./banner.png"
+        srcset="./registration.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
