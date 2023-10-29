@@ -1,98 +1,103 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 
 <head>
-    <title>Cart</title>
-    <style>
-        /* Style for the table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+  <title>Cart</title>
+  <style>
+    /* Style for the table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
 
-        /* Style for table header */
-        th {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
+    /* Style for table header */
+    th {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+    }
 
-        /* Style for table rows */
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+    /* Style for table rows */
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
 
-        /* Style for table cells */
-        td {
-            padding: 10px;
-            text-align: center;
-        }
+    /* Style for table cells */
+    td {
+      padding: 10px;
+      text-align: center;
+    }
 
-        /* Style for the image */
-        img {
-            max-width: 100px;
-            max-height: 100px;
-        }
-    </style>
+    /* Style for the image */
+    img {
+      max-width: 50px;
+      max-height: 35px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>Your Cart {{username}} </h1>
-    {% if signedin %}
-    <table>
-        <!-- Display cart data if user is signed in -->
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Variant Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart %}
-            <!-- Order of the query = quantity, name, price, variant_image, title -->
-            <tr>
-                <td>{{ item[4] +" " + item[1] }}</td>
-                <td>{{ item[0] }}</td>
-                <td>${{ item[2]  }}</td> 
-                <td><img src="{{ item.variant_image }}" alt="Variant Image"></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <!-- Display a message if the user is not signed in or the cart is empty -->
-    <p>You are currently logged in as a guest</p>
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Variant Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in guest_cart %}
-                <tr>
-                    <!-- p.title, v.name, v.price, v.variant_image -->
-                    <td>{{ item[0] }}</td>
-                    <td>{{item[4] }}</td> 
-                    <td>${{ item[2] }}</td>
-                    <td><img src="{{ item['image_url'] }}" alt="Variant Image"></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
+  <h1>Your Cart {{username}}</h1>
+  {% if signedin %}
+  <table>
+    <!-- Display cart data if user is signed in -->
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Variant Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+      <!-- Order of the query = quantity, name, price, variant_image, title -->
+      <tr>
+        <td>{{ item[4] +" | " + item[1] }}</td>
+        <td>{{ item[0] }}</td>
+        <td>${{ item[2] }}</td>
+        <td><img src="/static/{{ item[3] }}" alt="Variant Image" /></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <!-- Display a message if the user is not signed in or the cart is empty -->
+  <p>You are currently logged in as a guest</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Variant Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in guest_cart %}
+      <tr>
+        <!-- p.title, v.name, v.price, v.variant_image -->
+        <td>{{ item[0] }}</td>
+        <td>{{item[4] }}</td>
+        <td>${{ item[2] }}</td>
+        <td><img src="{{ item['image_url'] }}" alt="Variant Image" /></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
 
-        <!-- Buttons to navigate to checkout and product pages -->
-    <div>
-        <a href="{{ url_for('checkout') }}" class="btn btn-primary">Go to Checkout</a>
-        <a href="{{ url_for('products') }}" class="btn btn-secondary">Continue Shopping</a>
-    </div>
+  <!-- Buttons to navigate to checkout and product pages -->
+  <div>
+    <a href="{{ url_for('checkout') }}" class="btn btn-primary"
+      >Go to Checkout</a
+    >
+    <a href="{{ url_for('products') }}" class="btn btn-secondary"
+      >Continue Shopping</a
+    >
+  </div>
 </body>
 
 {% endblock content %}

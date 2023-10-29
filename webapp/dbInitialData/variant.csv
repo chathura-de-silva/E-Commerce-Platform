@@ -1,8 +1,8 @@
 variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_attrbutes TEXT,variant_image TEXT
 501,103,MacBook Air 13 - Space Gray,1199.99,"8GB RAM,Lightweight and powerful",put a link here
 502,103,MacBook Air 13 - Silver,1249.99,"16GB RAM,Enhanced performance",put a link here
-503,102,Dell XPS 13 - Silver,1099.99,"16GB RAM,Top-tier computing excellence",put a link here
-504,102,Dell XPS 13 - Black,1149.99,"32GB RAM,Upgrade for more power",put a link here
+503,102,Dell XPS 13 - Silver,1099.99,"16GB RAM,Top-tier computing excellence",product-images/Dell_XPS_13.png
+504,102,Dell XPS 13 - Black,1149.99,"32GB RAM,Upgrade for more power",product-images/Dell_XPS_13.png
 505,101,LEGO Star Wars Millennium Falcon - Standard,49.99,Regular edition,put a link here
 506,101,LEGO Star Wars Millennium Falcon - Deluxe,69.99,Larger and more detailed version,put a link here
 507,104,iPhone 12 Pro - Silver,1099.99,"128GB Storage,Exceptional camera capabilities",put a link here
