@@ -1,83 +1,83 @@
 variant_id INT,product_id INT,name VARCHAR(255),"price DECIMAL(10, 2)",custom_attrbutes TEXT,variant_image TEXT
-501,103,MacBook Air 13 - Space Gray,1199.99,"8GB RAM,Lightweight and powerful",put a link here
-502,103,MacBook Air 13 - Silver,1249.99,"16GB RAM,Enhanced performance",put a link here
+501,103,MacBook Air 13 - Space Gray,1199.99,"8GB RAM,Lightweight and powerful",product-images/macbook_air.png
+502,103,MacBook Air 13 - Silver,1249.99,"16GB RAM,Enhanced performance",product-images/macbook_air.png
 503,102,Dell XPS 13 - Silver,1099.99,"16GB RAM,Top-tier computing excellence",product-images/Dell_XPS_13.png
 504,102,Dell XPS 13 - Black,1149.99,"32GB RAM,Upgrade for more power",product-images/Dell_XPS_13.png
-505,101,LEGO Star Wars Millennium Falcon - Standard,49.99,Regular edition,put a link here
-506,101,LEGO Star Wars Millennium Falcon - Deluxe,69.99,Larger and more detailed version,put a link here
-507,104,iPhone 12 Pro - Silver,1099.99,"128GB Storage,Exceptional camera capabilities",put a link here
-508,104,iPhone 12 Pro - Gold,1149.99,"256GB Storage,More storage for your photos",put a link here
-509,105,Samsung Galaxy S21 Ultra - Phantom Black,1199.99,"256GB Storage,Unmatched performance and camera system",put a link here
-510,105,Samsung Galaxy S21 Ultra - Mystic Bronze,1249.99,"512GB Storage,High-capacity storage",put a link here
-511,106,Monopoly Board Game - Classic Edition,19.99,Traditional family fun,put a link here
-512,106,Monopoly Board Game - Deluxe Edition,29.99,Luxurious edition,put a link here
-513,107,Hot Wheels Die-Cast Cars Set - Assorted Models,12.99,Various cool die-cast cars,put a link here
-514,107,Hot Wheels Die-Cast Cars Set - Limited Edition,19.99,Limited collectible cars,put a link here
-515,108,iPad Air - Space Gray,499.99,"64GB Storage,Power and portability in one",put a link here
-516,108,iPad Air - Silver,549.99,"128GB Storage,More storage for your apps",put a link here
-517,109,Samsung 65-Inch 4K Smart TV - Black,999.99,65-inch stunning visuals,put a link here
-518,109,Samsung 65-Inch 4K Smart TV - Silver,1049.99,75-inch stunning visuals,put a link here
-519,110,Barbie Dreamhouse - Pink,199.99,Luxurious Barbie mansion,put a link here
-520,110,Barbie Dreamhouse - Purple,219.99,Enhanced play features,put a link here
-521,111,Bose Noise-Canceling Headphones - Black,299.99,Immerse in high-quality audio,put a link here
-522,111,Bose Noise-Canceling Headphones - Silver,319.99,Premium sound experience,put a link here
-523,112,Canon EOS Rebel T7 DSLR Camera - Black,449.99,"18-55mm Lens Kit,Stunning photos and videos",put a link here
-524,112,Canon EOS Rebel T7 DSLR Camera - Bundle,549.99,Extra lenses and accessories,put a link here
-525,113,Remote Control Helicopter - Blue,49.99,Blue-themed fun,put a link here
-526,113,Remote Control Helicopter - Red,49.99,Red-themed excitement,put a link here
-527,114,1000-Piece Jigsaw Puzzle Set - Scenic Landscapes,29.99,Beautiful puzzle scenes,put a link here
-528,114,1000-Piece Jigsaw Puzzle Set - Wildlife,29.99,Exciting wildlife scenes,put a link here
-529,115,Sony Xperia 1 III - Black,1099.99,"256GB Storage,High-end smartphone with 4K display",put a link here
-530,115,Sony Xperia 1 III - Blue,1149.99,"512GB Storage,Expanded storage options",put a link here
-531,116,Acer Predator Helios 300 - Black,1299.99,"RTX 3060,Powerful gaming laptop",put a link here
-532,116,Acer Predator Helios 300 - Red,1349.99,"RTX 3080,Top-tier gaming performance",put a link here
-533,117,LEGO Harry Potter Hogwarts Castle - Deluxe,129.99,Larger and more detailed version,put a link here
-534,117,LEGO Harry Potter Hogwarts Castle - Limited Edition,149.99,Collectible limited edition,put a link here
-535,118,Scrabble Board Game - Deluxe Edition,39.99,Luxurious word gaming,put a link here
-536,118,Scrabble Board Game - Travel Edition,24.99,Compact travel fun,put a link here
-537,119,Nerf N-Strike Elite Disruptor Blaster - Red,19.99,Red dart-blasting action,put a link here
-538,119,Nerf N-Strike Elite Disruptor Blaster - Blue,19.99,Blue dart-blasting action,put a link here
-539,120,Microsoft Surface Pro 7 - Platinum,899.99,"Core i5,Productivity on the go",put a link here
-540,120,Microsoft Surface Pro 7 - Black,949.99,"Core i7,Enhanced performance",put a link here
-541,121,LG 55-Inch OLED 4K TV - Silver,1099.99,"55-inch OLED display,Stunning visuals and colors",put a link here
-542,121,LG 55-Inch OLED 4K TV - Black,1149.99,"55-inch OLED display,In black color",put a link here
-543,122,American Girl Doll - Samantha,129.99,Comes with Samantha's accessories,put a link here
-544,122,American Girl Doll - Rebecca,129.99,Comes with Rebecca's accessories,put a link here
-545,123,Black,299.99,With 2 years Sony warranty!,put a link here
-546,124,Silver,949.99,With 2 years Nikon warranty!,put a link here
-547,125,Green,49.99,With 1 year R/C Buggy warranty!,put a link here
-548,125,Red,59.99,With 1 year R/C Buggy warranty!,put a link here
-549,126,World Map,24.99,High-quality puzzle!,put a link here
-550,126,Historical Map,29.99,High-quality puzzle!,put a link here
-551,127,Standard,499.99,With 2 years Sony warranty!,put a link here
-552,127,Pro,599.99,With 2 years Sony warranty!,put a link here
-553,128,8GB RAM,1299.99,With 3 years HP warranty!,put a link here
-554,128,16GB RAM,1499.99,With 3 years HP warranty!,put a link here
-555,129,Lamborghini Sian,349.99,Build the Lamborghini Sian!,put a link here
-556,130,Catan Board Game,29.99,Strategic board game for all ages!,put a link here
-557,130,Catan Expansion,39.99,Expand your Catan experience!,put a link here
-558,131,Neon Blue,299.99,Includes two controllers!,put a link here
-559,131,Gray,299.99,Includes two controllers!,put a link here
-560,132,Black,999.99,Ultra-slim design,put a link here
-561,132,Silver,1099.99,High-resolution display,put a link here
-562,133,75-Inch,1499.99,Smart TV with voice control,put a link here
-563,133,85-Inch,1899.99,Large 4K screen for an immersive experience,put a link here
-564,134,Roller Coaster Set,199.99,Working roller coaster with minifigures,put a link here
-565,134,Ferris Wheel Set,249.99,Build your own Ferris wheel attraction,put a link here
-566,135,Standard Edition,29.99,Classic board game fun for the family,put a link here
-567,135,Europe Edition,39.99,Travel across Europe in this special edition,put a link here
-568,136,Turquoise,179.99,Stylish color option for gaming enthusiasts,put a link here
-569,137,Intel Core i5,999.99,Powerful performance for everyday tasks,put a link here
-570,137,Intel Core i7,1199.99,High-performance laptop for multitasking,put a link here
-571,138,85-Inch,3999.99,8K resolution for a cinematic viewing experience,put a link here
-572,138,100-Inch,4999.99,Immersive large-screen entertainment,put a link here
-573,139,International Space Station,79.99,Recreate the ISS in intricate detail,put a link here
-574,140,Giant Edition,49.99,Giant-sized Jenga for outdoor fun,put a link here
-575,141,Black,199.99,High-quality sound with noise-canceling,put a link here
-576,141,Silver,229.99,Premium wireless earbuds for music lovers,put a link here
-577,142,Body Only,899.99,Capture stunning photos with the camera body only,put a link here
-578,142,Kit with 18-55mm Lens,1099.99,Complete kit for photography enthusiasts,put a link here
-579,143,Blue,39.99,Speedy remote control boat for water enthusiasts,put a link here
-580,143,Red,39.99,Enjoy high-speed adventures on the water,put a link here
-581,144,National Parks Set 1,24.99,Explore the beauty of US national parks,put a link here
-582,144,National Parks Set 2,24.99,Discover more national parks with this puzzle set,put a link here
+505,101,LEGO Star Wars Millennium Falcon - Standard,49.99,Regular edition,product-images/lego_falcon.png
+506,101,LEGO Star Wars Millennium Falcon - Deluxe,69.99,Larger and more detailed version,product-images/lego_falcon.png
+507,104,iPhone 12 Pro - Silver,1099.99,"128GB Storage,Exceptional camera capabilities",product-images/iphone_12.png
+508,104,iPhone 12 Pro - Gold,1149.99,"256GB Storage,More storage for your photos",product-images/iphone_12.png
+509,105,Samsung Galaxy S21 Ultra - Phantom Black,1199.99,"256GB Storage,Unmatched performance and camera system",product-images/galaxy_s21.png
+510,105,Samsung Galaxy S21 Ultra - Mystic Bronze,1249.99,"512GB Storage,High-capacity storage",product-images/galaxy_s21.png
+511,106,Monopoly Board Game - Classic Edition,19.99,Traditional family fun,product-images/monopoly.png
+512,106,Monopoly Board Game - Deluxe Edition,29.99,Luxurious edition,product-images/monopoly.png
+513,107,Hot Wheels Die-Cast Cars Set - Assorted Models,12.99,Various cool die-cast cars,product-images/hot_wheels.png
+514,107,Hot Wheels Die-Cast Cars Set - Limited Edition,19.99,Limited collectible cars,product-images/hot_wheels.png
+515,108,iPad Air - Space Gray,499.99,"64GB Storage,Power and portability in one",product-images/ipad_air.png
+516,108,iPad Air - Silver,549.99,"128GB Storage,More storage for your apps",product-images/ipad_air.png
+517,109,Samsung 65-Inch 4K Smart TV - Black,999.99,65-inch stunning visuals,product-images/samsung_tv.png
+518,109,Samsung 65-Inch 4K Smart TV - Silver,1049.99,75-inch stunning visuals,product-images/samsung_tv.png
+519,110,Barbie Dreamhouse - Pink,199.99,Luxurious Barbie mansion,product-images/barbie_dreamhouse.png
+520,110,Barbie Dreamhouse - Purple,219.99,Enhanced play features,product-images/barbie_dreamhouse.png
+521,111,Bose Noise-Canceling Headphones - Black,299.99,Immerse in high-quality audio,product-images/bose_headphones.png
+522,111,Bose Noise-Canceling Headphones - Silver,319.99,Premium sound experience,product-images/bose_headphones.png
+523,112,Canon EOS Rebel T7 DSLR Camera - Black,449.99,"18-55mm Lens Kit,Stunning photos and videos",product-images/canon_camera.png
+524,112,Canon EOS Rebel T7 DSLR Camera - Bundle,549.99,Extra lenses and accessories,product-images/canon_camera.png
+525,113,Remote Control Helicopter - Blue,49.99,Blue-themed fun,product-images/helicopter.png
+526,113,Remote Control Helicopter - Red,49.99,Red-themed excitement,product-images/helicopter.png
+527,114,1000-Piece Jigsaw Puzzle Set - Scenic Landscapes,29.99,Beautiful puzzle scenes,product-images/puzzle_set.png
+528,114,1000-Piece Jigsaw Puzzle Set - Wildlife,29.99,Exciting wildlife scenes,product-images/puzzle_set.png
+529,115,Sony Xperia 1 III - Black,1099.99,"256GB Storage,High-end smartphone with 4K display",product-images/sony_xperia.png
+530,115,Sony Xperia 1 III - Blue,1149.99,"512GB Storage,Expanded storage options",product-images/sony_xperia.png
+531,116,Acer Predator Helios 300 - Black,1299.99,"RTX 3060,Powerful gaming laptop",product-images/acer_predator.png
+532,116,Acer Predator Helios 300 - Red,1349.99,"RTX 3080,Top-tier gaming performance",product-images/acer_predator.png
+533,117,LEGO Harry Potter Hogwarts Castle - Deluxe,129.99,Larger and more detailed version,product-images/lego_hogwarts.png
+534,117,LEGO Harry Potter Hogwarts Castle - Limited Edition,149.99,Collectible limited edition,product-images/lego_hogwarts.png
+535,118,Scrabble Board Game - Deluxe Edition,39.99,Luxurious word gaming,product-images/scrabble.png
+536,118,Scrabble Board Game - Travel Edition,24.99,Compact travel fun,product-images/scrabble.png
+537,119,Nerf N-Strike Elite Disruptor Blaster - Red,19.99,Red dart-blasting action,product-images/nerf_blaster.png
+538,119,Nerf N-Strike Elite Disruptor Blaster - Blue,19.99,Blue dart-blasting action,product-images/nerf_blaster.png
+539,120,Microsoft Surface Pro 7 - Platinum,899.99,"Core i5,Productivity on the go",product-images/surface_pro.png
+540,120,Microsoft Surface Pro 7 - Black,949.99,"Core i7,Enhanced performance",product-images/surface_pro.png
+541,121,LG 55-Inch OLED 4K TV - Silver,1099.99,"55-inch OLED display,Stunning visuals and colors",product-images/lg_oled_tv.png
+542,121,LG 55-Inch OLED 4K TV - Black,1149.99,"55-inch OLED display,In black color",product-images/lg_oled_tv.png
+543,122,American Girl Doll - Samantha,129.99,Comes with Samantha's accessories,product-images/american_girl.png
+544,122,American Girl Doll - Rebecca,129.99,Comes with Rebecca's accessories,product-images/american_girl.png
+545,123,Black,299.99,With 2 years Sony warranty!,product-images/sony_headphones.png
+546,124,Silver,949.99,With 2 years Nikon warranty!,product-images/nikon_camera.png
+547,125,Green,49.99,With 1 year R/C Buggy warranty!,product-images/offroad_buggy.png
+548,125,Red,59.99,With 1 year R/C Buggy warranty!,product-images/offroad_buggy.png
+549,126,World Map,24.99,High-quality puzzle!,product-images/world_map_puzzle.png
+550,126,Historical Map,29.99,High-quality puzzle!,product-images/world_map_puzzle.png
+551,127,Standard,499.99,With 2 years Sony warranty!,product-images/pixel_7_pro.png
+552,127,Pro,599.99,With 2 years Sony warranty!,product-images/pixel_7_pro.png
+553,128,8GB RAM,1299.99,With 3 years HP warranty!,product-images/hp_spectre.png
+554,128,16GB RAM,1499.99,With 3 years HP warranty!,product-images/hp_spectre.png
+555,129,Lamborghini Sian,349.99,Build the Lamborghini Sian!,product-images/lego_bugatti.png
+556,130,Catan Board Game,29.99,Strategic board game for all ages!,product-images/catan.png
+557,130,Catan Expansion,39.99,Expand your Catan experience!,product-images/catan.png
+558,131,Neon Blue,299.99,Includes two controllers!,product-images/nintendo_switch.png
+559,131,Gray,299.99,Includes two controllers!,product-images/nintendo_switch.png
+560,132,Black,999.99,Ultra-slim design,product-images/surface_laptop.png
+561,132,Silver,1099.99,High-resolution display,product-images/surface_laptop.png
+562,133,75-Inch,1499.99,Smart TV with voice control,product-images/sony_4k_tv.png
+563,133,85-Inch,1899.99,Large 4K screen for an immersive experience,product-images/sony_4k_tv.png
+564,134,Roller Coaster Set,199.99,Working roller coaster with minifigures,product-images/lego_roller_coaster.png
+565,134,Ferris Wheel Set,249.99,Build your own Ferris wheel attraction,product-images/lego_roller_coaster.png
+566,135,Standard Edition,29.99,Classic board game fun for the family,product-images/ticket_to_ride.png
+567,135,Europe Edition,39.99,Travel across Europe in this special edition,product-images/ticket_to_ride.png
+568,136,Turquoise,179.99,Stylish color option for gaming enthusiasts,product-images/nintendo_switch_lite.png
+569,137,Intel Core i5,999.99,Powerful performance for everyday tasks,product-images/hp_envy.png
+570,137,Intel Core i7,1199.99,High-performance laptop for multitasking,product-images/hp_envy.png
+571,138,85-Inch,3999.99,8K resolution for a cinematic viewing experience,product-images/samsung_8k_tv.png
+572,138,100-Inch,4999.99,Immersive large-screen entertainment,product-images/samsung_8k_tv.png
+573,139,International Space Station,79.99,Recreate the ISS in intricate detail,product-images/lego_iss.png
+574,140,Giant Edition,49.99,Giant-sized Jenga for outdoor fun,product-images/jenga.png
+575,141,Black,199.99,High-quality sound with noise-canceling,product-images/sony_earbuds.png
+576,141,Silver,229.99,Premium wireless earbuds for music lovers,product-images/sony_earbuds.png
+577,142,Body Only,899.99,Capture stunning photos with the camera body only,product-images/canon_90d.png
+578,142,Kit with 18-55mm Lens,1099.99,Complete kit for photography enthusiasts,product-images/canon_90d.png
+579,143,Blue,39.99,Speedy remote control boat for water enthusiasts,product-images/speed_boat.png
+580,143,Red,39.99,Enjoy high-speed adventures on the water,product-images/speed_boat.png
+581,144,National Parks Set 1,24.99,Explore the beauty of US national parks,product-images/national_parks_puzzle.png
+582,144,National Parks Set 2,24.99,Discover more national parks with this puzzle set,product-images/national_parks_puzzle.png
