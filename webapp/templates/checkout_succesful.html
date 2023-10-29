@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Thank you for your purchase</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Estimated delivary time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for name, number in names %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ number }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<style>
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table, th, td {
+    border: 1px solid #ccc;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+</style>
+
+
+
+{% endblock %}
