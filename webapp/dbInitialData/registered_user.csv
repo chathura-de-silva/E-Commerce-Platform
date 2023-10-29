@@ -5,4 +5,3 @@ user_id INT,email VARCHAR(255),password VARCHAR(255),username VARCHAR(255)
 10003,david@example.com,secure789,davidj
 10004,emily@example.com,pwd101,emilyd
 10005,michael@example.com,secret246,michaelw
-10006,pdfsdsgfg@example.com,peashooter,luke
