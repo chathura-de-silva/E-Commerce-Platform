@@ -5,12 +5,12 @@
     
     <style>
         .product-image {
-            max-width: 100%;
+            max-width: 65%;
             max-height: 100%;
             width: auto;
             height: auto;
             transition: transform 0.3s ease;
-            border-radius: 3%;
+            border-radius: 5%;
         }
 
         .product-tile {
@@ -30,16 +30,18 @@
         }
 
         .product-name {
-            margin-top: 1px;
+            margin-top: 15px;
             font-size: 20px;
         }
 
         .add-to-cart-button {
-            background: #007BFF;
+            background: #25103b;
             color: #fff;
             padding: 5px 10px;
             border: none;
             cursor: pointer;
+            border-radius: 10%;
+            overflow: hidden;
         }
 
         .description-overlay {
@@ -58,33 +60,26 @@
         .product-tile:hover .description-overlay {
             display: block;
         }
+
+        /* Styles for the quantity select element */
+        select#quantitySelect {
+            padding: 03px 03px 03px 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 30px;
+            margin-top: 10px; 
+            transform: translateY(-5%);
+            background-color: #c6d4bb;
     </style>
-
-
-<script>
-    // Add an event listener to the quantity select element
-    document.getElementById('quantitySelect').addEventListener('change', function() {
-        // Get the selected quantity from the dropdown
-        var selectedQuantity = this.value;
-
-        // Update the hidden input field with the selected quantity
-        document.getElementById('hiddenQuantity').value = selectedQuantity;
-    });
-
-
-    
-</script>
-
-<!-- variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id -->
 
     <div class="row">
         <div class="col-md-12">
             <div class="card-deck">
                 {% for variant in variants %}
                     <div class="product-tile">
-                        <img src="/static/laptop.jpg" alt="{{ variant[0] }}" class="product-image">
+                        <img src="/static/{{variant[3]}}" alt="{{ variant[0] }}" class="product-image">
                         <div class="product-name">{{ variant[0] }}</div>
-                        
                         <p>Available Stock: {{ stock_count }}</p> <!-- Display stock count -->
                         <p>Price: ${{ variant[1] }}</p>
                         <p>Custom Attributes: {{ variant[2] }}</p>
@@ -103,6 +98,4 @@
             </div>
         </div>
     </div>
-</div>
-
 {% endblock %}
