@@ -1,5 +1,6 @@
 import mysql.connector
 from .databaseConfig import get_db_config_data
+from werkzeug.security import generate_password_hash,check_password_hash
 
 config = get_db_config_data()
 
@@ -133,11 +134,12 @@ def auth_user(data):
     password = data["password"]
 
     # check if the user is already in the database
-    cur.execute("SELECT user_id,username FROM registered_user WHERE password=%s AND username=%s", (password, username))
-
+    cur.execute("SELECT user_id,username,password FROM registered_user WHERE username=%s", (username,))
+  
     result = cur.fetchall()
+    print("hello mofossssssssssssssssssssssssssss",result[0][2])
     conn.close()
-    if len(result) == 0:
+    if not check_password_hash(result[0][2],password):
         return False
     return result[0]
 
