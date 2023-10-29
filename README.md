@@ -200,17 +200,6 @@ These are essential Python libraries and packages that your project relies on to
 # Developer Guide
 
 ## Entity-Relationship (ER) Diagram
-### ER Diagram Description
- An ER diagram, or Entity-Relationship diagram, is a visual representation of the data model in the e-commerce platform project. It illustrates how different entities (objects or concepts in our system) are related to each other and how attributes (properties) are associated with those entities. The ER diagram is a crucial part of the project's database design and provides a clear view of how data is organized.
-
-### Entities
- Entities represent real-world objects or concepts in our system, such as "Product," "inventory," and "Order."
-
-### Attributes
-Attributes describe the properties of entities. For example, the "Product" entity have attributes like "Product_ID," "Category_ID," and "Description."
-
-### Relationships
-Relationships define how entities are connected. For instance, the "Order" entity have relationships with "Registered user" and "Order item" entities, showing that an order is associated with a user and contains one or more Order items.
 
 <p align="center">
     <picture>
@@ -228,69 +217,38 @@ Relationships define how entities are connected. For instance, the "Order" entit
   </p>
 
 ## Project Structure
-### Project Structure Description
+
  The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
 
 ### Root Directory
  The top-level directory of our project. It contains configuration files (e.g.app.py) and top-level documentation (e.g., README.md).
 
-### Source Code
-The directory or directories where we keep our application's source code. This includes files for our frontend and backend components.
-    e.g._init_.py
+### Webapp
+All the csv files are included the dbinitialData folder such as cart.csv,category.csv,product.csv 
 
-### Database Scripts
- This directory may contain database migration scripts, SQL files, or an ORM-specific directory for database-related code.
+All the relasionship among tables are included in the database_relations.sql
 
-### Static Assets
-A directory for storing static assets such as images, CSS files, and other resources used in our web application.
 
-#### Sample code
-    * {
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-        font-size: 16px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-          body , #auth{
-              background-color: #435165;
-              margin: 0;
-      }
+### Static 
+A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
 
-### Templates (Frontend)
+It included category-images,product-images,subcategory-images folders.
+
+All the styles are included in the style.css file
+
+### requirements
+
+In tis requirements.txt file, all the required modules are included 
+
+### Templates 
  In web applications, this directory holds HTML templates that are used to render web pages.
 
- #### Sample code
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
-      {% if messages %}
+### Database
 
-      <div class="alert alert-danger">
-          <ul>
-              <!-- {% for category, message in messages %} -->
-                  <li>{{ message }}</li>
-              <!-- {% endfor %} -->
-          </ul>
-      </div>
+ The intial database is configured in this darabaseConfig.py file.
 
-      {% endif %}
-      {% endwith %}
+ Mysql files are fetched to the main by the dbaccess.py file.
 
-### API Endpoints (Backend)
- For RESTful APIs or backend services, this section contain API endpoint definitions, routes, and controllers.
-
-### Configuration
- Configuration files or directories for setting up application parameters, environment variables, and other project-specific settings.
-
-### Dependencies
-This includes dependencies used in your project.
-
-    - ansi2html
-    - blinker
-    - cachelib
-    - certifi
-    - charset-normalizer
-    - click
 
 ## Version Control
 The version control system we're using (Git) and provide instructions for cloning the repository.
