@@ -29,6 +29,7 @@ This repository contains the database design and implementation for a single ven
 </p>
 
 # Getting Started
+
 *   As prerequisites you should have,
     *    your mysql environment set up  and server running.
     *    Python environment with `Python version 3.11` or higher.
@@ -62,7 +63,8 @@ To get started with the platform, follow these steps :
     ```
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
 
+
 ## About
 
-This project was created as part of a 2<sup>nd</sup> year university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!
+This project was created as part of a 3<sup>rd</sup> semester university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!
 
