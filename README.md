@@ -42,7 +42,7 @@ This repository contains the database design and implementation for a single ven
     * [Configuration of environmental variables](#configuration-of-env-file)
 4.  [About](#about)
 
-# Implementation Details 
+## Implementation Details 
 *   This project is using a SQL database to manage data. 
 *   Backend is developed using Python with the `Flask` microframework.
 *   This Project uses Server Side Rendering to render the user interface.
@@ -81,16 +81,16 @@ To get started with the platform, follow these steps :
     $ python app.py
     ```
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
-# Configuration of Initial Database
+## Configuration of Initial Database
 
-## Overview
+### Overview
 Everything you have to modify to create the initial database you wish to have is located inside `/dbInitialData/` directory.
 
 * `database_relations.sql` holds 'ALTER' queries which creates the relations between tables of the database. 
 * All the `.csv` files, each represents a table in the initial database.
 * `.env` file (should be created by you as mentioned) contains environmental variables related to your MySQL environment.
 
-## Tables
+### Tables
   Every `.csv` file will generate a separate table in the database.
   
   Table name will be the same as the csv file's name.
@@ -127,7 +127,7 @@ product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10,2)",catego
 202,Dennim Jeans,Classic denim jeans,0.6,6,/assets/jean.jpeg
 ```
 
-## Table relations
+### Table relations
 You have to write `ALTER` SQL queries for the referencing inside `dbInitialData/database_relations.sql`.
 
 Keep an empty line between each SQL query. 
@@ -143,7 +143,7 @@ Ex -
     ADD CONSTRAINT pk_variant_id
     PRIMARY KEY (variant_id);
   ```
-## Configuration of `.env` file.
+### Configuration of `.env` file.
 *  Refer the [Getting Started](#getting-started) segment of this document.
 
 ## About
