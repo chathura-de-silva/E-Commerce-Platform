@@ -21,10 +21,11 @@ This repository contains the database design and implementation for a single ven
 * Product management: The platform allows users to create, manage, and track products, including their variants, categories, and inventory.
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
 * Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
+* This Github Readme contains only the initial setup and deploy instructions of the project. For further info, refer the full documentation.
 
 <p  align = "center">
     <a href="https://chathura-de-silva.github.io/E-Commerce-Platform/" target="_blank">
-        <img src="./docs/assets/doc-button.png" width="350px" >
+        <img src="./docs/assets/doc-button.png" width="500px" >
     </a>
 </p>
 
@@ -94,6 +95,10 @@ Everything you have to modify to create the initial database you wish to have is
   
   Table name will be the same as the csv file's name.
   * Ex - `product.csv` creates a table in the database called `product`. So you can create or rename the csv files as per your requirement.
+
+
+> [!Important]
+>* While altering the inital data as they wish according to the data constraints is recommended for any user, creating,renaming or deleting tables via creating,renaming or deleting the respective `.csv` files is only meant to be done by advanced users since the project depends on the current database schema despite being independant of the dummy data.
 
   You can either use something like Microsoft Excel or a plain text editor like Notepad for the purpose of creation and editing of CSV files.
   

@@ -108,6 +108,10 @@ Everything you have to modify to create the initial database you wish to have is
   Table name will be the same as the csv file's name.
   * Ex - product.csv creates a table in the database called product. So you can create or rename the csv files as per your requirement.
 
+> [!Important]
+>* While altering the inital data as they wish according to the data constraints is recommended for any user, creating,renaming or deleting tables via creating,renaming or deleting the respective `.csv` files is only meant to be done by advanced users since the project depends on the current database schema despite being independant of the dummy data.
+
+
   You can either use something like Microsoft Excel or a plain text editor like Notepad for the purpose of creation and editing of CSV files.
   
 **Make sure to use double quotes(") as the quotechar and comma(,) as the delimiter. Otherwise the project will fail to initiate the database properly.**
