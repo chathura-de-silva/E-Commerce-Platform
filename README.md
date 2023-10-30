@@ -1,14 +1,14 @@
-
+it
 # E-Commerce Platform for 'C'
 <p align="center">
     <picture>
       <source 
-        srcset="./banner.png"
+        srcset="./docs/assets/banner.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
-        alt="Academease Preview"
+        alt="C-Store Project Cover Image"
         width="800"
        />
     </picture>
@@ -21,6 +21,13 @@ This repository contains the database design and implementation for a single ven
 * Product management: The platform allows users to create, manage, and track products, including their variants, categories, and inventory.
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
 * Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
+* This Github Readme contains only the initial setup and deploy instructions of the project. For further info, refer the full documentation.
+
+<p  align = "center">
+    <a href="https://chathura-de-silva.github.io/E-Commerce-Platform/" target="_blank">
+        <img src="./docs/assets/doc-button.png" width="500px" >
+    </a>
+</p>
 
 # Index
 1.  [Implementation Details](#implementation-details)
@@ -69,8 +76,10 @@ To get started with the platform, follow these steps :
     ```
 4.  You can entirely alter the initial database as per your requirements without involving in any coding (sql queries will be required only to specify the relations between tables and data types. Even it is a simple process of modifying some text files.). For more info refer the [later part](#configuration-of-initial-database) of this document.
 
-5.  Run the Project.
-    *   `app.py` is the main file.
+5.  Run the Project using following command.( `./app.py` is the main file.)
+     ```plaintext
+    $ python app.py
+    ```
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
 # Configuration of Initial Database
 
@@ -86,6 +95,10 @@ Everything you have to modify to create the initial database you wish to have is
   
   Table name will be the same as the csv file's name.
   * Ex - `product.csv` creates a table in the database called `product`. So you can create or rename the csv files as per your requirement.
+
+
+> [!Important]
+>* While altering the inital data as they wish according to the data constraints is recommended for any user, creating,renaming or deleting tables via creating,renaming or deleting the respective `.csv` files is only meant to be done by advanced users since the project depends on the current database schema despite being independant of the dummy data.
 
   You can either use something like Microsoft Excel or a plain text editor like Notepad for the purpose of creation and editing of CSV files.
   
