@@ -341,7 +341,8 @@ These are essential Python libraries and packages that your project relies on to
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/Productsales.png" 
         alt="Product sales"
-        height="400"
+        height="500"
+        weight="500"
        />
     </picture>
   </p>
