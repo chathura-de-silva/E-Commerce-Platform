@@ -22,12 +22,11 @@ This repository contains the database design and implementation for a single ven
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
 * Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
 
-<center>
+<p  align = "center">
     <a href="https://chathura-de-silva.github.io/E-Commerce-Platform/" target="_blank">
-        <img src="./docs/assets/doc-button.png" width="500px">
+        <img src="./docs/assets/doc-button.png" width="500px" >
     </a>
-</center>
-
+</p>
 
 # Index
 1.  [Implementation Details](#implementation-details)
