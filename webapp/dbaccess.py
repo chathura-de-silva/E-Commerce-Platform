@@ -1,5 +1,6 @@
 import mysql.connector
 from .databaseConfig import get_db_config_data
+from werkzeug.security import generate_password_hash,check_password_hash
 
 config = get_db_config_data()
 
@@ -114,7 +115,7 @@ def add_user(data):
     if len(result) != 0:
         return False
     customer_id = gen_custID()
-    tup = (customer_id, data["email"], data["password"], data["username"],)
+    tup = (customer_id, data["email"], generate_password_hash(data["password"], method='pbkdf2:sha256'), data["username"],)
 
     cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
 
@@ -133,11 +134,12 @@ def auth_user(data):
     password = data["password"]
 
     # check if the user is already in the database
-    cur.execute("SELECT user_id,username FROM registered_user WHERE password=%s AND username=%s", (password, username))
-
+    cur.execute("SELECT user_id,username,password FROM registered_user WHERE username=%s", (username,))
+  
     result = cur.fetchall()
+    print("hello mofossssssssssssssssssssssssssss",result[0][2])
     conn.close()
-    if len(result) == 0:
+    if not check_password_hash(result[0][2],password):
         return False
     return result[0]
 
