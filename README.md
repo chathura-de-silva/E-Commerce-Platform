@@ -41,7 +41,6 @@ This repository contains the database design and implementation for a single ven
 [Developer Guide](#Developer-Guide)
   * [Entity-Relationship (ER) Diagram](#Entity-Relationship(ER)Diagram)
   * [Project Structure](#Project-Structure)
-  * [Version Control](#Version-Control)
 
 [User Guide](#User-Guide-And-How-To-Instructions)
   * [Getting Started](#Getting-Started)
@@ -204,7 +203,7 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="./ER_diagram.png"
+        srcset="./ERdiagram.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
@@ -218,41 +217,24 @@ These are essential Python libraries and packages that your project relies on to
 
 ## Project Structure
 
- The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
+* The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
 
-### Root Directory
- The top-level directory of our project. It contains configuration files (e.g.app.py) and top-level documentation (e.g., README.md).
+* All the csv files are included the dbinitialData folder such as cart.csv,category.csv,product.csv . In order to create tables.
 
-### Webapp
-All the csv files are included the dbinitialData folder such as cart.csv,category.csv,product.csv 
+* All the relasionship among tables in the intial database are included in the database_relations.sql
 
-All the relasionship among tables are included in the database_relations.sql
+* A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
 
-
-### Static 
-A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
-
-It included category-images,product-images,subcategory-images folders.
-
-All the styles are included in the style.css file
-
-### requirements
-
-In tis requirements.txt file, all the required modules are included 
-
-### Templates 
- In web applications, this directory holds HTML templates that are used to render web pages.
-
-### Database
-
- The intial database is configured in this darabaseConfig.py file.
-
- Mysql files are fetched to the main by the dbaccess.py file.
+* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately. All the styles are included in the style.css file.
 
 
-## Version Control
-The version control system we're using (Git) and provide instructions for cloning the repository.
+* In this requirements.txt file, all the required modules are included 
 
+* In templates, this directory holds HTML templates that are used to render web pages.
+
+* The intial database is configured in this darabaseConfig.py file.
+
+* dbaccess.py file contains the functions to communicate with the database using sql queries
 
 # User Guide 
 
