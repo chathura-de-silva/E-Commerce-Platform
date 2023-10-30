@@ -473,18 +473,23 @@ def select_year():
 def getProductQuantityList(from_year, to_year):
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute(F'''select title,count(quantity) as quantity
-                    from order_item
-                    natural join orders
-                    natural join product
+    cur.execute(F'''select LEFT(p.title, 20) as title, sum(oi.quantity) as quantity
+                    from order_item oi
+                    join orders o 
+                    on o.order_id = oi.order_id
+                    join variant v
+                    on v.variant_id = oi.variant_id
+                    join product p
+                    on p.product_id = v.product_id
                     where year(date) between {from_year} and {to_year}
-                    group by title ''')
+                    group by (p.title)''')
     result = cur.fetchall()
     product_list = []
     quantity_list = []
     for i, j in result:
         product_list.append(i)
-        quantity_list.append(j)
+        quantity_list.append(int(j))
+   
     return product_list, quantity_list
 
 
