@@ -4,3 +4,20 @@ order_id INT,date DATE,delivery_method VARCHAR(255),payment_method VARCHAR(255),
 30003,2023-09-03,Express,Credit Card,10003
 30004,2023-09-04,Standard,PayPal,10004
 30005,2023-09-05,Express,Credit Card,10005
+30006,2024-01-15,Express,PayPal,10006
+30007,2024-01-20,Standard,Credit Card,10007
+30008,2024-02-10,Express,PayPal,10008
+30009,2024-02-25,Standard,Credit Card,10009
+30010,2024-03-10,Express,PayPal,10010
+30011,2025-06-05,Standard,Credit Card,10011
+30012,2025-06-15,Express,PayPal,10012
+30013,2025-06-25,Standard,Credit Card,10013
+30014,2026-04-10,Express,PayPal,10014
+30015,2026-04-15,Standard,Credit Card,10015
+30016,2026-04-20,Express,PayPal,10016
+30017,2027-07-05,Standard,Credit Card,10017
+30018,2027-07-15,Express,PayPal,10018
+30019,2027-07-25,Standard,Credit Card,10019
+30020,2028-03-10,Express,PayPal,10020
+30021,2028-03-15,Standard,Credit Card,10021
+30022,2028-03-20,Express,PayPal,10022
