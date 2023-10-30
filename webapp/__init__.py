@@ -3,7 +3,7 @@ from .databaseConfig import database_connector
 database_connector()
 
 from datetime import date
-from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import Flask, render_template, request, url_for, redirect, session, flash ,jsonify
 from flask_session import Session
 from .dbaccess import *
 import os
@@ -292,8 +292,11 @@ def checkout_successful():
             # get the user's cart
             cart = get_cart(session['userid'])
             # extract the variant ID's from the cart
+            order_item_ids = []
             for item in cart:
                 new_ID = gen_order_item_ID()
+                order_item_ids.append(new_ID)
+
                 variant_Id = item[5]
                 quantity = item[0]
                 price = item[2]
@@ -311,7 +314,9 @@ def checkout_successful():
 
                 update_delivary_module(delivary_module)
 
-            return (render_template('home.html'))
+            names = get_details_for_delivery_module(order_item_ids)
+
+            return (render_template('checkout_succesful.html', names = names))
 
         if not signedin:
             # get the session cart
@@ -331,8 +336,13 @@ def checkout_successful():
             # need to implement the function to fetch values from the database for the given id's
             guest_cart = get_guest_cart(variant_ids)
 
+            order_item_ids = [] # we are using this for the delivery module
             for item in guest_cart:
                 new_ID = gen_order_item_ID()
+
+                order_item_ids.append(new_ID)
+
+                order_item_ids.append(new_ID)
                 variant_Id = item[4]
                 # quantity is in the hashmap of the session cart
                 quantity = session_cart[str(variant_Id)]
@@ -341,7 +351,16 @@ def checkout_successful():
                 temp = []
                 temp.append((new_ID, order_id, variant_Id, quantity, price))
 
+                
+                # update the delivary module 
+                stock_count = get_stock_count(variant_Id)
+                destination_city = city
+                delivary_module = [stock_count, destination_city,new_ID]
+
+
                 update_order_items(temp, signedin, user_id=user_id)
+
+                update_delivary_module(delivary_module)
 
             # clear the session cart
             session['cart'].clear()
@@ -350,16 +369,6 @@ def checkout_successful():
             # After processing the form data, you can render a success page
             return render_template('login.html', full_name=full_name, email=email)
 
-
-# @app.route('/analytics')
-# def analytics():
-#     years,selected_value=select_year()
-#     temp = request.args.get('value')
-#     selected_value = selected_value if temp is None else temp
-#     print(type(selected_value),selected_value)
-#     quarterly_sales = Quarterly_sales(selected_value)
-#     quarterly_sales_json = json.dumps(quarterly_sales)
-#     return render_template('analytics2.html', quarterly_sales=quarterly_sales_json,years=years,selected_value = selected_value)
 
 @app.route('/analytics')
 def analytics():

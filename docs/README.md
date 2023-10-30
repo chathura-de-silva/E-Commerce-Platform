@@ -6,7 +6,7 @@
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
+        src="assets/banner.png" 
         alt="C-Store Project Cover Image"
         width="800"
        />
@@ -211,6 +211,45 @@ These are essential thirdparty Python libraries and packages that your project r
 - Werkzeug
 - zipp
 
+# Developer Guide
+
+## Entity-Relationship (ER) Diagram
+
+<p align="center">
+    <picture>
+      <source 
+        srcset="assets/ERdiagram.png"
+        media="(prefers-color-scheme: dark)"
+      />
+      <img 
+        src="assets/ERdiagram.png" 
+        alt="ER Diagram"
+        height ="600"
+       />
+    </picture>
+  </p>
+
+## Project Structure
+
+* The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
+
+* All the csv files are included the dbinitialData folder such as cart.csv,category.csv,product.csv . In order to create tables.
+
+* All the relasionship among tables in the intial database are included in the database_relations.sql
+
+* A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
+
+* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately. All the styles are included in the style.css file.
+
+
+* In this requirements.txt file, all the required modules are included 
+
+* In templates, this directory holds HTML templates that are used to render web pages.
+
+* The intial database is configured in this darabaseConfig.py file.
+
+* dbaccess.py file contains the functions to communicate with the database using sql queries
+
 # User Guide 
 
 ## Getting Started
@@ -220,7 +259,6 @@ These are essential thirdparty Python libraries and packages that your project r
 * Logging In: If user already have an account, simply click on the `Log In` button. Enter user's registered email and password to access user's account.
 
 * Guest mode is there. So user can browse and proceed to checkout even if he or she is not registered on the platform. But the functionality gets limited.
-
 
 <p align = "center">
 <img src="assets/registration.png" 
@@ -258,7 +296,6 @@ height="300"
   * User may have to enter further payment details according the method of payment he/she selects.
 
 * Continue to checkout : After filling the required info, user can `Continue to checkout.`
-
 
 <p align = "center">
 <img src="assets/checkout.png" 
@@ -304,14 +341,12 @@ height="300"
 
 * Sales Throughout the Year: To get an insight on how the sales performance was throughout the year. 
 
-
 <p align = "center">
 <img src="assets/salesty.png" 
 alt="Login image"
 height="300"
 />
 </p> 
-
 
 ## Contacting Support
 
