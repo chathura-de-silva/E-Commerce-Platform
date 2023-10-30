@@ -221,8 +221,7 @@ These are essential Python libraries and packages that your project relies on to
   </p>
 
 ## Project Structure
-
-* The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
+* All documentation of the project is included in the 'docs' folder. These documents do not affect the functionality of the program.
 
 * All the `.csv` files are included the dbinitialData folder such as cart.csv,category.csv,product.csv . In order to create tables.
 
@@ -230,7 +229,7 @@ These are essential Python libraries and packages that your project relies on to
 
 * A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
 
-* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately. All the styles are included in the `style.css` file.
+* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately.
 
 
 * In this `requirements.txt` file, all the required modules are included 
