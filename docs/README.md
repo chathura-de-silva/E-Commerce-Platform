@@ -316,13 +316,54 @@ These are essential Python libraries and packages that your project relies on to
 
 * Total Quarterly Sales Over the Years: This section provides information about our total sales for each quarter over the years. It gives user an overview of our sales performance.
 
+<p align="center">
+    <picture>
+      <source 
+        srcset="assets/sample.png"
+        media="(prefers-color-scheme: dark)"
+      />
+      <img 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/sample.png" 
+        alt="Analytics report sample"
+        height="400"
+       />
+    </picture>
+  </p>
+
 * Product Sales Quantities: Here, user can explore data related to product sales quantities. It helps user understand which products are the most popular among our customers.
+
+<p align="center">
+    <picture>
+      <source 
+        srcset="assets/sample.png"
+        media="(prefers-color-scheme: dark)"
+      />
+      <img 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/sample.png" 
+        alt="Analytics report sample"
+        height="400"
+       />
+    </picture>
+  </p>
 
 * Trending Categories: Discover the product categories that are currently trending on our platform. This data can be helpful for making informed shopping decisions.
 
+<p align="center">
+    <picture>
+      <source 
+        srcset="assets/sample.png"
+        media="(prefers-color-scheme: dark)"
+      />
+      <img 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/sample.png" 
+        alt="Analytics report sample"
+        height="400"
+       />
+    </picture>
+  </p>
+
 * Sales Throughout the Year: Get insights into how our sales perform throughout the year. It can help user plan user's shopping based on seasonal trends and discounts.
 
-### sample analytic table
 
 <p align="center">
     <picture>
