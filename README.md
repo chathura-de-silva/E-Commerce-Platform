@@ -1,4 +1,3 @@
-it
 # E-Commerce Platform for 'C'
 <p align="center">
     <picture>
