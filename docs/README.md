@@ -341,12 +341,12 @@ These are essential Python libraries and packages that your project relies on to
 
 ## Contacting Support
 
-* Contact Us: If user encounter any issues or have questions about our products or services, user can reach out to our customer support team. Click on the "Contact Us" link to find our contact details.
+* Contact Us: If user encounter any issues or have questions about products or services, user can reach out to customer support team. Click on the "Contact Us" link to find the contact details.
 
 * Terms and conditions : Click on the "Terms and Conditions" link to read about terms and conditions. 
 
 
-That's it! User is now ready to explore and shop on our e-commerce platform. If user has any further questions or need assistance, don't hesitate to reach out to our friendly customer support team. Happy shopping!
+That's it! User is now ready to explore and shop on the e-commerce platform. If user has any further questions or need assistance, don't hesitate to reach out to friendly customer support team. Happy shopping!
 
 # About
 
