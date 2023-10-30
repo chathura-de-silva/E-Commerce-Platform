@@ -319,7 +319,7 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="assets/sample.png"
+        srcset="assets/total quarterly sales.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
@@ -335,7 +335,7 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="assets/sample.png"
+        srcset="assets/Product sales.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
@@ -368,7 +368,7 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="assets/sample.png"
+        srcset="assets/sales ty.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
