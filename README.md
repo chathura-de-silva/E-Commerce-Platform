@@ -148,6 +148,6 @@ Ex -
 
 ## About
 
-This project was created as part of a 2<sup>nd</sup> year university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!
+This project was created as part of a 3<sup>rd</sup> semester university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!
 
 [Go to the Top](#e-commerce-platform-for-c)
