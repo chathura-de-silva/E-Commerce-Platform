@@ -88,7 +88,7 @@ To get started with the platform, follow these steps :
     
 4.  You can entirely alter the initial database as per your requirements without involving in any coding (sql queries will be required only to specify the relations between tables and data types. Even it is a simple process of modifying some text files.). For more info refer the [later part](#configuration-of-initial-database) of this document.
 
-5.  Run the Project using following command.( `./app.py` is the main file.)
+5.  Run the Project using following command.( `./app.py` is the main file.) 
      ```plaintext
     $ python app.py
     ```
@@ -224,30 +224,30 @@ These are essential Python libraries and packages that your project relies on to
 
 * The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
 
-* All the csv files are included the dbinitialData folder such as cart.csv,category.csv,product.csv . In order to create tables.
+* All the `.csv` files are included the dbinitialData folder such as cart.csv,category.csv,product.csv . In order to create tables.
 
-* All the relasionship among tables in the intial database are included in the database_relations.sql
+* All the relasionship among tables in the intial database are included in the `database_relations.sql`
 
 * A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
 
-* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately. All the styles are included in the style.css file.
+* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately. All the styles are included in the `style.css` file.
 
 
 * In this requirements.txt file, all the required modules are included 
 
 * In templates, this directory holds HTML templates that are used to render web pages.
 
-* The intial database is configured in this darabaseConfig.py file.
+* The intial database is configured in this `darabaseConfig.py` file.
 
-* dbaccess.py file contains the functions to communicate with the database using sql queries
+* `dbaccess.py` file contains the functions to communicate with the database using sql queries
 
 # User Guide 
 
 ## Getting Started
 
-* Creating an Account: To get started with our e-commerce platform, user will need to create an account. Click on the "Sign Up" button on the homepage, and provide user's details, including user's name, email address, and a secure password.
+* Creating an Account: To get started with our e-commerce platform, user will need to create an account. Click on the `Sign Up` button on the homepage, and provide user's details, including user's name, email address, and a secure password.
 
-* Logging In: If user already have an account, simply click on the "Log In" button. Enter user's registered email and password to access user's account.
+* Logging In: If user already have an account, simply click on the `Log In` button. Enter user's registered email and password to access user's account.
 
 
 
@@ -276,13 +276,13 @@ These are essential Python libraries and packages that your project relies on to
 
 * Product Details: Click on a product to view its details. This includes the product's name, description, price, and any available variants. User can also see images of the product.
 
-* Adding to Cart: When user has found an item user would like to purchase, click the "Add to Cart" button. User can specify the quantity and select variants, if applicable.
+* Adding to Cart: When user has found an item user would like to purchase, click the `Add to Cart` button. User can specify the quantity and select variants, if applicable.
 
 * Shopping Cart: To review user's selected items, click on the cart icon at the top of the page. Here, user can make any necessary adjustments to user's order.
 
-* Continue shopping : To go to the shopping page again, click on the Continue shopping button.
+* Continue shopping : To go to the shopping page again, click on the `Continue shopping` button.
 
-* go to Checkout: Once user is satisfied with user's selections, click "go to Checkout" to complete user's purchase.
+* go to Checkout: Once user is satisfied with user's selections, click `go to Checkout` to complete user's purchase.
 
 ## Checkout and Payment
 
@@ -290,7 +290,7 @@ These are essential Python libraries and packages that your project relies on to
 
 * Payment: Select user's preferred payment method (e.g., cash on delivery, card payment). Enter user's payment details securely.
 
-* Continue to checkout : When user is ready, click "Continue to checkout."
+* Continue to checkout : When user is ready, click `Continue to checkout.`
 
 
 <p align="center">
@@ -309,7 +309,7 @@ These are essential Python libraries and packages that your project relies on to
 
 ## Managing User's Account
 
-* Logging Out: To log out of user's account, simply click the "Log Out" button. It's important to log out, especially if user is using a shared computer.
+* Logging Out: To log out of user's account, simply click the `Log Out` button. It's important to log out, especially if user is using a shared computer.
 
 ## Analytics
 
@@ -341,9 +341,9 @@ These are essential Python libraries and packages that your project relies on to
 
 ## Contacting Support
 
-* Contact Us: If user encounter any issues or have questions about products or services, user can reach out to customer support team. Click on the "Contact Us" link to find the contact details.
+* Contact Us: If user encounter any issues or have questions about products or services, user can reach out to customer support team. Click on the `Contact Us` link to find the contact details.
 
-* Terms and conditions : Click on the "Terms and Conditions" link to read about terms and conditions. 
+* Terms and conditions : Click on the `Terms and Conditions` link to read about terms and conditions. 
 
 
 That's it! User is now ready to explore and shop on the e-commerce platform. If user has any further questions or need assistance, don't hesitate to reach out to friendly customer support team. Happy shopping!
