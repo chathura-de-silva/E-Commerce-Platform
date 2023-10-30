@@ -1,4 +1,4 @@
-# E-Commerce Platform for 'C'
+<h1 align = "center"> E-Commerce Platform for 'C' </h1>
 <p align="center">
     <picture>
       <source 
