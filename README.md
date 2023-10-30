@@ -24,7 +24,7 @@ This repository contains the database design and implementation for a single ven
 
 <p  align = "center">
     <a href="https://chathura-de-silva.github.io/E-Commerce-Platform/" target="_blank">
-        <img src="./docs/assets/doc-button.png" width="500px" >
+        <img src="./docs/assets/doc-button.png" width="350px" >
     </a>
 </p>
 
@@ -75,8 +75,10 @@ To get started with the platform, follow these steps :
     ```
 4.  You can entirely alter the initial database as per your requirements without involving in any coding (sql queries will be required only to specify the relations between tables and data types. Even it is a simple process of modifying some text files.). For more info refer the [later part](#configuration-of-initial-database) of this document.
 
-5.  Run the Project.
-    *   `app.py` is the main file.
+5.  Run the Project using following command.( `./app.py` is the main file.)
+     ```plaintext
+    $ python app.py
+    ```
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
 # Configuration of Initial Database
 
