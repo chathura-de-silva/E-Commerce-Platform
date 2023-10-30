@@ -25,7 +25,7 @@ product_id INT,title VARCHAR(255),description TEXT,"weight DECIMAL(10, 2)",categ
 124,Nikon D7500 DSLR Camera,"Capture incredible photos and videos with the Nikon D7500 DSLR camera, perfect for photography enthusiasts.",1.6,12,product-images/nikon_camera.png
 125,R/C Off-Road Buggy,"Experience off-road racing excitement with this remote control off-road buggy.",1.1,13,product-images/offroad_buggy.png
 126,1000-Piece World Map Jigsaw Puzzle,"Challenge yourself with this world map jigsaw puzzle, perfect for geography enthusiasts.",1.0,14,product-images/world_map_puzzle.png
-127,Google Pixel 7 Pro,"Google pixel 7 Pro powered by google latest Tensor G2 Processor with a Tensor Processing unit.",4.5,3,product-images/pixel_7_pro.png
+127,Google Pixel 7 / 7 Pro,"Google pixel 7 Pro powered by google latest Tensor G2 Processor with a Tensor Processing unit.",4.5,3,product-images/pixel_7_pro.png
 128,HP Spectre x360,"The HP Spectre x360 is a premium 2-in-1 laptop with a sleek design and powerful performance.",2.6,4,product-images/hp_spectre.png
 129,LEGO Technic Bugatti Chiron,"Experience the thrill of building a detailed LEGO replica of the Bugatti Chiron sports car.",3.0,5,product-images/lego_bugatti.png
 130,Catan Board Game,"Settle the island of Catan and trade your way to victory in this popular strategy board game.",2.2,6,product-images/catan.png
