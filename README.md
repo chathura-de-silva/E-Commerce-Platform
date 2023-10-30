@@ -6,7 +6,7 @@
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
+        src="./docs/assets/banner.png" 
         alt="C-Store Project Cover Image"
         width="800"
        />

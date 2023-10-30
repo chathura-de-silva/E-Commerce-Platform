@@ -6,7 +6,7 @@
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
+        src="assets/banner.png" 
         alt="C-Store Project Cover Image"
         width="800"
        />
@@ -213,7 +213,7 @@ These are essential Python libraries and packages that your project relies on to
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/ER_diagram.png" 
+        src="assets/ERdiagram.png" 
         alt="ER Diagram"
         height ="600"
        />
@@ -258,7 +258,7 @@ These are essential Python libraries and packages that your project relies on to
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/registration.png" 
+        src="assets/registration.png" 
         alt="Login image"
         height="300"
        />
@@ -300,7 +300,7 @@ These are essential Python libraries and packages that your project relies on to
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/checkout.png" 
+        src="assets/checkout.png" 
         alt="checkout Image"
         height="300"
        />
@@ -331,7 +331,7 @@ These are essential Python libraries and packages that your project relies on to
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/sample.png" 
+        src="assets/sample.png" 
         alt="Analytics report sample"
         height="400"
        />
