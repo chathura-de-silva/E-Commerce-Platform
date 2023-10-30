@@ -39,11 +39,11 @@ This repository contains the database design and implementation for a single ven
 
 To get started with the platform, follow these steps : 
 1.  Clone this repository.
-    ```plaintext
+    ```bash
     https://github.com/chathura-de-silva/E-Commerce-Platform
     ```
 2.  cd in to the project directory's root and Install the dependencies using following command.(Activate the Virutal Environment if you are using one. It's recommended to use one.)
-    ```plaintext
+    ```bash
     $ pip install -r requirements.txt
     ```
 <a name="env_setup"></a>
@@ -58,7 +58,7 @@ To get started with the platform, follow these steps :
 4.  You can entirely alter the initial database as per your requirements without involving in any coding (sql queries will be required only to specify the relations between tables and data types. Even it is a simple process of modifying some text files.). For more info refer the [later part](#configuration-of-initial-database) of this document.
 
 5.  Run the Project using following command in project root.( `./app.py` is the main file.)
-     ```plaintext
+     ```bash
     $ python app.py
     ```
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
@@ -211,45 +211,6 @@ These are essential thirdparty Python libraries and packages that your project r
 - Werkzeug
 - zipp
 
-# Developer Guide
-
-## Entity-Relationship (ER) Diagram
-
-<p align="center">
-    <picture>
-      <source 
-        srcset="assets/ERdiagram.png"
-        media="(prefers-color-scheme: dark)"
-      />
-      <img 
-        src="assets/ERdiagram.png" 
-        alt="ER Diagram"
-        height ="600"
-       />
-    </picture>
-  </p>
-
-## Project Structure
-
-* The project structure is the organization of files and directories in our e-commerce platform project. It's essential for maintaining a clean, understandable, and scalable codebase.
-
-* All the csv files are included the dbinitialData folder such as cart.csv,category.csv,product.csv . In order to create tables.
-
-* All the relasionship among tables in the intial database are included in the database_relations.sql
-
-* A directory for storing static assets such as images, CSS files, and other resources used in the static directory.
-
-* Static directory included category-images,product-images,subcategory-images folders. Images for related functions are included in these files separately. All the styles are included in the style.css file.
-
-
-* In this requirements.txt file, all the required modules are included 
-
-* In templates, this directory holds HTML templates that are used to render web pages.
-
-* The intial database is configured in this darabaseConfig.py file.
-
-* dbaccess.py file contains the functions to communicate with the database using sql queries
-
 # User Guide 
 
 ## Getting Started
@@ -260,11 +221,11 @@ These are essential thirdparty Python libraries and packages that your project r
 
 * Guest mode is there. So user can browse and proceed to checkout even if he or she is not registered on the platform. But the functionality gets limited.
 
-<p align = "center">
+<p align = "center"><kbd>
 <img src="assets/registration.png" 
 alt="Login image"
 height="300"
-/>
+/></kbd>
 </p> 
 
 ## Browsing and Shopping
@@ -297,11 +258,11 @@ height="300"
 
 * Continue to checkout : After filling the required info, user can `Continue to checkout.`
 
-<p align = "center">
+<p align = "center"><kbd>
 <img src="assets/checkout.png" 
 alt="Login image"
 height="300"
-/>
+/></kbd>
 </p> 
 
 ## Managing User's Account
@@ -314,38 +275,38 @@ height="300"
 
 * Total Quarterly Sales Over the Years: This section provides information about our total sales for each quarter over the years. It gives  an overview of the sales performance.
 
-<p align = "center">
+<p align = "center"><kbd>
 <img src="assets/totalquarterlysales.png" 
 alt="Login image"
 height="300"
-/>
+/></kbd>
 </p> 
 
 * Product Sales Quantities: Here, the stakeholders can explore data related to product sales quantities. It helps to identify which products are the most popular among the customers.
 
-<p align = "center">
+<p align = "center"><kbd>
 <img src="assets/Productsales.png" 
 alt="Login image"
 height="300"
-/>
+/></kbd>
 </p> 
 
 * Trending Categories: Could be used to discover the product categories that are currently trending on the platform. This data can be helpful for making informed decisions for further stock purchases and to identify the trends in the target audiance.
 
-<p align = "center">
+<p align = "center"><kbd>
 <img src="assets/sample.png" 
 alt="Login image"
 height="300"
-/>
+/></kbd>
 </p> 
 
 * Sales Throughout the Year: To get an insight on how the sales performance was throughout the year. 
 
-<p align = "center">
+<p align = "center"><kbd>
 <img src="assets/salesty.png" 
 alt="Login image"
 height="300"
-/>
+/></kbd>
 </p> 
 
 ## Contacting Support
