@@ -3,12 +3,12 @@
 <p align="center">
     <picture>
       <source 
-        srcset="./banner.png"
+        srcset="./docs/assets/banner.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
-        alt="Academease Preview"
+        alt="C-Store Project Cover Image"
         width="800"
        />
     </picture>
@@ -21,6 +21,13 @@ This repository contains the database design and implementation for a single ven
 * Product management: The platform allows users to create, manage, and track products, including their variants, categories, and inventory.
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
 * Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
+
+<center>
+    <a href="https://chathura-de-silva.github.io/E-Commerce-Platform/" target="_blank">
+        <img src="./docs/assets/doc-button.png" width="500px">
+    </a>
+</center>
+
 
 # Index
 1.  [Implementation Details](#implementation-details)

@@ -2,12 +2,12 @@
 <p align="center">
     <picture>
       <source 
-        srcset="./banner.png"
+        srcset="assets/banner.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/banner.png" 
-        alt="Academease Preview"
+        alt="C-Store Project Cover Image"
         width="800"
        />
     </picture>
@@ -203,13 +203,12 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="./ERdiagram.png"
+        srcset="assets/ERdiagram.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/ER_diagram.png" 
-        alt="Academease Preview"
-        width="800"
+        alt="ER Diagram"
         height ="600"
        />
     </picture>
@@ -249,14 +248,13 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="./registration.png"
+        srcset="assets/registration.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/registration.png" 
-        alt="Academease Preview"
-        width="500"
-        height="400"
+        alt="Login image"
+        height="300"
        />
     </picture>
   </p>
@@ -292,14 +290,13 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="./checkout.png"
+        srcset="assets/checkout.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/checkout.png" 
-        alt="Academease Preview"
-        width="500"
-        height="400"
+        alt="checkout Image"
+        height="300"
        />
     </picture>
   </p>
@@ -324,13 +321,12 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="./sample.png"
+        srcset="assets/sample.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
         src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/sample.png" 
-        alt="Academease Preview"
-        width="500"
+        alt="Analytics report sample"
         height="400"
        />
     </picture>
