@@ -133,19 +133,11 @@ Ex -
 
 ## Entity-Relationship (ER) Diagram
 
-<p align="center">
-    <picture>
-      <source 
-        srcset="assets/ERdiagram.png"
-        media="(prefers-color-scheme: dark)"
-      />
-      <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/master/ER_diagram.png" 
-        alt="ER Diagram"
-        height ="600"
-       />
-    </picture>
-  </p>
+<p align = "center">
+<img src="assets/er.png" 
+alt="Login image"
+/>
+</p> 
 
 ## Project Structure
 * `./docs` only contain files related to the project documentation. These documents do not affect the functionality of the program.
