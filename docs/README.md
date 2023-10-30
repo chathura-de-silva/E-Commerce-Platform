@@ -319,11 +319,11 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="assets/total quarterly sales.png"
+        srcset="assets/totalquarterlysales.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/total quarterly sales.png" 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/totalquarterlysales.png" 
         alt="total quarterly sales"
         height="400"
        />
@@ -335,11 +335,11 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="assets/Product sales.png"
+        srcset="assets/Productsales.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/Product sales.png" 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/Productsales.png" 
         alt="Product sales"
         height="400"
        />
@@ -368,11 +368,11 @@ These are essential Python libraries and packages that your project relies on to
 <p align="center">
     <picture>
       <source 
-        srcset="assets/sales ty.png"
+        srcset="assets/salesty.png"
         media="(prefers-color-scheme: dark)"
       />
       <img 
-        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/sales ty.png" 
+        src="https://github.com/Chathura-De-Silva/E-Commerce-Platform/blob/readmefinalize/salesty.png" 
         alt="sales ty"
         height="400"
        />
