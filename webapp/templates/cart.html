@@ -93,7 +93,7 @@
       {% for item in cart %}
       <!-- Order of the query = quantity, name, price, variant_image, title -->
       <tr>
-        <td>{{ item[0] +" ("+ item[1]+")"}}</td>
+        <td>{{ item[4]+" ("+item[1]+")"}}</td>
         <td>{{ item[0] }}</td>
         <td>${{ item[2] }}</td>
         <td><img src="/static/{{ item[3] }}" alt="Variant Image" /></td>
