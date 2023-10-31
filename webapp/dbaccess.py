@@ -429,15 +429,6 @@ def get_details_for_delivery_module(order_item_ids):
 
     return variant_info
 
-
-
-def remove_from_cart(custID, prodID):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("DELETE FROM cart WHERE custID=%s AND prodID=%s", (custID, prodID))
-    conn.commit()
-
-
 def Quarterly_sales(year):
     conn = get_mysql_connection()
     cur = conn.cursor()
