@@ -15,7 +15,7 @@ def get_db_config_data():
     _config = {
         "host": os.getenv("HOST") if os.getenv("HOST") else "localhost",
         "user": os.getenv("USER") if os.getenv("USER") else "root",
-        "password": "SaviYa1000!!",
+        "password": os.getenv("PASSWORD"),
         "database": os.getenv("DATABASE") if os.getenv("DATABASE") else "ecomdb",
         "raise_on_warnings": True
         # Throws an exception when there is an error with other provided parameters such as when database does not
