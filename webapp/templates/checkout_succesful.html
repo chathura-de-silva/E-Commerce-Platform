@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <div class="header">
+    <img src="/static/background.png" alt="Thank You" />
+    <h1>Thank you for your purchase</h1>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Estimated delivery time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name, number in names %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ number }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<style>
+  /* Container styles */
+  .container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0; /* Background color for the entire container */
+  }
+
+  /* Header styles */
+  .header {
+    margin-bottom: 20px;
+    background-color: #333; /* Background color for the header */
+    color: #fff; /* Text color for the header */
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .header img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* H1 styles (Thank you message) */
+  h1 {
+    color: #333; /* Text color for the "Thank you" message */
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  /* Table styles */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff; /* Background color for the table */
+    border: 2px solid #ccc; /* Border around the table */
+  }
+
+  .table th, .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .table th {
+    background-color: #333; /* Background color for table headers */
+    color: #fff; /* Text color for table headers */
+  }
+
+  /* Table row styles (alternating colors) */
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row background color */
+  }
+
+  /* Additional styles */
+  .table a {
+    color: #007bff; /* Link color in the table (if any) */
+    text-decoration: none;
+  }
+
+  .table a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+{% endblock %}

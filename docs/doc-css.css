@@ -1,0 +1,10 @@
+:root {
+  --base-background-color   : #0d1117;
+  --heading-color  : #f3c57a;
+  --selection-color      : #492f04;
+  --sidebar-background : #161b22;
+  --sidebar-nav-link-color--active : #fca928;
+  --sidebar-name-color   : var(--sidebar-nav-link-color--active);
+  --siderbar-border-color : #382344;
+  --navbar-root-background  : var(--siderbar-border-color);
+}

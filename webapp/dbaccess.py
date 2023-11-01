@@ -364,7 +364,6 @@ def update_delivary_module(module):
 
     # create a list of main cities 
     main_cities = ['Colombo', 'Panadura', 'Galle', 'Kandy']
-
     new_id = gen_delivery_ID()
     # stock_count,destination_city,new_ID
     tup = new_id, module[2], module[1]
@@ -400,11 +399,38 @@ def update_delivary_module(module):
     conn.commit()
 
 
-def empty_cart(custID):
+def get_details_for_delivery_module(order_item_ids):
+
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("DELETE FROM cart WHERE custID=%s", (custID,))
-    conn.commit()
+    cursor = conn.cursor()
+    # Create a list to store variant names
+    variant_info = []
+
+    try:
+        for order_item_id in order_item_ids:
+            # SQL query to fetch variant name and estimated days for a specific order item ID
+            query = """
+            SELECT variant.name, delivery_module.estimated_days
+            FROM order_item
+            INNER JOIN variant ON order_item.variant_id = variant.variant_id
+            LEFT JOIN delivery_module ON order_item.order_item_id = delivery_module.order_item_id
+            WHERE order_item.order_item_id = %s
+            """
+            # Execute the SQL query with the current order_item_id
+            cursor.execute(query, (order_item_id,))
+
+            # Fetch the variant name and estimated days and append them to the variant_info list
+            result = cursor.fetchone()
+            if result:
+                variant_info.append(result)
+
+        print(variant_info)
+    
+    except Exception as e:
+        print("Error:", e)
+
+    return variant_info
+
 
 
 def remove_from_cart(custID, prodID):
