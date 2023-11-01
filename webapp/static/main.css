@@ -148,7 +148,7 @@ body, h1, h2, h3, h4, p, ul, ol, li {
               position: fixed;
               top: 20px;
               right: 0;
-              padding: 20px;
+              padding: 5px 20px;
               background-color: transparent; /* Set background color to transparent */
               border: none; /* Remove the border */
               z-index: 999; /* Adjust the z-index to ensure it's on top */
