@@ -36,7 +36,7 @@ def create_dash_application(flask_app):
                     {"label": year[0], "value": year[0]} for year in years
                 ],
                 value=selected_value,  # Set default value
-                style={'width': '50%', 'font-family': 'Arial', 'font-size': '20px'},
+                style={'width': '50%', 'font-family': 'Arial', 'font-size': '20px', 'border-radius': '15px'},
             ),
             dcc.Graph(id="example-graph"),
         ]
