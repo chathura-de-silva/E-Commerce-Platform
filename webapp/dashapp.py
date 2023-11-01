@@ -26,12 +26,9 @@ def create_dash_application(flask_app):
     years, selected_value = select_year()
     dash_app.layout = html.Div(
         children=[
-            html.H1(children="Total Quarterly sales over years"),
-            html.Div(
-                children="""
-                Select a year
-            """
-            ),
+            html.H1("Total Quarterly Sales Over Years", style={'textAlign': 'center', 'font-family': 'Arial', 'font-size': '24px'}),
+            html.Div("Select a year", style={'font-family': 'Arial', 'font-size': '20px'}),
+            
             dcc.Dropdown(
                 id="year-dropdown",
 
@@ -39,6 +36,7 @@ def create_dash_application(flask_app):
                     {"label": year[0], "value": year[0]} for year in years
                 ],
                 value=selected_value,  # Set default value
+                style={'width': '50%', 'font-family': 'Arial', 'font-size': '20px'},
             ),
             dcc.Graph(id="example-graph"),
         ]
@@ -59,6 +57,14 @@ def create_dash_application(flask_app):
         # Create the updated graph
         fig = px.bar(df, x="Quarters", y="Sales", color="Quarters", barmode="group",
                      title=f"Sales in each quarter for {selected_year}")
+        
+        fig.update_layout(
+
+        font=dict(family="Arial", size=18),
+        legend=dict(font=dict(family="Arial", size=15)),
+   
+    )
+
         return fig
 
     return dash_app
