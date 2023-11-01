@@ -4,10 +4,21 @@
 {% block content %}
 
 <body>
+    <style type="text/css">
+        .cont {
+            max-width: 80%;
+            text-align: center;
+            padding: 30px;
+            background-color: #cbffea; /* Background color for the entire container */
+            border-radius: 5px;
+          }
+        
+    </style>
     
-    <iframe src="http://127.0.0.1:5007/dash" width="700px" height="700px"></iframe>
-    <iframe src="http://127.0.0.1:5007/dash2" width="700px" height="800px"></iframe>
-    <iframe src="http://127.0.0.1:5007/dash3" width="700px" height="700px"></iframe>
-    <iframe src="http://127.0.0.1:5007/dash4" width="700px" height="700px"></iframe>
+    <iframe class ="cont" src="http://127.0.0.1:5007/dash" width="1000px" height="800px" ></iframe>
+    <iframe class ="cont" src="http://127.0.0.1:5007/dash2" width="1000px" height="800px" ></iframe>
+    <iframe class ="cont" src="http://127.0.0.1:5007/dash3" width="1000px" height="800px" ></iframe>
+    <iframe class ="cont" src="http://127.0.0.1:5007/dash4" width="1000px" height="800px" ></iframe>
+
 </body>
 {% endblock %}

@@ -186,7 +186,7 @@ strong{
               position: fixed;
               top: 20px;
               right: 0;
-              padding: 20px;
+              padding: 5px 20px;
               background-color: transparent; /* Set background color to transparent */
               border: none; /* Remove the border */
               z-index: 999; /* Adjust the z-index to ensure it's on top */
