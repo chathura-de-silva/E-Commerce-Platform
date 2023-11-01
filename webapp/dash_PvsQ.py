@@ -34,7 +34,7 @@ def dash_productVStime(flask_app):
                 options=[
                     {"label": year[0], "value": year[0]} for year in years
                 ],
-                value=selected_value,
+                value=years[-1][0],
 
             ),
             html.P("Select To Year:"),

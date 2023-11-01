@@ -27,6 +27,26 @@
     {% endif %}
 </head>
 <body >
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    #footer {
+      background-color: #f8f8f8; /* Set your preferred background color */
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+  
     <header class="site-header">
       <nav class="navbar  navbar-expand-md navbar-light fixed-top">
         <div class="container">
@@ -74,7 +94,7 @@
         <!-- </div> -->
       <!-- </div> -->
     </main>
-      <footer >
+      <div id="footer">
         <div class="container">
           <div class="row">
             <div class="col-sm-4">
@@ -94,28 +114,10 @@
         <!--<footer class="small text-center text-muted">-->
         <!--    Website built by HM <a href="https://google.com/">linkedin</a>.-->
         <!--</footer>-->
-      </footer>
+      </div>
 
         <!-- Include your CSS and other head content here -->
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-    }
-
-    footer {
-      background-color: #f8f8f8; /* Set your preferred background color */
-      padding: 20px 0;
-      text-align: center;
-    }
-  </style>
+  
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
