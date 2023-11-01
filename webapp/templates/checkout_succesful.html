@@ -1,33 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container">
-  <div class="header">
-    <img src="/static/background.png" alt="Thank You" />
-    <h1>Thank you for your purchase</h1>
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Estimated delivery time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for name, number in names %}
-        <tr>
-          <td>{{ name }}</td>
-          <td>{{ number }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
 <style>
   /* Container styles */
-  .container {
+  .containerr {
     text-align: center;
-    padding: 20px;
+    padding: 30px;
     background-color: #f0f0f0; /* Background color for the entire container */
+    border-radius: 5px;
   }
 
   /* Header styles */
@@ -39,16 +18,10 @@
     border-radius: 5px;
   }
 
-  .header img {
+  #ty {
     max-width: 100%;
     height: auto;
-  }
-
-  /* H1 styles (Thank you message) */
-  h1 {
-    color: #333; /* Text color for the "Thank you" message */
-    font-size: 24px;
-    font-weight: bold;
+    padding: 20px;
   }
 
   /* Table styles */
@@ -84,6 +57,34 @@
   .table a:hover {
     text-decoration: underline;
   }
+  #txt{
+    color: #007bff;
+    font-size: 60px;
+  }
+
 </style>
+
+<div class="containerr">
+  <div class="header">
+    <img src="/static/artwork.png" alt="Thank You" id ="ty" />
+    <div id = "txt">Thank you for the purchase</div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Estimated delivery time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for name, number in names %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ number }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 {% endblock %}
