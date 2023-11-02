@@ -21,34 +21,68 @@ def dash_productVStime(flask_app):
     years, selected_value = select_year()
 
     dash_app.layout = html.Div(
-        children=[
-            html.H1(children="Product Sales Quantities"),
-            html.Div(
-                children="""
-                Product vs Quantity
-            """
-            ),
-            html.P("Select From Year:"),
-            dcc.Dropdown(
-                id="from_year",
-                options=[
-                    {"label": year[0], "value": year[0]} for year in years
-                ],
-                value=years[-1][0],
+    children=[
+        html.H1(
+            "Product Sales Quantities",
+            style={
+                'textAlign': 'center',
+                'font-family': 'Arial',
+                'font-size': '28px',
+                'margin-bottom': '10px',  # Add some spacing below the title
+            }
+        ),
+        html.Div(
+            "Product vs Quantity",
+            style={
+                'textAlign': 'center',
+                'font-family': 'Arial',
+                'font-size': '20px',
+                'margin-bottom': '20px',  # Add more spacing below this text
+            }
+        ),
+        html.P(
+            "Select From Year:",
+            style={
+                'font-family': 'Arial',
+                'font-size': '20px',
+            }
+        ),
+        dcc.Dropdown(
+            id="from_year",
+            options=[
+                {"label": year[0], "value": year[0]} for year in years
+            ],
+            value=years[-1][0],
+            style={'width': '50%', 'font-family': 'Arial', 'font-size': '20px'}
+        ),
+        html.P(
+            "Select To Year:",
+            style={
+                'font-family': 'Arial',
+                'font-size': '20px',
+            }
+        ),
+        dcc.Dropdown(
+            id="to_year",
+            options=[
+                {"label": year[0], "value": year[0]} for year in years
+            ],
+            value=selected_value,
+            style={'width': '50%', 'font-family': 'Arial', 'font-size': '20px'}
+        ),
+        dcc.Graph(
+            id="example-graph",
+            style={'width': '100%'},
+            config={'displayModeBar': False}  # Hide the plotly toolbar
+        ),
+    ],
+    style={
+        'maxWidth': '800px',
+        'margin': '0 auto',
+        'padding': '20px'  # Add padding around the entire content
+    }
+)
 
-            ),
-            html.P("Select To Year:"),
-            dcc.Dropdown(
-                id="to_year",
-                options=[
-                    {"label": year[0], "value": year[0]} for year in years
-                ],
-                value=selected_value,
-
-            ),
-            dcc.Graph(id="example-graph"),
-        ]
-    )
 
     @dash_app.callback(
         Output("example-graph", "figure"),
@@ -61,6 +95,13 @@ def dash_productVStime(flask_app):
         df = pd.DataFrame({"products": product_list, "quantity": quantity_list})
 
         fig = px.bar(df, x="quantity", y="products", title=f"product sales quantity over {from_year} to {to_year}")
+          
+        fig.update_layout(
+
+        font=dict(family="Arial", size=18),
+        legend=dict(font=dict(family="Arial", size=15)),
+   
+    )
         return fig
 
     return dash_app

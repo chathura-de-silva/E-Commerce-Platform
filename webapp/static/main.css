@@ -4,19 +4,28 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   }
   
   body {
-    background: #ece7b5;
+    background: rgba(0, 0, 0, 0.2);
     margin-top: 5rem;
     background: #becccc;
     color: #00264d;
     text-align: center;
     font-family: 'Manjari', sans-serif;
+
+    margin: 0;
+    padding: 0;
+    background-image: url('main-backdrop.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
-  
   /* Header */
   header {
-    background: #f9f5d8;
+    background: rgba(247, 244, 219, 0.75);
     height: 90px;
-    border-bottom: 1px solid #a5a390;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+  
   }
   
   #logo {
@@ -36,12 +45,14 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   
   .site-header .navbar-nav .nav-link:hover {
     color: #975f31;
-  }
+    box-shadow: inset 0 -2px 0 rgba(151, 95, 49, 0.5);}
   
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
     text-decoration: underline;
     font-style: italic;
+    color: #975f31;
+    box-shadow: inset 0 -2px 0 #975f31;}
   }
   
   /* Content Section */
@@ -68,16 +79,17 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   
   /* Form */
   .form {
-    margin: auto;
     width: 60%;
     padding: 50px;
   }
   
   /* Main Content */
   main {
+    margin-top: 20px;
     color: #00264d;
     text-align: center;
     font-family: 'Manjari', sans-serif;
+    max-height: fit-content;
   }
   
   /* Glyphicons */
@@ -121,67 +133,30 @@ body, h1, h2, h3, h4, p, ul, ol, li {
   .nav-link {
     display: inline;
   }
-
-  /* body { 
-    font-family: 'Arial', Arial, sans-serif; 
-    background: #becccc; 
-    text-transform: uppercase; 
-    color: #fff; 
-    text-align: center; 
-    letter-spacing: -3px; 
-    padding:50px;
-  }
-   */
-   h2{
-    font-size:100px;
-    margin-top: 20px;
-    position:relative;
-    font-weight: bold;
-    cursor: pointer;
-  }
   
-  /*
-text-shadow forked from: https://codepen.io/teetteet/details/dFICw#forkline
-*/
-.superShadow {
-  text-shadow:     0 1px 0 hsl(174,5%,80%),
-	                 0 2px 0 hsl(174,5%,75%),
-	                 0 3px 0 hsl(174,5%,70%),
-	                 0 4px 0 hsl(174,5%,66%),
-	                 0 5px 0 hsl(174,5%,64%),
-	                 0 6px 0 hsl(174,5%,62%),
-	                 0 7px 0 hsl(174,5%,61%),
-	                 0 8px 0 hsl(174,5%,60%),
-	
-	                 0 0 5px rgba(0,0,0,.05),
-	                0 1px 3px rgba(0,0,0,.2),
-	                0 3px 5px rgba(0,0,0,.2),
-	               0 5px 10px rgba(0,0,0,.2),
-	              0 10px 10px rgba(0,0,0,.2),
-	              0 20px 20px rgba(0,0,0,.3);
-}
-
-strong{
-  font-size:200px;
-}
-  
-  h1 {
-    font-family: 'Arial', sans-serif; /* Change the font to Arial for a professional look */
-    margin-top: 20px;
-    font-size: 36px;
-    color: #333; /* Use a dark gray color for a professional scheme */
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
-    background: linear-gradient(45deg, #000000, #00DFFC);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transform: scale(1);
-  }
-  
-
+            /* Style for the tiles */
+            h1 {
+              font-family: 'Arial', sans-serif; /* Change the font to Arial for a professional look */
+              margin-top: 20px;
+              font-size: 36px;
+              color: #333; /* Use a dark gray color for a professional scheme */
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+              transition: all 0.3s ease-in-out;
+              background: linear-gradient(45deg, #000000, #00DFFC);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              transform: scale(1);
+            }
+            
+            h1:hover {
+              transform: scale(1.1);
+              color: #00A0E0; /* Change text color on hover to a lighter blue */
+              text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+            }
+            
             .top-right {
               position: fixed;
               top: 20px;
@@ -191,7 +166,23 @@ strong{
               border: none; /* Remove the border */
               z-index: 999; /* Adjust the z-index to ensure it's on top */
           }
-          
+          .top-right-second {
+            background-color:rgba(69, 58, 45,1);
+            border-radius: 30px;
+            padding: 8px 15px;
+            font-style: bold;
+            color: #eeeccc;
+            font-size: small;
+          }
+          .top-right-second:hover {
+            background-color:#000;
+            border-radius: 30px;
+            padding: 8px 15px;
+            font-style: bold;
+            color: #fff;
+            font-size: small;
+         
+          }
           /* Additional styles for when the user is logged in (adjust as needed) */
           .top-right.loggedin {
               background-color: #e5e5e5; /* Change background color when logged in */
