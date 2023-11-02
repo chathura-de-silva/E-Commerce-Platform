@@ -26,8 +26,8 @@ body, h1, h2, h3, h4, p, ul, ol, li {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     border: 1px solid rgba(230, 232, 165, 0.3);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   
   #logo {
