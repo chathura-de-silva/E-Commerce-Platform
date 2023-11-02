@@ -21,9 +21,9 @@
     
     <link rel="icon" type="image/png" href="static/favicon.png">
     {% if title %}
-        <title>C retailors - {{ title }}</title>
+        <title>C Store - {{ title }}</title>
     {% else %}
-        <title>C retailors</title>
+        <title>C Store</title>
     {% endif %}
 </head>
 <body >
@@ -41,9 +41,11 @@
     }
 
     #footer {
-      background-color: #f8f8f8; /* Set your preferred background color */
+      background-color: rgba(248, 248, 248,0.6); /* Set your preferred background color */
       padding: 20px 0;
       text-align: center;
+      backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(30px);
     }
   </style>
   
