@@ -23,6 +23,7 @@
             text-align: center;
             cursor: pointer;
             position: relative;
+
         }
 
         .product-tile:hover .product-image {
@@ -44,10 +45,11 @@
         }
 
         .description-overlay {
+            margin: 10px;
             border-radius: 15px;
             overflow: hidden;
             display: none;
-            background: #f8f8f8;
+            background: rgba(255, 255, 255, 0.7);
             color: #000;
             padding: 10px;
             position: absolute;
@@ -56,6 +58,12 @@
             right: 0;
             text-align: center;
             transition: opacity 0.3s ease;
+            border: 1px solid rgba(232, 232, 195, 0.6);
+        border-radius: 15px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        width: fit-content;
         }
 
         .product-tile:hover .description-overlay {
