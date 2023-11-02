@@ -244,12 +244,7 @@ def checkout():
 
     if is_logged is True:
         user_id = session['userid']
-        # ci.quantity AS quantity,
-        # v.name AS name,
-        # v.price AS price,
-        # v.variant_image AS variant_image,
-        # p.title AS title,
-        # v.variant_id as variant_id
+
         items = get_cart(user_id)
         # manipulating the tuple to meet our requirements 
 
@@ -260,11 +255,10 @@ def checkout():
         return render_template('checkout.html', total_price=total_price)
     # also need to find the total price
     else:
-
+        show_popup = True
+        flash("please login to proceed to checkout")
         # find a way to calculate the total price from the session cart
-
-        flash('You are going to checkout as a guest. Some features may not be not available')
-        return render_template('checkout.html')
+        return render_template('login.html',show_popup=show_popup)
 
 
 @app.route('/checkout_successful', methods=['POST'])

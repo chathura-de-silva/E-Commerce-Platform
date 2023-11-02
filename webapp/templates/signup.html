@@ -80,6 +80,8 @@
 }
 </style>
 
+
+
 <div class="register">
     {% include "alert.html" %}
     
@@ -108,5 +110,13 @@
         <div class="msg">{{ msg }}</div>
         <input type="submit" value="Register">
     </form>
+
+    {% if show_popup %}
+    <!-- Render the pop-up message if 'show_popup' is True -->
+    
+    {% endif %}
+
 </div>
+
+
 {% endblock %}
