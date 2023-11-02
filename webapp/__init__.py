@@ -147,20 +147,27 @@ def get_varient(product_id):
 
     tup = get_varient_info(product_id)
 
+    print("dan test karanne meka " , tup)
+    
+
     print(tup)
     # variant id is the last elemet in the fetched tuple
     # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
     variant_id = (tup[-1][-1])
+    #this will store all the ID's that we are going to fetch the stock counts from
+    test_id = []
 
-    print(variant_id)
-    stock_count = get_stock_count(variant_id)
+    for t in tup:
 
-    print(stock_count, "is the stock count")
+        test_id.append(t[-1])
+
+    stock_counts = get_all_stock_counts(test_id)
     signedin = False
     if "userid" in session:
         signedin = True
+        
 
-    return render_template('variants.html', variants=tup, signedin=signedin, stock_count=stock_count)
+    return render_template('variants.html', variants=tup, signedin=signedin, stock_count=stock_counts)
 
 
 @app.route('/search', methods=['GET'])

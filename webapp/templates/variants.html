@@ -73,28 +73,34 @@
             background-color: #c6d4bb;
     </style>
     <div class="row">
-        <div class="col-md-12">
-            <div class="card-deck">
-                {% for variant in variants %}
-                    <div class="product-tile">
-                        <img src="/static/{{variant[3]}}" alt="{{ variant[0] }}" class="product-image">
-                        <div class="product-name">{{ variant[0] }}</div>
-                        <p>Available Stock: {{ stock_count }}</p> <!-- Display stock count -->
-                        <p>Price: ${{ variant[1] }}</p>
-                        <p>Custom Attributes: {{ variant[2] }}</p>
-                        <form action="/add_to_cart" method="post">
-                            <input type="hidden" name="variant_id" value="{{ variant[4] }}">
-                            <select name="quantity" id="quantitySelect">
-                                {% for i in range(1, 11) %}
-                                    <option value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
-                            <button type="submit" class="add-to-cart-button">Add to Cart</button>
-                        </form>
-                    </div>
-                {% endfor %}
-            </div>
+    <div class="col-md-12">
+        <div class="card-deck">
+            {% set counter = 0 %}
+            {% for variant in variants %}
+                <div class="product-tile">
+                    <img src="/static/{{ variant[3] }}" alt="{{ variant[0] }}" class="product-image">
+                    <div class="product-name">{{ variant[0] }}</div>
+                    <p>Available Stock: {{ stock_count[counter] }}</p>
+                    {% set counter = counter + 1 %}
+                    <p>Available Stock: {{ stock_count}}</p>
+                    <p>Price: ${{ variant[1] }}</p>
+                    <p>Custom Attributes: {{ variant[2] }}</p>
+                    <form action="/add_to_cart" method="post">
+                        <input type="hidden" name="variant_id" value="{{ variant[4] }}">
+                        <select name="quantity" id="quantitySelect">
+                            {% for i in range(1, 11) %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
+                        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                    </form>
+                </div>
+                
+            {% endfor %}
         </div>
     </div>
+</div>
+
 {% endblock %}
+    

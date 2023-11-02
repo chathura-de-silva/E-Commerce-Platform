@@ -101,6 +101,12 @@ def get_stock_count(variant_id):
     else:
         return None
 
+def get_all_stock_counts(counts):
+    value = []
+    for id in counts:
+        value.append(get_stock_count(id))
+    
+    return value
 
 # this function will be used to add a new user to the database
 # it will return true if we are able to add a new user
