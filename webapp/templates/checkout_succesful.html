@@ -5,23 +5,32 @@
   .containerr {
     text-align: center;
     padding: 30px;
-    background-color: #f0f0f0; /* Background color for the entire container */
-    border-radius: 5px;
+    border-radius: 15px;
+    background: rgba(242, 242, 242,0.5);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 70, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18); 
+    margin-bottom: 20px;
   }
 
   /* Header styles */
   .header {
     margin-bottom: 20px;
-    background-color: #333; /* Background color for the header */
+    background-color: transparent ;/* Background color for the header */
     color: #fff; /* Text color for the header */
     padding: 10px;
     border-radius: 5px;
+    align-items: center;
   }
 
-  #ty {
+  .ty {
     max-width: 100%;
     height: auto;
-    padding: 20px;
+    border-radius: 15px;
+    max-width: 90%;
   }
 
   /* Table styles */
@@ -29,7 +38,8 @@
     width: 100%;
     border-collapse: collapse;
     background-color: #fff; /* Background color for the table */
-    border: 2px solid #ccc; /* Border around the table */
+    border: 2px solid #ccc; 
+    /* Border around the table */
   }
 
   .table th, .table td {
@@ -39,7 +49,7 @@
   }
 
   .table th {
-    background-color: #333; /* Background color for table headers */
+    background-color: rgba(69, 58, 45,0.9); /* Background color for table headers */
     color: #fff; /* Text color for table headers */
   }
 
@@ -58,7 +68,7 @@
     text-decoration: underline;
   }
   #txt{
-    color: #007bff;
+    color: #26103d;
     font-size: 60px;
   }
 
@@ -66,8 +76,8 @@
 
 <div class="containerr">
   <div class="header">
-    <img src="/static/artwork.png" alt="Thank You" id ="ty" />
-    <div id = "txt">Thank you for the purchase</div>
+    <img src="/static/checkout-success.webp" alt="Thank You" class ="ty" />
+    <div id = "txt">Thank you for the purchase!</div>
   </div>
   <table class="table">
     <thead>

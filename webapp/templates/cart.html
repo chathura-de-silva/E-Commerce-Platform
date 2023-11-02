@@ -3,18 +3,41 @@
 <head>
   <title>Cart</title>
   <style>
+    @keyframes scale {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.01);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
      table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
       border-radius: 10px;
       overflow: hidden;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 70, 0.37);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);   
+    }
+
+    table:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* Style for table header */
     th {
-      background-color: #453a2d;
+      background-color: rgba(69, 58, 45,0.9);
       color: #fff;
       padding: 15px 30px;
       text-align: left;
@@ -22,7 +45,7 @@
 
     /* Style for table rows */
     tr:nth-child(even) {
-      background-color: #f2f2f2;
+      background-color: rgba(242, 242, 242,0.5);
     }
 
     /* Style for table cells */
@@ -64,14 +87,16 @@
       background-color: #453a2d;
       border: none;
       border-radius: 10px;
+      transition: transform 0.2s;
     }
-
     .btn-secondary {
       background-color: #808080;
     }
 
     .btn:hover {
       background-color: #634f3e;
+      transform: scale(1.05);
+      color:#fff
     }
   </style>
 </head>
