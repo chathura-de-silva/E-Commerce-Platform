@@ -2,38 +2,29 @@
 {% block content %}
 
 <head>
+  <title>Cart</title>
+  <style>
+     table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
+    /* Style for table header */
+    th {
+      background-color: #453a2d;
+      color: #fff;
+      padding: 15px 30px;
+      text-align: left;
+    }
 
-    <title>Cart</title>
-    <style>
-
-  /*
-text-shadow forked from: https://codepen.io/teetteet/details/dFICw#forkline
-*/
-
-
-strong{
-  font-size:200px;
-}
-  
-        /* Style for the table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        /* Style for table header */
-        th {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        /* Style for table rows */
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+    /* Style for table rows */
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
 
         /* Style for table cells */
         td {
@@ -73,14 +64,16 @@ strong{
       background-color: #453a2d;
       border: none;
       border-radius: 10px;
+      transition: transform 0.2s;
     }
-
     .btn-secondary {
       background-color: #808080;
     }
 
     .btn:hover {
       background-color: #634f3e;
+      transform: scale(1.05);
+      color:#fff
     }
   </style>
 </head>
