@@ -359,9 +359,7 @@ def update_order_items(order_items, is_signedin, user_id):
 
 ## Triggers
 
-* order_item_after_insert: Updates the quantity of the item after an order is placed and deletes the item from the cart table.
-* after_customer_update: Creates a cart for the customer when an unregistered user registers as a customer.
-* after_customer_insert: Creates a cart for a customer when the customer is registered.
+* A single trigger is being used for the purpose of managing the stock count within its constraints.
 
 
 ## Views
