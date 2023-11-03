@@ -19,7 +19,7 @@ This repository contains the database design and implementation for a single ven
 
 * Product management: The platform allows users to create, manage, and track products, including their variants, categories, and inventory.
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
-* Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
+* Reporting: The platform provides a variety of reports to track the performance of their e-commerce business.
 * This Github Readme contains only the initial setup and deploy instructions of the project. For further info, refer the full documentation.
 
 <p  align = "center">
