@@ -447,15 +447,15 @@ Here is an example used in analytics to create sales reports.
 
 ### *SQL Injection Prevention using Prepared Statements*
 
-    SQL Injection is one of the most prevalent and dangerous web application vulnerabilities. It allows attackers to insert malicious SQL code into queries, which can then be executed by the database.
+* SQL Injection is one of the most prevalent and dangerous web application vulnerabilities. It allows attackers to insert malicious SQL code into queries, which can then be executed by the database.
 
-    In our e-commerce platform, we're proactive in guarding against SQL Injection attacks by utilizing prepared statements in our SQL queries. Here's how prepared statements offer enhanced security:
+* In our e-commerce platform, we're proactive in guarding against SQL Injection attacks by utilizing prepared statements in our SQL queries. Here's how prepared statements offer enhanced security:
 
-    i. *Parameterized Queries*:
-    - In our SQL queries, we use placeholders (?) instead of directly inserting values into the SQL string. This ensures that the database always treats the inputs as data rather than executable code.
-    
-    ii. *Sanitizing Data*:
-    - All the data is sanitized when initializing the database.
+i. *Parameterized Queries*:
+- In our SQL queries, we use placeholders (?) instead of directly inserting values into the SQL string. This ensures that the database always treats the inputs as data rather than executable code.
+
+ii. *Sanitizing Data*:
+- All the data is sanitized when initializing the database.
 
   ```python
             def row_sanitizer(csv_reader_row):
