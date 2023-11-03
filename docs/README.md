@@ -249,7 +249,7 @@ A set of procedures that can be used to manage products, users, and attributes.
 
 ### Procedure for adding users
 
-```python
+```sql
 PROCEDURE AddUser(
   IN p_email VARCHAR(255),
   IN p_password VARCHAR(255),
@@ -262,8 +262,8 @@ END
 ```
 
 ### Procedure to get cart
-```python
-  PROCEDURE get_cart(IN user_id INT)
+```sql
+PROCEDURE get_cart(IN user_id INT)
 BEGIN
     SELECT
         ci.quantity AS quantity,
@@ -285,8 +285,8 @@ END
 
 ### Procedure to get catogories
 
-```python
-  PROCEDURE get_categories(IN parent_category_name VARCHAR(255))
+```sql
+PROCEDURE get_categories(IN parent_category_name VARCHAR(255))
 BEGIN
     SELECT Category.category_name, Category.category_image, Category.category_id
     FROM Category
@@ -298,8 +298,8 @@ END
 
 ### Procedure to get guest cart
 
-```python
-  PROCEDURE get_guest_cart(IN variant_id INT)
+```sql
+PROCEDURE get_guest_cart(IN variant_id INT)
 BEGIN
     SELECT p.title, v.name, v.price, v.variant_image, v.variant_id
     FROM product AS p
@@ -312,48 +312,48 @@ There are more procedures have used. Above are only some examples.
 
 ## Transactions
 
-* update order items:
+ updating order items:
 
-    - *Transaction Usage*: This procedure also starts a transaction at the beginning and commits it at the end. 
+  - *Transaction Usage*: This procedure also starts a transaction at the beginning and commits it at the end. 
 
 ```python
-  def update_order_items(order_items, is_signedin, user_id):
-    conn = get_mysql_connection()
-    cursor = conn.cursor()
-    # create a transaction
-    # inventry should be updated
-    # we should handle this separately for logged in users and guest users
+def update_order_items(order_items, is_signedin, user_id):
+  conn = get_mysql_connection()
+  cursor = conn.cursor()
+  # create a transaction
+  # inventry should be updated
+  # we should handle this separately for logged in users and guest users
 
-    # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated
-    # cart table should be inserted with a new entry
-    try:
-        # Start a transaction
-        cursor.execute("START TRANSACTION")
+  # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated
+  # cart table should be inserted with a new entry
+  try:
+      # Start a transaction
+      cursor.execute("START TRANSACTION")
 
-        if is_signedin:
-            order_item_id, order_id, variant_id, quantity, price = order_items[0]
+      if is_signedin:
+          order_item_id, order_id, variant_id, quantity, price = order_items[0]
 
-            # INSERT INTO order_item
-            insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
+          # INSERT INTO order_item
+          insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
+          cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
 
-            # DELETE FROM cart_item
-            delete_query = "DELETE FROM cart_item WHERE user_id = %s"
-            cursor.execute(delete_query, (user_id,))
+          # DELETE FROM cart_item
+          delete_query = "DELETE FROM cart_item WHERE user_id = %s"
+          cursor.execute(delete_query, (user_id,))
 
-            # Reduce stock count in inventory
-            update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
-            cursor.execute(update_query, (quantity, variant_id))
+          # Reduce stock count in inventory
+          update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
+          cursor.execute(update_query, (quantity, variant_id))
 
-        # Commit the transaction
-        cursor.execute("COMMIT")
+      # Commit the transaction
+      cursor.execute("COMMIT")
 
-    except Exception as e:
-        # Handle any exceptions and possibly roll back the transaction
-        cursor.execute("ROLLBACK")
-        raise e
-    finally:
-        conn.close()
+  except Exception as e:
+      # Handle any exceptions and possibly roll back the transaction
+      cursor.execute("ROLLBACK")
+      raise e
+  finally:
+      conn.close()
 ```
 
 
@@ -371,46 +371,46 @@ A view is used to create a temporary table to keep the selected data and access 
 Here is an example used in analytics to create sales reports.
 
 ```python
-  ef Quarterly_sales(year):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
+def Quarterly_sales(year):
+  conn = get_mysql_connection()
+  cur = conn.cursor()
 
-    cur.execute(f'''CREATE VIEW year{year}orderitem AS
-                    select v.price*oi.quantity as total_price , t23.date , oi.order_id, oi.variant_id
-                    from order_item as oi
-                    join (SELECT * FROM orders WHERE YEAR(date) = {year}) AS t23 on oi.order_id = t23.order_id
-                    join variant as v on v.variant_id = oi.variant_id''')
-    conn.commit()
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (1,2,3);''')
-    q1 = cur.fetchone()[0]
-    q1 = int(q1) if q1 is not None else 0
+  cur.execute(f'''CREATE VIEW year{year}orderitem AS
+                  select v.price*oi.quantity as total_price , t23.date , oi.order_id, oi.variant_id
+                  from order_item as oi
+                  join (SELECT * FROM orders WHERE YEAR(date) = {year}) AS t23 on oi.order_id = t23.order_id
+                  join variant as v on v.variant_id = oi.variant_id''')
+  conn.commit()
+  cur.execute(f'''select sum(total_price) as q1_price
+                  from year{year}orderitem
+                  where month(date) in (1,2,3);''')
+  q1 = cur.fetchone()[0]
+  q1 = int(q1) if q1 is not None else 0
 
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (4,5,6);''')
-    q2 = cur.fetchone()[0]
-    q2 = int(q2) if q2 is not None else 0
+  cur.execute(f'''select sum(total_price) as q1_price
+                  from year{year}orderitem
+                  where month(date) in (4,5,6);''')
+  q2 = cur.fetchone()[0]
+  q2 = int(q2) if q2 is not None else 0
 
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (7,8,9);''')
-    q3 = cur.fetchone()[0]
-    q3 = int(q3) if q3 is not None else 0
+  cur.execute(f'''select sum(total_price) as q1_price
+                  from year{year}orderitem
+                  where month(date) in (7,8,9);''')
+  q3 = cur.fetchone()[0]
+  q3 = int(q3) if q3 is not None else 0
 
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (10,11,12);''')
-    q4 = cur.fetchone()[0]
-    q4 = int(q4) if q4 is not None else 0
+  cur.execute(f'''select sum(total_price) as q1_price
+                  from year{year}orderitem
+                  where month(date) in (10,11,12);''')
+  q4 = cur.fetchone()[0]
+  q4 = int(q4) if q4 is not None else 0
 
-    cur.execute(f'DROP VIEW IF EXISTS year{year}orderitem;')
-    conn.commit()
+  cur.execute(f'DROP VIEW IF EXISTS year{year}orderitem;')
+  conn.commit()
 
-    q_sale = [q1, q2, q3, q4]
-    conn.close()
-    return q_sale
+  q_sale = [q1, q2, q3, q4]
+  conn.close()
+  return q_sale
 ```
 
 ## Security
@@ -421,24 +421,24 @@ Here is an example used in analytics to create sales reports.
    When intializing the database, Logging to the side as a user, Regisitering a new user password encryption and hashing is udes using `werkzeug` library.  
 
   ```python
-    def add_user(data):
-    conn = get_mysql_connection()
-    cur = conn.cursor()
-    username = data["username"]
-    # need to check if the username already exists
-    cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
-    result = cur.fetchall()
-    # if we already have a registered user from that username then we can't add another user
-    if len(result) != 0:
-        return False
-    customer_id = gen_custID()
-    tup = (customer_id, data["email"], data["password"], data["username"],)
+  def add_user(data):
+  conn = get_mysql_connection()
+  cur = conn.cursor()
+  username = data["username"]
+  # need to check if the username already exists
+  cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
+  result = cur.fetchall()
+  # if we already have a registered user from that username then we can't add another user
+  if len(result) != 0:
+      return False
+  customer_id = gen_custID()
+  tup = (customer_id, data["email"], data["password"], data["username"],)
 
-    cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
+  cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
 
-    conn.commit()
-    conn.close()
-    return True
+  conn.commit()
+  conn.close()
+  return True
   ```
 
 ### *Password Verification*:
@@ -458,16 +458,16 @@ ii. *Sanitizing Data*:
 - All the data is sanitized when initializing the database.
 
   ```python
-            def row_sanitizer(csv_reader_row):
-            for i in range(len(csv_reader_row)):
-                try:  # Had to use a try catch block to check whether string contains a float.
-                    if csv_reader_row[i] == 'NULL':  # Adding support for NULL values in fields such as integers.
-                        continue
-                    float(csv_reader_row[i].replace(" ", ""))  # If the cell is a float (or an integer), it will not
-                    # raise an exception. Instead, will jump to the next for loop iteration
-                except ValueError:
-                    csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
-            return csv_reader_row
+  def row_sanitizer(csv_reader_row):
+  for i in range(len(csv_reader_row)):
+      try:  # Had to use a try catch block to check whether string contains a float.
+          if csv_reader_row[i] == 'NULL':  # Adding support for NULL values in fields such as integers.
+              continue
+          float(csv_reader_row[i].replace(" ", ""))  # If the cell is a float (or an integer), it will not
+          # raise an exception. Instead, will jump to the next for loop iteration
+      except ValueError:
+          csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
+  return csv_reader_row
   ```
 
 
