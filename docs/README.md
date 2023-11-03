@@ -19,7 +19,7 @@ This repository contains the database design and implementation for a single ven
 
 * Product management: The platform allows users to create, manage, and track products, including their variants, categories, and inventory.
 * Order management: The platform allows users to place orders, track their orders, and manage their payments.
-* Reporting: The platform provides a variety of reports to help administrators to track the performance of their e-commerce business.
+* Reporting: The platform provides a variety of reports to track the performance of their e-commerce business.
 
 
 ## Basic Implementation Details 
@@ -211,6 +211,274 @@ These are essential thirdparty Python libraries and packages that your project r
 - Werkzeug
 - zipp
 
+# Insight Into The Database
+
+Our Project Database serves as the backbone of our operations, providing structured storage and efficient management of our data. This document delves into the intricate design of the database, detailing its various components including functions, procedures, transactions, triggers, views, and indexes. In addition, we emphasize the security measures we have incorporated to protect our valuable data.
+## Database Design
+
+### Consistency and Avoiding Redundancy:
+
+#### Unique Constraints: 
+    - Ensures unique data for specific columns, thereby preventing redundancy. For instance, username in the registered_user table has been made UNIQUE to prevent duplicate entries.
+
+#### Primary Keys: 
+    - Each table has a primary key, ensuring a unique identifier for each row, which in turn maintains consistency.
+
+#### Foreign Key Constraints: 
+    - Establishes a link between data in two tables, ensuring consistency across tables. 
+    E.g: the Variant_id in the order_item table is a Foreign Key referring to the variant table. 
+
+#### CASCADE Options: 
+    - In the event of an update or delete operation, the CASCADE option ensures that changes are consistently reflected across related tables. This prevents orphan records and maintains database integrity.
+
+### Normalizations and Improvements:
+
+#### First Normal Form (1NF):
+    - Each table has a primary key, and there are no repeating groups or arrays. All attributes have atomic values.
+#### Second Normal Form (2NF):
+    - Tables like order_item has composite primary keys (Order_item_id with Order_id). This decomposition ensures that every non-prime attribute is fully functionally dependent on the primary key.
+
+#### Third Normal Form (3NF):
+    - Transitive dependencies are removed. For instance, the category table has a Parent_Category_id that points back to the same table, creating a hierarchical structure. Thus, by using a self-referencing foreign key, we ensure that the table is in 3NF by eliminating possible transitive dependencies.
+
+#### Modularity of Tables:
+    - The database is designed such that entities like registered users, orders, orders items, cart items, and attributes are in separate tables. This modular design makes the database scalable and easy to manage.
+
+#### Hierarchical Data:
+    - The category table uses a self-referencing foreign key (Parent_Category_id) to establish a category hierarchy, allowing for nested categories in the e-commerce platform.
+
+
+
+## Stored Procedures
+### Procedures for product management
+
+A set of procedures that can be used to manage products, users, and attributes.
+
+
+### Procedure for adding users
+
+```python
+PROCEDURE AddUser(
+  IN p_email VARCHAR(255),
+  IN p_password VARCHAR(255),
+  IN p_username VARCHAR(255)
+)
+BEGIN
+  INSERT INTO registered_user (email, password, username)
+  VALUES (p_email, p_password, p_username);
+END
+```
+
+### Procedure to get cart
+
+```python
+  PROCEDURE get_cart(IN user_id INT)
+BEGIN
+    SELECT
+        ci.quantity AS quantity,
+        v.name AS name,
+        v.price AS price,
+        v.variant_image AS variant_image,
+        p.title AS title,
+        v.variant_id AS variant_id
+    FROM
+        cart_item AS ci
+    JOIN
+        variant AS v ON ci.variant_id = v.variant_id
+    JOIN
+        product AS p ON v.product_id = p.product_id
+    WHERE
+        ci.user_id = user_id;
+END
+```
+
+### Procedure to get catogories
+
+```python
+  PROCEDURE get_categories(IN parent_category_name VARCHAR(255))
+BEGIN
+    SELECT Category.category_name, Category.category_image, Category.category_id
+    FROM Category
+    WHERE Category.parent_category_id = (
+        SELECT category_id FROM Category WHERE category_name = parent_category_name
+    );
+END
+```
+
+### Procedure to get guest cart
+
+```python
+  PROCEDURE get_guest_cart(IN variant_id INT)
+BEGIN
+    SELECT p.title, v.name, v.price, v.variant_image, v.variant_id
+    FROM product AS p
+    JOIN variant AS v ON p.product_id = v.product_id
+    WHERE v.variant_id = variant_id;
+END
+```
+
+There are more procedures have used. Above are only some examples.
+
+## Transactions
+
+* update order items:
+
+    - *Transaction Usage*: This procedure also starts a transaction at the beginning and commits it at the end. 
+
+```python
+  def update_order_items(order_items, is_signedin, user_id):
+    conn = get_mysql_connection()
+    cursor = conn.cursor()
+    # create a transaction
+    # inventry should be updated
+    # we should handle this separately for logged in users and guest users
+
+    # for a guest user his session cart should be emptied and for a logged in user his cart_item table should be updated
+    # cart table should be inserted with a new entry
+    try:
+        # Start a transaction
+        cursor.execute("START TRANSACTION")
+
+        if is_signedin:
+            order_item_id, order_id, variant_id, quantity, price = order_items[0]
+
+            # INSERT INTO order_item
+            insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
+
+            # DELETE FROM cart_item
+            delete_query = "DELETE FROM cart_item WHERE user_id = %s"
+            cursor.execute(delete_query, (user_id,))
+
+            # Reduce stock count in inventory
+            update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
+            cursor.execute(update_query, (quantity, variant_id))
+
+        # Commit the transaction
+        cursor.execute("COMMIT")
+
+    except Exception as e:
+        # Handle any exceptions and possibly roll back the transaction
+        cursor.execute("ROLLBACK")
+        raise e
+    finally:
+        conn.close()
+```
+
+
+## Triggers
+
+* order_item_after_insert: Updates the quantity of the item after an order is placed and deletes the item from the cart table.
+* after_customer_update: Creates a cart for the customer when an unregistered user registers as a customer.
+* after_customer_insert: Creates a cart for a customer when the customer is registered.
+
+
+## Views
+
+A view is used to create a temporary table to keep the selected data and access them whenever needed with maximum efficiency.
+
+Here is an example used in analytics to create sales reports.
+
+```python
+  ef Quarterly_sales(year):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+
+    cur.execute(f'''CREATE VIEW year{year}orderitem AS
+                    select v.price*oi.quantity as total_price , t23.date , oi.order_id, oi.variant_id
+                    from order_item as oi
+                    join (SELECT * FROM orders WHERE YEAR(date) = {year}) AS t23 on oi.order_id = t23.order_id
+                    join variant as v on v.variant_id = oi.variant_id''')
+    conn.commit()
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (1,2,3);''')
+    q1 = cur.fetchone()[0]
+    q1 = int(q1) if q1 is not None else 0
+
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (4,5,6);''')
+    q2 = cur.fetchone()[0]
+    q2 = int(q2) if q2 is not None else 0
+
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (7,8,9);''')
+    q3 = cur.fetchone()[0]
+    q3 = int(q3) if q3 is not None else 0
+
+    cur.execute(f'''select sum(total_price) as q1_price
+                    from year{year}orderitem
+                    where month(date) in (10,11,12);''')
+    q4 = cur.fetchone()[0]
+    q4 = int(q4) if q4 is not None else 0
+
+    cur.execute(f'DROP VIEW IF EXISTS year{year}orderitem;')
+    conn.commit()
+
+    q_sale = [q1, q2, q3, q4]
+    conn.close()
+    return q_sale
+```
+
+## Security
+
+### *Password Encryption*:
+   - *Hashing Process*: When a user sets or updates their password, it's transformed from plain-text into a cryptographic hash. We utilize the bcrypt algorithm, one of the most trusted methods in the industry. This ensures that the actual password is never stored directly in our database.
+
+   When intializing the database, Logging to the side as a user, Regisitering a new user password encryption and hashing is udes using `werkzeug` library.  
+
+  ```python
+    def add_user(data):
+    conn = get_mysql_connection()
+    cur = conn.cursor()
+    username = data["username"]
+    # need to check if the username already exists
+    cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
+    result = cur.fetchall()
+    # if we already have a registered user from that username then we can't add another user
+    if len(result) != 0:
+        return False
+    customer_id = gen_custID()
+    tup = (customer_id, data["email"], data["password"], data["username"],)
+
+    cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
+
+    conn.commit()
+    conn.close()
+    return True
+  ```
+
+### *Password Verification*:
+   - When a user logs in, their given password is compared with the stored hash in our database.
+   - The `check_password_hash` function is used for this verification. It checks if the hashed version of the given password matches the stored hash without ever converting the hash back to plain-text. This ensures a secure and efficient login process.
+
+### *SQL Injection Prevention using Prepared Statements*
+
+    SQL Injection is one of the most prevalent and dangerous web application vulnerabilities. It allows attackers to insert malicious SQL code into queries, which can then be executed by the database.
+
+    In our e-commerce platform, we're proactive in guarding against SQL Injection attacks by utilizing prepared statements in our SQL queries. Here's how prepared statements offer enhanced security:
+
+    i. *Parameterized Queries*:
+    - In our SQL queries, we use placeholders (?) instead of directly inserting values into the SQL string. This ensures that the database always treats the inputs as data rather than executable code.
+    
+    ii. *Sanitizing Data*:
+    - All the data is sanitized when initializing the database.
+
+  ```python
+            def row_sanitizer(csv_reader_row):
+            for i in range(len(csv_reader_row)):
+                try:  # Had to use a try catch block to check whether string contains a float.
+                    if csv_reader_row[i] == 'NULL':  # Adding support for NULL values in fields such as integers.
+                        continue
+                    float(csv_reader_row[i].replace(" ", ""))  # If the cell is a float (or an integer), it will not
+                    # raise an exception. Instead, will jump to the next for loop iteration
+                except ValueError:
+                    csv_reader_row[i] = f'''"{csv_reader_row[i]}"'''
+            return csv_reader_row
+  ```
+
 # User Guide 
 
 ## Getting Started
@@ -325,3 +593,7 @@ This project was created as part of a 3<sup>rd</sup> semester university project
 
 > [!Note]
 > * As this project is developed for an Assesment, It is not meant to be used in any commercial applications since it doesn't meet all the nessecary requirements yet. Instead the main focus is in the educational aspect of a DBMS Project.
+
+
+
+
