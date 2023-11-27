@@ -482,7 +482,7 @@ ii. *Sanitizing Data*:
 <p align = "center"><kbd>
 <img src="assets/registration.png" 
 alt="Login image"
-height="300"
+width = 80%
 /></kbd>
 </p> 
 
@@ -519,7 +519,7 @@ height="300"
 <p align = "center"><kbd>
 <img src="assets/checkout.png" 
 alt="Login image"
-height="300"
+width = 80%
 /></kbd>
 </p> 
 
@@ -536,7 +536,7 @@ height="300"
 <p align = "center"><kbd>
 <img src="assets/totalquarterlysales.png" 
 alt="Login image"
-height="300"
+width = 80%
 /></kbd>
 </p> 
 
@@ -545,7 +545,7 @@ height="300"
 <p align = "center"><kbd>
 <img src="assets/Productsales.png" 
 alt="Login image"
-height="300"
+width = 80%
 /></kbd>
 </p> 
 
@@ -554,7 +554,7 @@ height="300"
 <p align = "center"><kbd>
 <img src="assets/sample.png" 
 alt="Login image"
-height="300"
+width = 80%
 /></kbd>
 </p> 
 
@@ -563,7 +563,7 @@ height="300"
 <p align = "center"><kbd>
 <img src="assets/salesty.png" 
 alt="Login image"
-height="300"
+width = 80%
 /></kbd>
 </p> 
 
