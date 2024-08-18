@@ -175,27 +175,27 @@ def search_products():
 @app.route("/cart/", methods=["POST", "GET"])
 def cart():
     # Check if the user is signed in
-
-    signedin = session['signedin']
-    if signedin is True:
-        username = session['username']
-        cart = get_cart(session['userid'])
+    signedin = session.get('signedin', False)
+    
+    if signedin:
+        username = session.get('username', '')
+        cart = get_cart(session.get('userid'))
         return render_template('cart.html', cart=cart, signedin=signedin, username=username)
     else:
-        signedin = False
         session_cart = session.get('cart', {})
-        # get a list of all the varient ID's that are added to the cart
+        # get a list of all the variant IDs that are added to the cart
         variant_ids_string = list(session_cart.keys())
         variant_ids = [int(i) for i in variant_ids_string]
-        # need to implement the function to fetch values from the database for the given id's
+        
+        # fetch values from the database for the given IDs
         variant_details = get_guest_cart(variant_ids)
 
         # append the count to each tuple in the variant details 
-
         for i in range(len(variant_details)):
-            variant_details[i] = variant_details[i] + (variant_ids[i],)
+            variant_details[i] = variant_details[i] + (session_cart[variant_ids_string[i]],)
 
         return render_template('cart.html', guest_cart=variant_details, signedin=False, session_cart=session_cart)
+
 
 
 @app.route('/add_to_cart', methods=['POST'])
