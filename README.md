@@ -64,6 +64,25 @@ To get started with the platform, follow these steps :
     *   This will initially create the database as you specified and will populate the data given. Thereafter it will run the app itself. If database already exists directly the app will run without reinitiating the database.
 
 
+## Running with Docker
+
+As an alternative to the manual setup above, you can run the whole platform (Flask app + MySQL database) with Docker Compose. No local MySQL or Python install is required.
+
+Prerequisites: Docker and Docker Compose.
+
+1.  (Optional) Copy `.env.example` to `.env` in the project root and set your own `MYSQL_ROOT_PASSWORD`. If you skip this step a default password is used.
+2.  Build and start the containers:
+    ```plaintext
+    $ docker compose up --build
+    ```
+3.  On first run, the `web` container waits for the `db` container to become healthy, then connects to it and finds no `ecomdb` database yet — at that point it creates the schema and populates it from `webapp/dbInitialData/*.csv` and `database_relations.sql` directly inside the `db` container, exactly like the manual setup does against a local MySQL server.
+4.  Once it's up, visit [http://localhost:8080](http://localhost:8080).
+
+Database data persists in a named Docker volume (`db_data`) across restarts. To reset the database from scratch, stop the containers and remove the volume:
+```plaintext
+$ docker compose down -v
+```
+
 ## About
 
 This project was created as part of a 3<sup>rd</sup> semester university project under the Database Systems module in the Department of Computer Science and Engineering at the University of Moratuwa. Any contributions are welcome!

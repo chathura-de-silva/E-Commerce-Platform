@@ -8,10 +8,16 @@
     justify-content: space-between;
   }
 
-  .col-25,
-  .col-50,
-  .col-75 {
+  .col-25 {
     flex: 0 0 25%;
+  }
+
+  .col-50 {
+    flex: 0 0 50%;
+  }
+
+  .col-75 {
+    flex: 0 0 75%;
   }
 
   .xd {
@@ -172,8 +178,7 @@
             </form>
           </div>
         </div>
-      </div>
-    
+
       <div class="col-25">
         <div class="container">
           <h4>Cart
@@ -188,6 +193,7 @@
         </div>
       </div>
     </div>
+  </div>
   <script>
     function togglePaymentFields() {
       var cashOnDeliveryRadio = document.getElementById("cashOnDeliveryRadio");

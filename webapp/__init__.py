@@ -21,22 +21,19 @@ sales_for_product(app)
 sess = Session()
 
 
+@app.context_processor
+def inject_login_status():
+    # Makes signedin/username available to every template's nav bar,
+    # without every single route having to remember to pass them.
+    return dict(signedin=session.get('signedin', False), username=session.get('username'))
+
+
 # users should not be logged in in order to use the platform
 
 
 @app.route("/")
 def home():
-    # if the user is signed in load as signed in
-    # use userid insted of id (a point to consider)
-
-    signedin = False
-    username = None
-
-    if "userid" in session:
-        signedin = True
-        username = session.get("username")  # Assuming username is saved in session["username"]
-
-    return render_template("home.html", signedin=signedin, username=username)
+    return render_template("home.html")
 
 
 @app.route("/signup/", methods=["POST", "GET"])
@@ -143,24 +140,11 @@ def view_product(id):
 # need to create a function to get varient details from the database
 @app.route('/varients/<product_id>', methods=['GET'])
 def get_varient(product_id):
-    # need to write the business logic here
-
+    # variant.name, variant.price, variant.custom_attrbutes, variant.variant_image,
+    # variant.variant_id, variant's own stock_count
     tup = get_varient_info(product_id)
 
-    print(tup)
-    # variant id is the last elemet in the fetched tuple
-    # variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id
-    variant_id = (tup[-1][-1])
-
-    print(variant_id)
-    stock_count = get_stock_count(variant_id)
-
-    print(stock_count, "is the stock count")
-    signedin = False
-    if "userid" in session:
-        signedin = True
-
-    return render_template('variants.html', variants=tup, signedin=signedin, stock_count=stock_count)
+    return render_template('variants.html', variants=tup)
 
 
 @app.route('/search', methods=['GET'])
@@ -176,7 +160,7 @@ def search_products():
 def cart():
     # Check if the user is signed in
 
-    signedin = session['signedin']
+    signedin = session.get('signedin', False)
     if signedin is True:
         username = session['username']
         cart = get_cart(session['userid'])
@@ -190,11 +174,6 @@ def cart():
         # need to implement the function to fetch values from the database for the given id's
         variant_details = get_guest_cart(variant_ids)
 
-        # append the count to each tuple in the variant details 
-
-        for i in range(len(variant_details)):
-            variant_details[i] = variant_details[i] + (variant_ids[i],)
-
         return render_template('cart.html', guest_cart=variant_details, signedin=False, session_cart=session_cart)
 
 
@@ -202,6 +181,12 @@ def cart():
 def add_to_cart():
     variant_id = request.form.get('variant_id')
     quantity = int(request.form.get('quantity'))
+
+    available_stock = get_stock_count(variant_id)
+    if available_stock is not None and quantity > available_stock:
+        flash(f'Only {available_stock} left in stock.', 'error')
+        return redirect(url_for('cart'))
+
     try:
         username = session['username']
 
@@ -233,7 +218,7 @@ def checkout():
     # need to show an estimated delivary time , total prices should be fetched from the cart
     # get_cart()
 
-    is_logged = session['signedin']
+    is_logged = session.get('signedin', False)
 
     if is_logged is True:
         user_id = session['userid']
@@ -251,28 +236,24 @@ def checkout():
         print(total_price)
 
         return render_template('checkout.html', total_price=total_price)
-    # also need to find the total price
     else:
-
-        # find a way to calculate the total price from the session cart
+        session_cart = session.get('cart', {})
+        variant_ids = [int(i) for i in session_cart.keys()]
+        guest_items = get_guest_cart(variant_ids)
+        # p.title, v.name, v.price, v.variant_image, v.variant_id
+        total_price = sum(session_cart[str(item[4])] * item[2] for item in guest_items)
 
         flash('You are going to checkout as a guest. Some features may not be not available')
-        return render_template('checkout.html')
+        return render_template('checkout.html', total_price=total_price)
 
 
 @app.route('/checkout_successful', methods=['POST'])
 def checkout_successful():
     if request.method == 'POST':
-        # Here, we can process the form data as needed
-        # you can access form data using request.form
-        full_name = request.form.get('firstname')
-        email = request.form.get('email')
-        # Process other form data here as necessary
         city = request.form.get('city')  # Assuming 'city' is the name attribute of the city input field
 
-        signedin = session['signedin']
+        signedin = session.get('signedin', False)
         order_id = gen_orderID()
-        # need to update the order table in order to get rid of the foregin key constraint
 
         # Get the current date
         current_date = date.today()
@@ -281,93 +262,98 @@ def checkout_successful():
 
         # order_id, date, delivery_method, payment_method, user_id
 
-        if signedin:
+        try:
+            if signedin:
 
-            user_id = session['userid']
+                user_id = session['userid']
 
-            order_table_details = [order_id, formatted_date, 'Express', 'visa', user_id]
-            # first of all we need to update the order_table in order to avoid the primary key constraint
-            update_order_table(order_table_details)
+                order_table_details = [order_id, formatted_date, 'Express', 'visa', user_id]
+                update_order_table(order_table_details)
 
-            # get the user's cart
-            cart = get_cart(session['userid'])
-            # extract the variant ID's from the cart
-            order_item_ids = []
-            for item in cart:
-                new_ID = gen_order_item_ID()
-                order_item_ids.append(new_ID)
+                # get the user's cart
+                cart = get_cart(session['userid'])
+                # extract the variant ID's from the cart
+                order_item_ids = []
+                for item in cart:
+                    new_ID = gen_order_item_ID()
+                    order_item_ids.append(new_ID)
 
-                variant_Id = item[5]
-                quantity = item[0]
-                price = item[2]
+                    variant_Id = item[5]
+                    quantity = item[0]
+                    price = item[2]
 
-                temp = []
-                temp.append((new_ID, order_id, variant_Id, quantity, price))
+                    temp = []
+                    temp.append((new_ID, order_id, variant_Id, quantity, price))
 
-                # update the delivary module 
-                stock_count = get_stock_count(variant_Id)
-                destination_city = city
-                delivary_module = [stock_count, destination_city, new_ID]
+                    # update the delivary module
+                    stock_count = get_stock_count(variant_Id)
+                    destination_city = city
+                    delivary_module = [stock_count, destination_city, new_ID]
 
-                # need to update the order item table from the above details
-                update_order_items(temp, signedin, user_id=user_id)
+                    # need to update the order item table from the above details
+                    update_order_items(temp, signedin, user_id=user_id)
 
-                update_delivary_module(delivary_module)
+                    update_delivary_module(delivary_module)
 
-            names = get_details_for_delivery_module(order_item_ids)
+                names = get_details_for_delivery_module(order_item_ids)
 
-            return (render_template('checkout_succesful.html', names = names))
+                return (render_template('checkout_succesful.html', names = names))
 
-        if not signedin:
-            # get the session cart
-            # when updating the order tables we need a user_id and we don't have a user ID for a guest user 
+            else:
+                # get the session cart
+                # when updating the order tables we need a user_id and we don't have a user ID for a guest user
 
-            # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER 
-            user_id = 0
-            order_table_details = [order_id, formatted_date, 'Express', 'visa', user_id]
-            # first of all we need to update the order_table in order to avoid the primary key constraint
-            update_order_table(order_table_details)
+                # I AM GOING TO HARDCODE USERID *00000* FOR A GUEST USER
+                user_id = 0
+                order_table_details = [order_id, formatted_date, 'Express', 'visa', user_id]
+                update_order_table(order_table_details)
 
-            # p.title, v.name, v.price, v.variant_image,v.variant_id
-            session_cart = session.get('cart', {})
-            # get a list of all the varient ID's that are added to the cart
-            variant_ids_string = list(session_cart.keys())
-            variant_ids = [int(i) for i in variant_ids_string]
-            # need to implement the function to fetch values from the database for the given id's
-            guest_cart = get_guest_cart(variant_ids)
+                # p.title, v.name, v.price, v.variant_image,v.variant_id
+                session_cart = session.get('cart', {})
+                # get a list of all the varient ID's that are added to the cart
+                variant_ids_string = list(session_cart.keys())
+                variant_ids = [int(i) for i in variant_ids_string]
+                # need to implement the function to fetch values from the database for the given id's
+                guest_cart = get_guest_cart(variant_ids)
 
-            order_item_ids = [] # we are using this for the delivery module
-            for item in guest_cart:
-                new_ID = gen_order_item_ID()
+                order_item_ids = [] # we are using this for the delivery module
+                for item in guest_cart:
+                    new_ID = gen_order_item_ID()
+                    order_item_ids.append(new_ID)
 
-                order_item_ids.append(new_ID)
+                    variant_Id = item[4]
+                    # quantity is in the hashmap of the session cart
+                    quantity = session_cart[str(variant_Id)]
+                    price = item[2]
 
-                order_item_ids.append(new_ID)
-                variant_Id = item[4]
-                # quantity is in the hashmap of the session cart
-                quantity = session_cart[str(variant_Id)]
-                price = item[2]
+                    temp = []
+                    temp.append((new_ID, order_id, variant_Id, quantity, price))
 
-                temp = []
-                temp.append((new_ID, order_id, variant_Id, quantity, price))
+                    # update the delivary module
+                    stock_count = get_stock_count(variant_Id)
+                    destination_city = city
+                    delivary_module = [stock_count, destination_city, new_ID]
 
-                
-                # update the delivary module 
-                stock_count = get_stock_count(variant_Id)
-                destination_city = city
-                delivary_module = [stock_count, destination_city,new_ID]
+                    update_order_items(temp, signedin, user_id=user_id)
 
+                    update_delivary_module(delivary_module)
 
-                update_order_items(temp, signedin, user_id=user_id)
+                names = get_details_for_delivery_module(order_item_ids)
 
-                update_delivary_module(delivary_module)
+                # clear the session cart
+                session['cart'] = {}
+                session.modified = True
 
-            # clear the session cart
-            session['cart'].clear()
+                return (render_template('checkout_succesful.html', names = names))
 
-            # try to implement and transaction to finish the checkout functionality
-            # After processing the form data, you can render a success page
-            return render_template('login.html', full_name=full_name, email=email)
+        except InsufficientStockError as e:
+            flash(f'Sorry, only {e.available} left in stock for one of the items in your cart. '
+                  f'Please update the quantity and try again.', 'error')
+            return redirect(url_for('checkout'))
+        except Exception as e:
+            print(f"Checkout failed: {e}")
+            flash('Something went wrong while placing your order. Please try again.', 'error')
+            return redirect(url_for('checkout'))
 
 
 @app.route('/analytics')

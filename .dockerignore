@@ -1,0 +1,11 @@
+.git
+.gitignore
+__pycache__/
+webapp/__pycache__/
+*.pyc
+.idea/
+flask_session/
+webapp/dbInitialData/.env
+.env
+docs/
+README.md

@@ -5,6 +5,14 @@ from werkzeug.security import generate_password_hash,check_password_hash
 config = get_db_config_data()
 
 
+class InsufficientStockError(Exception):
+    def __init__(self, variant_id, available, requested):
+        self.variant_id = variant_id
+        self.available = available
+        self.requested = requested
+        super().__init__(f"Only {available} left in stock for variant {variant_id} (requested {requested})")
+
+
 def get_mysql_connection():
     return mysql.connector.connect(**config)
 
@@ -34,7 +42,7 @@ def gen_custID():
 def gen_orderID():
     conn = get_mysql_connection()
     cur = conn.cursor()
-    cur.execute("SELECT order_id FROM order_item ORDER BY order_id DESC LIMIT 1")
+    cur.execute("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1")
     res = cur.fetchall()
     conn.close()
     # return the number which is 1 greater than the last entry
@@ -92,6 +100,7 @@ def get_stock_count(variant_id):
 
     # Fetch the result
     result = cur.fetchone()
+    conn.close()
 
     print(result)
 
@@ -106,22 +115,24 @@ def get_stock_count(variant_id):
 # it will return true if we are able to add a new user
 def add_user(data):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    username = data["username"]
-    # need to check if the username already exists
-    cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
-    result = cur.fetchall()
-    # if we already have a registered user from that username then we can't add another user
-    if len(result) != 0:
-        return False
-    customer_id = gen_custID()
-    tup = (customer_id, data["email"], generate_password_hash(data["password"], method='pbkdf2:sha256'), data["username"],)
+    try:
+        cur = conn.cursor()
+        username = data["username"]
+        # need to check if the username already exists
+        cur.execute("SELECT * FROM registered_user WHERE username=%s", (username,))
+        result = cur.fetchall()
+        # if we already have a registered user from that username then we can't add another user
+        if len(result) != 0:
+            return False
+        customer_id = gen_custID()
+        tup = (customer_id, data["email"], generate_password_hash(data["password"], method='pbkdf2:sha256'), data["username"],)
 
-    cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
+        cur.execute("INSERT INTO registered_user (user_id,email, password, username) VALUES (%s, %s, %s, %s)", tup)
 
-    conn.commit()
-    conn.close()
-    return True
+        conn.commit()
+        return True
+    finally:
+        conn.close()
 
 
 # this function is used to authenticate the user
@@ -135,10 +146,11 @@ def auth_user(data):
 
     # check if the user is already in the database
     cur.execute("SELECT user_id,username,password FROM registered_user WHERE username=%s", (username,))
-  
+
     result = cur.fetchall()
-    print("hello mofossssssssssssssssssssssssssss",result[0][2])
     conn.close()
+    if not result:
+        return False
     if not check_password_hash(result[0][2],password):
         return False
     return result[0]
@@ -153,6 +165,7 @@ def search_product(search_query):
 
     # Fetch the matching products
     matching_products = cur.fetchall()
+    conn.close()
 
     return matching_products
 
@@ -165,16 +178,17 @@ def get_categories(category):
     # select all the subproducts related to the given category
     # Execute the SQL query
     query = """
-            SELECT Category.category_name, Category.category_image,Category.category_id
-            FROM Category
-            WHERE Category.parent_category_id = (
-                SELECT category_id FROM Category WHERE category_name = %s
+            SELECT category.category_name, category.category_image,category.category_id
+            FROM category
+            WHERE category.parent_category_id = (
+                SELECT category_id FROM category WHERE category_name = %s
             )
         """
 
     # Fetch the results
     cur.execute(query, (category,))
     results = cur.fetchall()
+    conn.close()
 
     return results
 
@@ -191,6 +205,7 @@ def get_products_from_database(id):
     cur.execute(query, (id,))  # Pass the integer id as a parameter
 
     results = cur.fetchall()
+    conn.close()
     return results
 
 
@@ -200,31 +215,30 @@ def get_product_info():
 
     cur.execute("SELECT * FROM product")
     products = cur.fetchall()
+    conn.close()
     return products
 
 
 def update_cart(user_id, variant_id, quantity):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    print("hello world")
-    # Define the SQL statement using the INSERT ... ON DUPLICATE KEY UPDATE syntax
-    # Define the SQL statement with an alias for VALUES
-    query = """
-        INSERT INTO cart_item (user_id, variant_id, quantity)
-        VALUES (%s, %s, %s)
-        ON DUPLICATE KEY UPDATE quantity = cart_item.quantity
-        """
-    # Execute the SQL statement with the provided user_id, variant_id, and quantity
-    cur.execute(query, (user_id, variant_id, quantity))
-
-    conn.commit()
-    conn.close()
-    return
+    try:
+        cur = conn.cursor()
+        # Adding the same variant again increases the existing quantity,
+        # matching the guest session-cart behavior in add_to_cart().
+        query = """
+            INSERT INTO cart_item (user_id, variant_id, quantity)
+            VALUES (%s, %s, %s) AS new_item
+            ON DUPLICATE KEY UPDATE quantity = cart_item.quantity + new_item.quantity
+            """
+        cur.execute(query, (user_id, variant_id, quantity))
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def get_single_product_info(product_id):
+    conn = get_mysql_connection()
     try:
-        conn = get_mysql_connection()
         with conn.cursor() as cur:
             # Run the query to get product details based on the product_id
             cur.execute("SELECT * FROM product WHERE id = %s", (product_id,))
@@ -233,17 +247,25 @@ def get_single_product_info(product_id):
     except Exception as e:
         # Handle the exception (e.g., log the error or return an error message)
         return None  # Return None or an appropriate error indicator
+    finally:
+        conn.close()
 
 
 def get_varient_info(product_id):
     conn = get_mysql_connection()
-    with conn.cursor() as cur:
-        cur.execute(
-            "SELECT variant.name,variant.price,variant.custom_attrbutes,variant.variant_image,variant.variant_id FROM variant WHERE product_id = %s",
-            (product_id,))
-        result = cur.fetchall()
-
-    return result
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT variant.name, variant.price, variant.custom_attrbutes, variant.variant_image,
+                          variant.variant_id, inventory.stock_count
+                   FROM variant
+                   LEFT JOIN inventory ON inventory.variant_id = variant.variant_id
+                   WHERE variant.product_id = %s""",
+                (product_id,))
+            result = cur.fetchall()
+        return result
+    finally:
+        conn.close()
 
 
 def update_order_items(order_items, is_signedin, user_id):
@@ -259,20 +281,28 @@ def update_order_items(order_items, is_signedin, user_id):
         # Start a transaction
         cursor.execute("START TRANSACTION")
 
+        order_item_id, order_id, variant_id, quantity, price = order_items[0]
+
+        # Lock the inventory row and verify there's enough stock left before
+        # selling it, so concurrent checkouts can't push stock_count negative.
+        cursor.execute("SELECT stock_count FROM inventory WHERE variant_id = %s FOR UPDATE", (variant_id,))
+        row = cursor.fetchone()
+        available = row[0] if row and row[0] is not None else 0
+        if available < quantity:
+            raise InsufficientStockError(variant_id, available, quantity)
+
+        # INSERT INTO order_item (needed for both signed-in and guest checkouts)
+        insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
+
         if is_signedin:
-            order_item_id, order_id, variant_id, quantity, price = order_items[0]
-
-            # INSERT INTO order_item
-            insert_query = "INSERT INTO order_item (order_item_id, order_id, variant_id, quantity, price) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(insert_query, (order_item_id, order_id, variant_id, quantity, price))
-
-            # DELETE FROM cart_item
+            # Guests have no server-side cart_item row to clean up
             delete_query = "DELETE FROM cart_item WHERE user_id = %s"
             cursor.execute(delete_query, (user_id,))
 
-            # Reduce stock count in inventory
-            update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
-            cursor.execute(update_query, (quantity, variant_id))
+        # Reduce stock count in inventory
+        update_query = "UPDATE inventory SET stock_count = stock_count - %s WHERE variant_id = %s"
+        cursor.execute(update_query, (quantity, variant_id))
 
         # Commit the transaction
         cursor.execute("COMMIT")
@@ -298,8 +328,12 @@ def update_order_table(order_table_details):
         conn.commit()
 
     except mysql.connector.Error as err:
-        # Handle any potential errors here
+        # Re-raise so the caller knows the order was NOT created and can abort
+        # the rest of the checkout instead of proceeding with a phantom order.
         print("Error: {}".format(err))
+        raise
+    finally:
+        conn.close()
 
 
 def get_cart(custID):
@@ -355,48 +389,52 @@ def get_guest_cart(variant_ids):
         for row in rows:
             result.append(row)
 
+    conn.close()
     return result
 
 
 def update_delivary_module(module):
     conn = get_mysql_connection()
-    cur = conn.cursor()
+    try:
+        cur = conn.cursor()
 
-    # create a list of main cities 
-    main_cities = ['Colombo', 'Panadura', 'Galle', 'Kandy']
-    new_id = gen_delivery_ID()
-    # stock_count,destination_city,new_ID
-    tup = new_id, module[2], module[1]
+        # create a list of main cities
+        main_cities = ['Colombo', 'Panadura', 'Galle', 'Kandy']
+        new_id = gen_delivery_ID()
+        # stock_count,destination_city,new_ID
+        tup = new_id, module[2], module[1]
 
-    # checking if the stock count is greater than zero
-    if module[0] > 0:
+        # checking if the stock count is greater than zero
+        if module[0] > 0:
 
-        if (module[1] in main_cities):
-            # add fibve days to the end of the tuple
+            if (module[1] in main_cities):
+                # add fibve days to the end of the tuple
 
-            tup = tup + (5,)
-            cur.execute(
-                "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
-                tup)
+                tup = tup + (5,)
+                cur.execute(
+                    "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
+                    tup)
+            else:
+                tup = tup + (7,)
+                cur.execute(
+                    "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
+                    tup)
+
         else:
-            tup = tup + (7,)
-            cur.execute(
-                "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
-                tup)
+            if (module[1] in main_cities):
+                tup = tup + (8,)
+                cur.execute(
+                    "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
+                    tup)
+            else:
+                tup = tup + (10,)
+                cur.execute(
+                    "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
+                    tup)
 
-    else:
-        if (module[1] in main_cities):
-            tup = tup + (8,)
-            cur.execute(
-                "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
-                tup)
-        else:
-            tup = tup + (10,)
-            cur.execute(
-                "INSERT INTO delivery_module (delivery_module_id, order_item_id, destination_city, estimated_days) VALUES (%s, %s, %s, %s)",
-                tup)
-
-    conn.commit()
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def get_details_for_delivery_module(order_item_ids):
@@ -428,6 +466,8 @@ def get_details_for_delivery_module(order_item_ids):
     
     except Exception as e:
         print("Error:", e)
+    finally:
+        conn.close()
 
     return variant_info
 
@@ -435,51 +475,55 @@ def get_details_for_delivery_module(order_item_ids):
 
 def remove_from_cart(custID, prodID):
     conn = get_mysql_connection()
-    cur = conn.cursor()
-    cur.execute("DELETE FROM cart WHERE custID=%s AND prodID=%s", (custID, prodID))
-    conn.commit()
+    try:
+        cur = conn.cursor()
+        cur.execute("DELETE FROM cart WHERE custID=%s AND prodID=%s", (custID, prodID))
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def Quarterly_sales(year):
     conn = get_mysql_connection()
     cur = conn.cursor()
+    try:
+        cur.execute(f'''CREATE VIEW year{year}orderitem AS
+                        select v.price*oi.quantity as total_price , t23.date , oi.order_id, oi.variant_id
+                        from order_item as oi
+                        join (SELECT * FROM orders WHERE YEAR(date) = {year}) AS t23 on oi.order_id = t23.order_id
+                        join variant as v on v.variant_id = oi.variant_id''')
+        conn.commit()
+        cur.execute(f'''select sum(total_price) as q1_price
+                        from year{year}orderitem
+                        where month(date) in (1,2,3);''')
+        q1 = cur.fetchone()[0]
+        q1 = int(q1) if q1 is not None else 0
 
-    cur.execute(f'''CREATE VIEW year{year}orderitem AS
-                    select v.price*oi.quantity as total_price , t23.date , oi.order_id, oi.variant_id
-                    from order_item as oi
-                    join (SELECT * FROM orders WHERE YEAR(date) = {year}) AS t23 on oi.order_id = t23.order_id
-                    join variant as v on v.variant_id = oi.variant_id''')
-    conn.commit()
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (1,2,3);''')
-    q1 = cur.fetchone()[0]
-    q1 = int(q1) if q1 is not None else 0
+        cur.execute(f'''select sum(total_price) as q1_price
+                        from year{year}orderitem
+                        where month(date) in (4,5,6);''')
+        q2 = cur.fetchone()[0]
+        q2 = int(q2) if q2 is not None else 0
 
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (4,5,6);''')
-    q2 = cur.fetchone()[0]
-    q2 = int(q2) if q2 is not None else 0
+        cur.execute(f'''select sum(total_price) as q1_price
+                        from year{year}orderitem
+                        where month(date) in (7,8,9);''')
+        q3 = cur.fetchone()[0]
+        q3 = int(q3) if q3 is not None else 0
 
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (7,8,9);''')
-    q3 = cur.fetchone()[0]
-    q3 = int(q3) if q3 is not None else 0
+        cur.execute(f'''select sum(total_price) as q1_price
+                        from year{year}orderitem
+                        where month(date) in (10,11,12);''')
+        q4 = cur.fetchone()[0]
+        q4 = int(q4) if q4 is not None else 0
 
-    cur.execute(f'''select sum(total_price) as q1_price
-                    from year{year}orderitem
-                    where month(date) in (10,11,12);''')
-    q4 = cur.fetchone()[0]
-    q4 = int(q4) if q4 is not None else 0
-
-    cur.execute(f'DROP VIEW IF EXISTS year{year}orderitem;')
-    conn.commit()
-
-    q_sale = [q1, q2, q3, q4]
-    conn.close()
-    return q_sale
+        return [q1, q2, q3, q4]
+    finally:
+        # Always drop the temporary view and release the connection,
+        # even if one of the quarter queries above raised.
+        cur.execute(f'DROP VIEW IF EXISTS year{year}orderitem;')
+        conn.commit()
+        conn.close()
 
 
 def select_year():
@@ -493,6 +537,7 @@ def select_year():
                     from orders 
                     order by year(date) desc''')
     year = cur.fetchone()[0]
+    conn.close()
     return (result, year)
 
 
@@ -515,7 +560,8 @@ def getProductQuantityList(from_year, to_year):
     for i, j in result:
         product_list.append(i)
         quantity_list.append(int(j))
-   
+
+    conn.close()
     return product_list, quantity_list
 
 
@@ -539,6 +585,7 @@ def getCategoriesandOrders():
     for i, j in result:
         category.append(i)
         orders.append(j)
+    conn.close()
     return category, orders
 
 
@@ -549,6 +596,7 @@ def product_list():
                     from product ;
                 ''')
     result = cur.fetchall()
+    conn.close()
     return result
 
 
@@ -580,4 +628,5 @@ def get_product_sales(product_id):
     # Convert the dictionary values to a list
     result_list = list(monthly_values.values())
 
+    conn.close()
     return result_list

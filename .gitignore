@@ -3,3 +3,4 @@
 /.idea/
 /webapp/dbInitialData/.env
 /webapp/__pycache__/
+/.env

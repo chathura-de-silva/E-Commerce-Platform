@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: ecom-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-ecomdb_root_pw}
+    # No MYSQL_DATABASE here on purpose: the web app detects a missing
+    # database on first connect and creates + populates the schema itself
+    # (tables from webapp/dbInitialData/*.csv, relations from
+    # database_relations.sql) directly against this container.
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build: .
+    container_name: ecom-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      HOST: db
+      USER: root
+      PASSWORD: ${MYSQL_ROOT_PASSWORD:-ecomdb_root_pw}
+      DATABASE: ecomdb
+    ports:
+      - "8080:5007"
+
+volumes:
+  db_data:
