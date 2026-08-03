@@ -3,26 +3,28 @@
 {% block content %}
 <style>
     /* Add some styles to the background image and container */
-    body {
-        background-image: url('/static/main-backdrop.jpg');  
+    .form-page {
+        min-height: calc(100vh - 90px); /* 90px = fixed header height in main.css */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        box-sizing: border-box;
+        background-image: url('/static/main-backdrop.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center; 
-        height: 100vh; 
     }
 
     .form-container {
-        background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background for the form */
+        background-color: rgba(255, 255, 255, 0.9); /* Add a semi-transparent white background for the form */
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         max-width: 400px;
         width: 100%; /* Ensure the form takes up the available width */
+        box-sizing: border-box;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -38,6 +40,7 @@
     .form-group {
         margin: 15px 0;
         position: relative;
+        width: 100%;
     }
 
     label {
@@ -57,6 +60,7 @@
         border-radius: 5px;
         font-size: 16px;
         padding-left: 40px;
+        box-sizing: border-box;
     }
 
     input[type="submit"] {
@@ -66,6 +70,7 @@
         padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
+        width: 100%;
     }
 
     .msg {
@@ -74,35 +79,39 @@
         margin-top: 10px;
     }
 
-    /* Position the form container in the center */
-    .form-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+    @media (max-width: 480px) {
+        .form-page {
+            min-height: calc(100vh - 60px);
+            padding: 20px 12px;
+        }
+        .form-container {
+            padding: 16px;
+        }
     }
 </style>
 
-<div class="form-container">
-    {% include "alert.html" %}
-    <div class="links">
-        <p>Not a user already? <a href="{{ url_for('signup') }}">Register</a></p>
+<div class="form-page">
+    <div class="form-container">
+        {% include "alert.html" %}
+        <div class="links">
+            <p>Not a user already? <a href="{{ url_for('signup') }}">Register</a></p>
+        </div>
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <label for="username">
+                    <i class="fas fa-user"></i>
+                </label>
+                <input type="text" name="username" placeholder="Username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                </label>
+                <input type="password" name="password" placeholder="Password" id="password" required>
+            </div>
+            <div class="msg">{{ msg }}</div>
+            <input type="submit" value="Login">
+        </form>
     </div>
-    <form action="{{ url_for('login') }}" method="post">
-        <div class="form-group">
-            <label for="username">
-                <i class="fas fa-user"></i>
-            </label>
-            <input type="text" name="username" placeholder="Username" id="username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">
-                <i class="fas fa-lock"></i>
-            </label>
-            <input type="password" name="password" placeholder="Password" id="password" required>
-        </div>
-        <div class="msg">{{ msg }}</div>
-        <input type="submit" value="Login">
-    </form>
 </div>
 {% endblock %}

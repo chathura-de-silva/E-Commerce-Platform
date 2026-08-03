@@ -180,10 +180,10 @@ END;
 
 CREATE PROCEDURE get_categories(IN parent_category_name VARCHAR(255))
 BEGIN
-    SELECT Category.category_name, Category.category_image, Category.category_id
-    FROM Category
-    WHERE Category.parent_category_id = (
-        SELECT category_id FROM Category WHERE category_name = parent_category_name
+    SELECT category.category_name, category.category_image, category.category_id
+    FROM category
+    WHERE category.parent_category_id = (
+        SELECT category_id FROM category WHERE category_name = parent_category_name
     );
 END;
 

@@ -120,7 +120,7 @@
       <tr>
         <td>{{ item[4]+" ("+item[1]+")"}}</td>
         <td>{{ item[0] }}</td>
-        <td>${{ item[2] }}</td>
+        <td>${{ "%.2f"|format(item[0] * item[2]) }}</td>
         <td><img class= "variant-img" src="/static/{{ item[3] }}" alt="Variant Image" /></td>
       </tr>
       {% endfor %}
@@ -140,11 +140,12 @@
     </thead>
     <tbody>
       {% for item in guest_cart %}
+      <!-- p.title, v.name, v.price, v.variant_image, v.variant_id -->
+      {% set qty = session_cart[item[4]|string] %}
       <tr>
-        <!-- p.title, v.name, v.price, v.variant_image -->
         <td>{{ item[0] +" ("+ item[1]+")"}}</td>
-        <td>{{item[4] }}</td>
-        <td>${{ item[2] }}</td>
+        <td>{{ qty }}</td>
+        <td>${{ "%.2f"|format(qty * item[2]) }}</td>
         <td><img class= "variant-img"src="/static/{{ item[3] }}" alt="Variant Image" /></td>
       </tr>
       {% endfor %}
